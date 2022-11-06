@@ -47,7 +47,6 @@ public class BsPlayer {
         int current_time = gr.getTime();
         int expiration_time = current_time + 60; // for now hardcoded 60, need diff vals for mid and other
 
-        gr.addBlock
-
+        gr.addBlock(new ExpiringBlock(current_time, expiration_time, block.getLocation()));
     }
 }
