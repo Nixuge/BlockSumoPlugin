@@ -1,0 +1,11 @@
+name: BlockSumo
+version: 0.2
+author: Nixuge
+main: me.nixuge.BlockSumo
+commands:
+  join_blocksumo:
+    description: join the blocksumo queue
+    usage: /join_blocksumo
+  quit_blocksumo:
+    description: quit the blocksumo queue
+    usage: /quit_blocksumo
