@@ -9,7 +9,9 @@ import org.bukkit.entity.Player;
 
 import me.nixuge.enums.GameState;
 import me.nixuge.enums.PlayerState;
-import me.nixuge.runnables.GeneratorRunnable;
+import me.nixuge.runnables.GameRunnable;
+import me.nixuge.utils.BsPlayer;
+import me.nixuge.utils.TextUtils;
 
 public class GameManager {
 
@@ -29,12 +31,20 @@ public class GameManager {
     private BlockSumo blockSumo = BlockSumo.getInstance();
 
     // runnables
-    private GeneratorRunnable genRunnable;
+    private GameRunnable gameRunnable;
+
+    public GameRunnable getGameRunnable() {
+        return gameRunnable;
+    }
 
     public GameState getGameState() {
         return state;
     }
 
+
+    public List<BsPlayer> getPlayers() {
+        return players;
+    }
     public boolean isPlayerInGameList(BsPlayer bsPlayer) {
         return players.contains(bsPlayer);
     }
@@ -76,11 +86,10 @@ public class GameManager {
             return;
 
         bsPlayer.setState(pstate);
-        if (pstate.equals(PlayerState.LOGGED_ON)) {
-            Bukkit.broadcastMessage("Player " + player.getName() + "logged back on");
-        } else {
-            Bukkit.broadcastMessage("Player " + player.getName() + "logged off");
-        }
+        String bc = pstate.equals(PlayerState.LOGGED_ON) ?
+            "Player " + player.getName() + "logged back on":
+            "Player " + player.getName() + "logged off";
+        TextUtils.broadcastGame(bc);
     }
 
     public void startGame() {
@@ -90,10 +99,10 @@ public class GameManager {
         if (state != GameState.WAITING) {
             Bukkit.broadcastMessage("Wrong time to start a game !");
         }
-        Bukkit.broadcastMessage("Starting!");
+        TextUtils.broadcastGame("Starting!");
 
         players.forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
-        genRunnable = new GeneratorRunnable();
-        genRunnable.runTaskTimer(blockSumo, 20, 20);
+        gameRunnable = new GameRunnable();
+        gameRunnable.runTaskTimer(blockSumo, 20, 20);
     }
 }

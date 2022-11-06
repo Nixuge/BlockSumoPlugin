@@ -13,7 +13,6 @@ import me.nixuge.enums.PlayerState;
 public class JoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Bukkit.broadcastMessage("cc");
         GameManager mgr = BlockSumo.getInstance().getGameManager();
         if ((!mgr.isPlayerInGameList(event.getPlayer())) && (mgr.getGameState() != GameState.WAITING)) {
             event.getPlayer().kickPlayer("Game already started !");
