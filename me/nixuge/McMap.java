@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 
 public class McMap {
 
@@ -12,10 +13,12 @@ public class McMap {
     private List<Location> spawnLocations;
     private final Location center;
     private final Random rand = new Random();
+    private final World world;
     
-    public McMap(List<Location> spawnLocations, Location center) {
+    public McMap(List<Location> spawnLocations, Location center, World world) {
         this.spawnLocations = spawnLocations;
         this.center = center;
+        this.world = world;
     }
 
     public Location getRandomSpawn() {
@@ -24,5 +27,8 @@ public class McMap {
     }
     public Location getCenter() {
         return center;
+    }
+    public World getWorld() {
+        return world;
     }
 }

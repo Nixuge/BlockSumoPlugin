@@ -9,3 +9,6 @@ commands:
   quit_blocksumo:
     description: quit the blocksumo queue
     usage: /quit_blocksumo
+  start_blocksumo:
+    description: force start the blocksumo queue /!\DEV ONLY/!\
+    usage: /start_blocksumo

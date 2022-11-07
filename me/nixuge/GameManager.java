@@ -21,7 +21,7 @@ public class GameManager {
         spawns.add(new Location(Bukkit.getWorld("world"), 96, 67, 63));
         spawns.add(new Location(Bukkit.getWorld("world"), 96, 67, 65));
 
-        map = new McMap(spawns, new Location(Bukkit.getWorld("world"), 93, 66, 64));
+        map = new McMap(spawns, new Location(Bukkit.getWorld("world"), 93, 66, 64), Bukkit.getWorld("world"));
     }
 
     // HARDCODED FOR NOW
@@ -41,6 +41,9 @@ public class GameManager {
         return state;
     }
 
+    public McMap getMcMap() {
+        return map;
+    }
 
     public List<BsPlayer> getPlayers() {
         return players;
@@ -97,7 +100,7 @@ public class GameManager {
             Bukkit.broadcastMessage("Not enough players !");
         }
         if (state != GameState.WAITING) {
-            Bukkit.broadcastMessage("Wrong time to start a game !");
+            Bukkit.broadcastMessage("Wrong state to start a game !" + state);
         }
         TextUtils.broadcastGame("Starting!");
 

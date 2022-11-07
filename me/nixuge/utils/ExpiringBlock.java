@@ -3,8 +3,8 @@ package me.nixuge.utils;
 import org.bukkit.Location;
 
 public class ExpiringBlock {
-    private int currentTime, expirationTime;
-    private Location location;
+    private final int currentTime, expirationTime;
+    private final Location location;
 
     //TODO:
     //figure out how to simulate a block breaking
@@ -22,7 +22,7 @@ public class ExpiringBlock {
         //got all the values gj
     }
 
-    public Location getLocation() {
+    public Location asLocation() {
         return location;
     }
 }
