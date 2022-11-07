@@ -36,6 +36,7 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void changeExpiringBlocks(int time) {
+        Bukkit.broadcastMessage("[DEBUG]current time:" + time);
         for(ExpiringBlock block : blocks) {
             Location loc = block.asLocation();
             int x = loc.getBlockX();

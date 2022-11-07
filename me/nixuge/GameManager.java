@@ -22,13 +22,14 @@ public class GameManager {
         spawns.add(new Location(Bukkit.getWorld("world"), 96, 67, 65));
 
         map = new McMap(spawns, new Location(Bukkit.getWorld("world"), 93, 66, 64), Bukkit.getWorld("world"));
+        blockSumo = BlockSumo.getInstance();
     }
 
     // HARDCODED FOR NOW
     private McMap map;
     private List<BsPlayer> players = new ArrayList<BsPlayer>();
     private GameState state = GameState.WAITING;
-    private BlockSumo blockSumo = BlockSumo.getInstance();
+    private BlockSumo blockSumo;
 
     // runnables
     private GameRunnable gameRunnable;
@@ -96,15 +97,22 @@ public class GameManager {
     }
 
     public void startGame() {
-        if (players.size() < 2) {
+        startGame(false);
+    }
+    public void startGame(boolean bypass) {
+        if (players.size() < 2 && !bypass) {
             Bukkit.broadcastMessage("Not enough players !");
+            return;
         }
-        if (state != GameState.WAITING) {
+        if (state != GameState.WAITING && !bypass) {
             Bukkit.broadcastMessage("Wrong state to start a game !" + state);
+            return;
         }
         TextUtils.broadcastGame("Starting!");
 
+        state = GameState.PLAYING;
         players.forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
+
         gameRunnable = new GameRunnable();
         gameRunnable.runTaskTimer(blockSumo, 20, 20);
     }
