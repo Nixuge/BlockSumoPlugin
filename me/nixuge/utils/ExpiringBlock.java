@@ -1,5 +1,7 @@
 package me.nixuge.utils;
 
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -7,6 +9,7 @@ public class ExpiringBlock {
     private final int currentTime, expirationTime;
     private final Location location;
     private final int[] states;
+    private final int breakerId;
 
     //TODO:
     //figure out how to simulate a block breaking
@@ -21,6 +24,7 @@ public class ExpiringBlock {
         this.expirationTime = currentTime + breakTime;
         this.location = location;
         this.states = getStatesAfterTime(currentTime, breakTime, 45);
+        this.breakerId = new Random().nextInt(Integer.MAX_VALUE);
     }
     
     private int[] getStatesLinear(int currentTime, int breakTime) {
@@ -44,5 +48,8 @@ public class ExpiringBlock {
     }
     public int[] getStates() {
         return states;
+    }
+    public int getBreakerId() {
+        return breakerId;
     }
 }

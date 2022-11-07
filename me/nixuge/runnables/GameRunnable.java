@@ -5,10 +5,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.World;
+import org.bukkit.Effect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -16,6 +19,7 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
+
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.PlayerState;
 import me.nixuge.utils.BsPlayer;
@@ -39,11 +43,12 @@ public class GameRunnable extends BukkitRunnable {
 
     private void changeExpiringBlocks(int time) {
         for (ExpiringBlock block : blocks) {
+            // ExpiringBlock block = blocks.get(a);
+
             int[] states = block.getStates();
             for (int i = 0; i < states.length; i++) {
                 if (states[i] == time) {
-                    Bukkit.broadcastMessage("changed blockstate, set to: " + i);
-                    sendBreakBlockPacket(block.asLocation(), i);
+                    sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
                     break;
                 }
             }
@@ -51,17 +56,21 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void breakBlockParticles(Location loc) {
-        //todo
+        World world = loc.getWorld();
+        ItemStack item = new ItemStack(loc.getBlock().getType());
+        // todo
+        // Particle
+        // world.spawnParticle(Particle.ITEM_CRACK, loc.add(0.5, 0.5, 0.5), 1, 1, 0.1, 0.1, 0.1, item);
     }
 
-    private void sendBreakBlockPacket(Location loc, int stage) {
+    private void sendBreakBlockPacket(Location loc, int stage, int breakerId) {
         int x = loc.getBlockX();
         int y = loc.getBlockY();
         int z = loc.getBlockZ();
         // int = id of player who is hitting
         // set it to a random one, everytime the same tho so that it doesn't look weird
         PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
-                16127, new BlockPosition(x, y, z), stage);
+                breakerId, new BlockPosition(x, y, z), stage);
 
         int dimension;
 
@@ -101,9 +110,12 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public void removeBlock(Location location) {
-        blocks.forEach((b) -> {
-            if (location.equals(b.asLocation()))
+        for (ExpiringBlock b : blocks) {
+            if (location.equals(b.asLocation())) {
+                Bukkit.broadcastMessage("block removed!");
                 blocks.remove(b);
-        });
+                break; // should only ever be 1 at the same place so breaking is fine
+            }
+        }
     }
 }
