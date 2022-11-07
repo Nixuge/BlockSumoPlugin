@@ -35,9 +35,6 @@ public class GameRunnable extends BukkitRunnable {
         // TODO:
         changeExpiringBlocks(time);
         time++;
-        // if (time > 10) {
-        // time = 0;
-        // }
     }
 
     private void changeExpiringBlocks(int time) {
@@ -59,11 +56,9 @@ public class GameRunnable extends BukkitRunnable {
                 }
             }
         }
-
         for (ExpiringBlock block : toRemove) {
             blocks.remove(block); //remove after to avoid causing issues in the loop
         }
-
     }
 
     private void breakBlockParticles(Location loc) {
@@ -80,6 +75,7 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void sendBreakBlockPacket(Location loc, int stage, int breakerId) {
+        //-> see https://www.spigotmc.org/threads/block-break-state.266966/
         int x = loc.getBlockX();
         int y = loc.getBlockY();
         int z = loc.getBlockZ();
@@ -102,9 +98,6 @@ public class GameRunnable extends BukkitRunnable {
             ((CraftServer) player.getServer()).getHandle().sendPacketNearby(
                     x, y, z, 120, dimension, packet);
         }
-        // int dimension = ((CraftWorld) p.getWorld()).getHandle().dimension;
-        // TODO: remove block or change break % here
-        // see ExpiringBlock.java
     }
 
     private void spawnBonus() {
