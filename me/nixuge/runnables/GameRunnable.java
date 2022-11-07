@@ -6,11 +6,9 @@ import java.util.List;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.Effect;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -43,8 +41,9 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void changeExpiringBlocks(int time) {
+        List<ExpiringBlock> toRemove = new ArrayList<>();
+
         for (ExpiringBlock block : blocks) {
-            // ExpiringBlock block = blocks.get(a);
 
             int[] states = block.getStates();
             for (int i = 0; i < states.length; i++) {
@@ -53,12 +52,18 @@ public class GameRunnable extends BukkitRunnable {
                         sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
                     } else {
                         breakBlockParticles(block.asLocation());
-                        blocks.remove(block);
+                        sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId()); //reset state
+                        toRemove.add(block);
                     }
                     break;
                 }
             }
         }
+
+        for (ExpiringBlock block : toRemove) {
+            blocks.remove(block); //remove after to avoid causing issues in the loop
+        }
+
     }
 
     private void breakBlockParticles(Location loc) {
@@ -69,6 +74,7 @@ public class GameRunnable extends BukkitRunnable {
         block.setType(Material.AIR);
 
         for (int i = 0; i < 50; i++) {
+            //proper API only on 1.9+, to rework
             world.playEffect(loc, Effect.TILE_BREAK, typeId, 500);
         }
     }
@@ -115,14 +121,10 @@ public class GameRunnable extends BukkitRunnable {
         blocks.add(block);
     }
 
-    public void removeBlock(ExpiringBlock block) {
-        blocks.remove(block);
-    }
-
     public void removeBlock(Location location) {
         for (ExpiringBlock b : blocks) {
             if (location.equals(b.asLocation())) {
-                Bukkit.broadcastMessage("block removed!");
+                sendBreakBlockPacket(b.asLocation(), 10, b.getBreakerId()); //reset state
                 blocks.remove(b);
                 break; // should only ever be 1 at the same place so breaking is fine
             }

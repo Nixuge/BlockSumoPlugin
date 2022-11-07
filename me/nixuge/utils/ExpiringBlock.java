@@ -15,15 +15,20 @@ public class ExpiringBlock {
     //figure out how to simulate a block breaking
     //-> see https://www.spigotmc.org/threads/block-break-state.266966/
 
-    public ExpiringBlock(int currentTime, int breakTime, Location location) {
-        Bukkit.broadcastMessage(
-            "constructor called! block should start breaking in 45s and be destroyed in "
-            + breakTime +"s. current game timer: " + currentTime);
-        
+    public ExpiringBlock(int currentTime, Location location, int breakTime) {
         this.currentTime = currentTime;
         this.expirationTime = currentTime + breakTime;
         this.location = location;
-        this.states = getStatesAfterTime(currentTime, breakTime, 0);
+        this.states = getStatesAfterTime(currentTime, breakTime, 45);
+        this.breakerId = new Random().nextInt(Integer.MAX_VALUE);
+    }
+    
+    public ExpiringBlock(int currentTime, Location location) {
+        int breakTime = 60; //default
+        this.currentTime = currentTime;
+        this.expirationTime = currentTime + breakTime;
+        this.location = location;
+        this.states = getStatesAfterTime(currentTime, breakTime, 45);
         this.breakerId = new Random().nextInt(Integer.MAX_VALUE);
     }
     
