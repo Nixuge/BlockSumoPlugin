@@ -44,6 +44,6 @@ public class BsPlayer {
             return;
         }
 
-        gr.addBlock(new ExpiringBlock(gr.getTime(), 60, block.getLocation()));
+        gr.addBlock(new ExpiringBlock(gr.getTime(), 10, block.getLocation()));
     }
 }

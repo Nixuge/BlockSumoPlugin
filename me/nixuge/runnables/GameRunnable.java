@@ -1,15 +1,14 @@
 package me.nixuge.runnables;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.Effect;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -26,6 +25,8 @@ import me.nixuge.utils.BsPlayer;
 import me.nixuge.utils.ExpiringBlock;
 
 public class GameRunnable extends BukkitRunnable {
+
+    // TODO: refactor this class
 
     private int time = 0;
     private int last_bonus_spawn = 0;
@@ -48,7 +49,12 @@ public class GameRunnable extends BukkitRunnable {
             int[] states = block.getStates();
             for (int i = 0; i < states.length; i++) {
                 if (states[i] == time) {
-                    sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
+                    if (i < 10) {
+                        sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
+                    } else {
+                        breakBlockParticles(block.asLocation());
+                        blocks.remove(block);
+                    }
                     break;
                 }
             }
@@ -57,10 +63,14 @@ public class GameRunnable extends BukkitRunnable {
 
     private void breakBlockParticles(Location loc) {
         World world = loc.getWorld();
-        ItemStack item = new ItemStack(loc.getBlock().getType());
-        // todo
-        // Particle
-        // world.spawnParticle(Particle.ITEM_CRACK, loc.add(0.5, 0.5, 0.5), 1, 1, 0.1, 0.1, 0.1, item);
+        Block block = loc.getBlock();
+        int typeId = block.getTypeId();
+
+        block.setType(Material.AIR);
+
+        for (int i = 0; i < 50; i++) {
+            world.playEffect(loc, Effect.TILE_BREAK, typeId, 500);
+        }
     }
 
     private void sendBreakBlockPacket(Location loc, int stage, int breakerId) {

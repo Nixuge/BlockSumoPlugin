@@ -23,7 +23,7 @@ public class ExpiringBlock {
         this.currentTime = currentTime;
         this.expirationTime = currentTime + breakTime;
         this.location = location;
-        this.states = getStatesAfterTime(currentTime, breakTime, 45);
+        this.states = getStatesAfterTime(currentTime, breakTime, 0);
         this.breakerId = new Random().nextInt(Integer.MAX_VALUE);
     }
     
