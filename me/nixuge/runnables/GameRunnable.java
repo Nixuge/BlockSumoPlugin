@@ -30,41 +30,56 @@ public class GameRunnable extends BukkitRunnable {
     @Override
     public void run() {
         // TODO:
-        // changeExpiringBlocks(time);
+        changeExpiringBlocks(time);
         time++;
-        if (time > 10) { time = 0; }
+        // if (time > 10) {
+        // time = 0;
+        // }
     }
 
     private void changeExpiringBlocks(int time) {
-        Bukkit.broadcastMessage("[DEBUG]current time:" + time);
-        for(ExpiringBlock block : blocks) {
-            Location loc = block.asLocation();
-            int x = loc.getBlockX();
-            int y = loc.getBlockY();
-            int z = loc.getBlockZ();
-
-            //int = id of player who is hitting
-            //set it to a random one, everytime the same tho so that it doesn't look weird
-            PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
-                16127, new BlockPosition(x, y, z), time);
-            
-            int dimension;
-
-            List<BsPlayer> onlinePlayers = BlockSumo.getInstance().getGameManager().getPlayers();
-            
-            for (BsPlayer bsPlayer : onlinePlayers) {
-                if (bsPlayer.getPlayerState().equals(PlayerState.LOGGED_OFF)) return;
-                Player player = bsPlayer.getBukkitPlayer();
-
-                dimension = ((CraftWorld) player.getWorld()).getHandle().dimension; 
-
-                ((CraftServer) player.getServer()).getHandle().sendPacketNearby(
-                    x, y, z, 120, dimension, packet);
+        for (ExpiringBlock block : blocks) {
+            int[] states = block.getStates();
+            for (int i = 0; i < states.length; i++) {
+                if (states[i] == time) {
+                    Bukkit.broadcastMessage("changed blockstate, set to: " + i);
+                    sendBreakBlockPacket(block.asLocation(), i);
+                    break;
+                }
             }
-            // int dimension = ((CraftWorld) p.getWorld()).getHandle().dimension;
-            //TODO: remove block or change break % here
-            //see ExpiringBlock.java
         }
+    }
+
+    private void breakBlockParticles(Location loc) {
+        //todo
+    }
+
+    private void sendBreakBlockPacket(Location loc, int stage) {
+        int x = loc.getBlockX();
+        int y = loc.getBlockY();
+        int z = loc.getBlockZ();
+        // int = id of player who is hitting
+        // set it to a random one, everytime the same tho so that it doesn't look weird
+        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
+                16127, new BlockPosition(x, y, z), stage);
+
+        int dimension;
+
+        List<BsPlayer> onlinePlayers = BlockSumo.getInstance().getGameManager().getPlayers();
+
+        for (BsPlayer bsPlayer : onlinePlayers) {
+            if (bsPlayer.getPlayerState().equals(PlayerState.LOGGED_OFF))
+                return;
+            Player player = bsPlayer.getBukkitPlayer();
+
+            dimension = ((CraftWorld) player.getWorld()).getHandle().dimension;
+
+            ((CraftServer) player.getServer()).getHandle().sendPacketNearby(
+                    x, y, z, 120, dimension, packet);
+        }
+        // int dimension = ((CraftWorld) p.getWorld()).getHandle().dimension;
+        // TODO: remove block or change break % here
+        // see ExpiringBlock.java
     }
 
     private void spawnBonus() {

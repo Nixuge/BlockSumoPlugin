@@ -14,7 +14,6 @@ import me.nixuge.runnables.GameRunnable;
 public class BsPlayer {
     private final Player player;
     private PlayerState state;
-    private List<Block> placedBlocks = new ArrayList<>();
 
     public BsPlayer(Player player, PlayerState pState) {
         this.player = player;
@@ -44,9 +43,7 @@ public class BsPlayer {
             Bukkit.broadcastMessage("This shouldn't happen! avoakn");
             return;
         }
-        int current_time = gr.getTime();
-        int expiration_time = current_time + 60; // for now hardcoded 60, need diff vals for mid and other
 
-        gr.addBlock(new ExpiringBlock(current_time, expiration_time, block.getLocation()));
+        gr.addBlock(new ExpiringBlock(gr.getTime(), 60, block.getLocation()));
     }
 }

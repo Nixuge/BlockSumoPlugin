@@ -14,7 +14,6 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockChange;
 import net.minecraft.server.v1_8_R3.World;
 
 public class TestCommand implements CommandExecutor {

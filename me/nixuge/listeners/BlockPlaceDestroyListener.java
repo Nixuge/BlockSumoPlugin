@@ -11,7 +11,7 @@ import me.nixuge.BlockSumo;
 import me.nixuge.enums.GameState;
 import me.nixuge.utils.BsPlayer;
 
-public class BlockPlaceListener implements Listener {
+public class BlockPlaceDestroyListener implements Listener {
     //TODO:
     //PLACE BLOCKS IN ARRAYLIST OR SMTH -> DONE
     //W TIME OF PLACING -> SHOULD BE DONE TOO

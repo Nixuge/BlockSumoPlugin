@@ -8,7 +8,7 @@ import me.nixuge.commands.JoinCommand;
 import me.nixuge.commands.QuitCommand;
 import me.nixuge.commands.StartCommand;
 import me.nixuge.commands.TestCommand;
-import me.nixuge.listeners.BlockPlaceListener;
+import me.nixuge.listeners.BlockPlaceDestroyListener;
 import me.nixuge.listeners.InventoryChangeListener;
 import me.nixuge.listeners.JoinListener;
 import me.nixuge.listeners.QuitListener;
@@ -45,7 +45,7 @@ public class BlockSumo extends JavaPlugin {
         pluginManager.registerEvents(new JoinListener(), this);
         pluginManager.registerEvents(new QuitListener(), this);
         pluginManager.registerEvents(new RandomChangeListener(), this);
-        pluginManager.registerEvents(new BlockPlaceListener(), this);
+        pluginManager.registerEvents(new BlockPlaceDestroyListener(), this);
         pluginManager.registerEvents(new InventoryChangeListener(), this);
         // start runtime here
         lobbyRunnable = new LobbyRunnable();
