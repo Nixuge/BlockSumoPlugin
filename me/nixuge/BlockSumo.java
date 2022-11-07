@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.nixuge.commands.JoinCommand;
 import me.nixuge.commands.QuitCommand;
 import me.nixuge.commands.StartCommand;
+import me.nixuge.commands.TestCommand;
 import me.nixuge.listeners.BlockPlaceListener;
 import me.nixuge.listeners.InventoryChangeListener;
 import me.nixuge.listeners.JoinListener;
@@ -38,6 +39,7 @@ public class BlockSumo extends JavaPlugin {
         getCommand("join_blocksumo").setExecutor(new JoinCommand());
         getCommand("quit_blocksumo").setExecutor(new QuitCommand());
         getCommand("start_blocksumo").setExecutor(new StartCommand());
+        getCommand("testcommand").setExecutor(new TestCommand());
 
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new JoinListener(), this);

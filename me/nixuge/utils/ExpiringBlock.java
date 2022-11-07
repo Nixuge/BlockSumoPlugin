@@ -5,6 +5,7 @@ import org.bukkit.Location;
 public class ExpiringBlock {
     private final int currentTime, expirationTime;
     private final Location location;
+    private int states[];
 
     //TODO:
     //figure out how to simulate a block breaking

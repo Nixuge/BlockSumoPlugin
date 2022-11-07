@@ -30,7 +30,7 @@ public class GameRunnable extends BukkitRunnable {
     @Override
     public void run() {
         // TODO:
-        changeExpiringBlocks(time);
+        // changeExpiringBlocks(time);
         time++;
         if (time > 10) { time = 0; }
     }
@@ -43,8 +43,10 @@ public class GameRunnable extends BukkitRunnable {
             int y = loc.getBlockY();
             int z = loc.getBlockZ();
 
+            //int = id of player who is hitting
+            //set it to a random one, everytime the same tho so that it doesn't look weird
             PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
-                new Random().nextInt(5000), new BlockPosition(x, y, z), time);
+                16127, new BlockPosition(x, y, z), time);
             
             int dimension;
 

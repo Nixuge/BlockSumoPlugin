@@ -12,3 +12,6 @@ commands:
   start_blocksumo:
     description: force start the blocksumo queue /!\DEV ONLY/!\
     usage: /start_blocksumo
+  testcommand:
+    description: test command used for various purposes while testing
+    usage: /testcommand
