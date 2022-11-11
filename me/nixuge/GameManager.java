@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import me.nixuge.enums.GameState;
 import me.nixuge.enums.PlayerState;
+import me.nixuge.runnables.BlockDestroyRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.utils.BsPlayer;
 import me.nixuge.utils.TextUtils;
@@ -33,9 +34,12 @@ public class GameManager {
 
     // runnables
     private GameRunnable gameRunnable;
-
+    private BlockDestroyRunnable blockDestroyRunnable;
     public GameRunnable getGameRunnable() {
         return gameRunnable;
+    }
+    public BlockDestroyRunnable getBlockDestroyRunnable() {
+        return blockDestroyRunnable;
     }
 
     public GameState getGameState() {
@@ -112,7 +116,8 @@ public class GameManager {
 
         state = GameState.PLAYING;
         players.forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
-
+        blockDestroyRunnable = new BlockDestroyRunnable();
+        blockDestroyRunnable.runTaskTimer(blockSumo, 1, 1);
         gameRunnable = new GameRunnable();
         gameRunnable.runTaskTimer(blockSumo, 20, 20);
     }

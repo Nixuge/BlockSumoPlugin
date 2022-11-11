@@ -39,6 +39,6 @@ public class BlockPlaceDestroyListener implements Listener {
         GameManager gameMgr = BlockSumo.getInstance().getGameManager();
         if (gameMgr.getGameState() != GameState.PLAYING) return;
         
-        gameMgr.getGameRunnable().removeBlock(event.getBlock().getLocation());
+        gameMgr.getBlockDestroyRunnable().removeBlock(event.getBlock().getLocation());
     }
 }

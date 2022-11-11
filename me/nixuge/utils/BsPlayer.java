@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.PlayerState;
+import me.nixuge.runnables.BlockDestroyRunnable;
 import me.nixuge.runnables.GameRunnable;
 
 public class BsPlayer {
@@ -35,12 +36,12 @@ public class BsPlayer {
     }
 
     public void addBlock(Block block) {
-        GameRunnable gr = BlockSumo.getInstance().getGameManager().getGameRunnable();
-        if (gr == null) {
+        BlockDestroyRunnable bdr = BlockSumo.getInstance().getGameManager().getBlockDestroyRunnable();
+        if (bdr == null) {
             Bukkit.broadcastMessage("This shouldn't happen! avoakn");
             return;
         }
 
-        gr.addBlock(new ExpiringBlock(gr.getTime(), block.getLocation()));
+        bdr.addBlock(new ExpiringBlock(bdr.getTime(), block.getLocation()));
     }
 }
