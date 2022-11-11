@@ -9,8 +9,7 @@ import org.bukkit.World;
 
 public class McMap {
 
-    //TODO: set to final
-    private List<Location> spawnLocations;
+    private final List<Location> spawnLocations;
     private final Location center;
     private final Random rand = new Random();
     private final World world;

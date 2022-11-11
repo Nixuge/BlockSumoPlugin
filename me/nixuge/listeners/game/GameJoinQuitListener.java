@@ -10,6 +10,7 @@ import me.nixuge.GameManager;
 import me.nixuge.enums.PlayerState;
 
 public class GameJoinQuitListener implements Listener {
+    
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage(event.getPlayer().getName() + " rejoined the game !");

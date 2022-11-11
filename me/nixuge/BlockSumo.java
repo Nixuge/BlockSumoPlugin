@@ -31,7 +31,6 @@ public class BlockSumo extends JavaPlugin {
 
 
     private LobbyRunnable lobbyRunnable;
-    //TODO
     
     @Override
     public void onEnable() {

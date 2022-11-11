@@ -6,7 +6,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.runnables.particle.MiddleParticleRunnable;
-import me.nixuge.runnables.particle.PlayerRespawnParticle;
 import me.nixuge.utils.TextUtils;
 
 public class GameRunnable extends BukkitRunnable {
@@ -15,16 +14,10 @@ public class GameRunnable extends BukkitRunnable {
     private final Random rand = new Random();
 
     private int time = 1;
-    private int lastBonusSpawn = 50;
+    private int lastBonusSpawn = 30;
 
     @Override
     public void run() {
-
-
-        // PlayerRespawnParticle r = new PlayerRespawnParticle(20, Bukkit.getPlayer("Nixuge"));
-        // r.runTaskTimer(plugin, 1, 1);
-        // MiddleParticleRunnable run = new MiddleParticleRunnable(60);
-        // run.runTaskTimer(plugin, 1, 1);
         manageBonus();
 
         time++;
