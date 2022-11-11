@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.PlayerState;
 import me.nixuge.runnables.BlockDestroyRunnable;
-import me.nixuge.runnables.GameRunnable;
 
 public class BsPlayer {
     private final Player player;
@@ -42,6 +41,6 @@ public class BsPlayer {
             return;
         }
 
-        bdr.addBlock(new ExpiringBlock(bdr.getTime(), block.getLocation()));
+        bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation()));
     }
 }

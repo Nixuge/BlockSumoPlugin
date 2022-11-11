@@ -63,7 +63,7 @@ public class BlockDestroyRunnable extends BukkitRunnable {
 
         block.setType(Material.AIR);
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 20; i++) {
             //proper API only on 1.9+, to rework
             world.playEffect(loc, Effect.TILE_BREAK, typeId, 500);
         }
@@ -95,13 +95,7 @@ public class BlockDestroyRunnable extends BukkitRunnable {
         }
     }
 
-    private void spawnBonus() {
-        // make it so that
-        // this function is harder to call right after a bonus
-        // eg, 0.1% chance 5s after a bonus, 10% chance 23s after a bonus
-    }
-
-    public int getTime() {
+    public int getTickTime() {
         return tick_time;
     }
 

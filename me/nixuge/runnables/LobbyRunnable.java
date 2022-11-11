@@ -4,7 +4,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class LobbyRunnable extends BukkitRunnable {
 
-    private int time = 0;
+    private int remainingTime = 0;
     private int maxPlayerCount = 8;
     private int minPlayerCount = 2;
     
@@ -14,7 +14,7 @@ public class LobbyRunnable extends BukkitRunnable {
         
     }
     
-    public int getTime() {
-        return time;
+    public int getRemainingTime() {
+        return remainingTime;
     }
 }

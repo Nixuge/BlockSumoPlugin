@@ -14,7 +14,9 @@ public class ExpiringBlock {
         // GAME TICK, SO MULTIPLY VALUES BY 20
         // TO GET THE TIME FROM SECONDS
         int breakTime = 1200; //default 60s
-        this.location = location;
+        // this.location = location;
+        this.location = location.clone().add(0.5, 0, 0.5); //use center of block instead of edge
+
         this.states = getStatesAfterTime(currentTime, breakTime, 900); //default 45s
         this.breakerId = new Random().nextInt(Integer.MAX_VALUE); 
     }

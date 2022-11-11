@@ -1,6 +1,7 @@
 package me.nixuge;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,5 +51,11 @@ public class BlockSumo extends JavaPlugin {
         // start runtime here
         lobbyRunnable = new LobbyRunnable();
         lobbyRunnable.runTaskTimer(this, 20, 20);
+
+        //add players instead of kicking 
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            gameManager.addPlayer(player);
+        }
+        
     }
 }

@@ -22,7 +22,7 @@ public class GameManager {
         spawns.add(new Location(Bukkit.getWorld("world"), 96, 67, 63));
         spawns.add(new Location(Bukkit.getWorld("world"), 96, 67, 65));
 
-        map = new McMap(spawns, new Location(Bukkit.getWorld("world"), 93, 66, 64), Bukkit.getWorld("world"));
+        map = new McMap(spawns, new Location(Bukkit.getWorld("world"), 93.5, 67, 64.5), Bukkit.getWorld("world"));
         blockSumo = BlockSumo.getInstance();
     }
 
@@ -63,8 +63,10 @@ public class GameManager {
     }
 
     public BsPlayer getExistingBsPlayerFromBukkit(Player player) {
+        String playerName = player.getName();
         for (BsPlayer bsPlayer : players) {
-            if (bsPlayer.getBukkitPlayer().equals(player)) {
+            // if (bsPlayer.getBukkitPlayer().equals(player)) {
+            if (bsPlayer.getBukkitPlayer().getName().equals(playerName)) {
                 return bsPlayer;
             }
         }
