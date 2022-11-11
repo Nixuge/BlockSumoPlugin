@@ -2,7 +2,6 @@ package me.nixuge;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,8 +10,6 @@ import me.nixuge.commands.QuitCommand;
 import me.nixuge.commands.StartCommand;
 import me.nixuge.commands.TestCommand;
 import me.nixuge.listeners.RandomChangeListener;
-import me.nixuge.listeners.game.BlockPlaceDestroyListener;
-import me.nixuge.listeners.game.GameInventoryChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
 
 public class BlockSumo extends JavaPlugin {

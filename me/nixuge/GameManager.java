@@ -35,7 +35,7 @@ public class GameManager {
         for (Listener listener : listeners) {
             HandlerList.unregisterAll(listener);
         }
-        
+
         state = gameState;
         for (Listener listener : gameState.getListeners()) {
             Bukkit.broadcastMessage(String.valueOf(listener));
@@ -46,7 +46,6 @@ public class GameManager {
         }
     }
 
-
     // HARDCODED FOR NOW
     private McMap map;
     private List<BsPlayer> players = new ArrayList<BsPlayer>();
@@ -56,9 +55,11 @@ public class GameManager {
     // runnables
     private GameRunnable gameRunnable;
     private BlockDestroyRunnable blockDestroyRunnable;
+
     public GameRunnable getGameRunnable() {
         return gameRunnable;
     }
+
     public BlockDestroyRunnable getBlockDestroyRunnable() {
         return blockDestroyRunnable;
     }
@@ -74,6 +75,7 @@ public class GameManager {
     public List<BsPlayer> getPlayers() {
         return players;
     }
+
     public boolean isPlayerInGameList(BsPlayer bsPlayer) {
         return players.contains(bsPlayer);
     }
@@ -107,7 +109,8 @@ public class GameManager {
 
     public void removePlayer(Player player) {
         BsPlayer bsPlayer = getExistingBsPlayerFromBukkit(player);
-        if (bsPlayer == null) return;
+        if (bsPlayer == null)
+            return;
         players.remove(bsPlayer);
     }
 
@@ -117,9 +120,8 @@ public class GameManager {
             return;
 
         bsPlayer.setState(pstate);
-        String bc = pstate.equals(PlayerState.LOGGED_ON) ?
-            "Player " + player.getName() + "logged back on":
-            "Player " + player.getName() + "logged off";
+        String bc = pstate.equals(PlayerState.LOGGED_ON) ? "Player " + player.getName() + "logged back on"
+                : "Player " + player.getName() + "logged off";
         TextUtils.broadcastGame(bc);
     }
 

@@ -1,6 +1,5 @@
 package me.nixuge.utils;
 
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -24,14 +23,8 @@ public class TextUtils {
     // }
 
     public static void broadcastGame(String message) {
-        Bukkit.broadcastMessage("ccc");
-        for (BsPlayer p : BlockSumo.getInstance().getGameManager().getPlayers()) {
-            Bukkit.broadcastMessage(p.getBukkitPlayer().getName());
-        }
-        
         BlockSumo.getInstance().getGameManager().getPlayers().forEach(
             (p) -> p.getBukkitPlayer().sendMessage(message)
         );
     }
-
 }

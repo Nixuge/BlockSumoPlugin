@@ -1,9 +1,11 @@
 package me.nixuge.runnables;
 
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.runnables.particle.MiddleParticleRunnable;
+import me.nixuge.runnables.particle.PlayerRespawnParticle;
 
 public class GameRunnable extends BukkitRunnable {
 
@@ -21,5 +23,8 @@ public class GameRunnable extends BukkitRunnable {
 
         MiddleParticleRunnable run = new MiddleParticleRunnable(60);
         run.runTaskTimer(plugin, 1, 1);
+
+        PlayerRespawnParticle r = new PlayerRespawnParticle(20, Bukkit.getPlayer("Nixuge"));
+        r.runTaskTimer(plugin, 1, 1);
     }
 }

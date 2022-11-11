@@ -2,14 +2,11 @@ package me.nixuge.runnables.particle;
 
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-
 import me.nixuge.BlockSumo;
+import me.nixuge.utils.PacketUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
@@ -28,7 +25,6 @@ public class MiddleParticleRunnable extends BukkitRunnable {
     public MiddleParticleRunnable(int maxTick) {
         this.maxTick = maxTick;
     }
-
 
     @Override
     public void run() {
@@ -53,19 +49,9 @@ public class MiddleParticleRunnable extends BukkitRunnable {
         double x = radius * Math.cos((y + yAdd) * 5);
         double z = radius * Math.sin((y + yAdd) * 5);
 
-        // PacketPlayOutWorldParticles:
-        // particle, bool, x, y, z, x+-, y+-, z+-, idk, idk
-        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(EnumParticle.FLAME, true,
-                (float) (particleLoc.getX() + x), (float) (particleLoc.getY() + y), (float) (particleLoc.getZ() + z), 0,
-                0, 0, 0, 1);
-
-        sendPacketAllPlayers(packet);
+        PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(EnumParticle.FLAME,
+                particleLoc.getX() + x, particleLoc.getY() + y, particleLoc.getZ() + z);
+            
+        PacketUtils.sendPacketAllPlayers(packet);
     }
-
-    private void sendPacketAllPlayers(PacketPlayOutWorldParticles packet) {
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
-        }
-    }
-
 }

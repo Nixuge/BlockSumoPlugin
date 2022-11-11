@@ -44,7 +44,7 @@ public class BlockDestroyRunnable extends BukkitRunnable {
                         sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
                     } else {
                         breakBlockParticles(block.asLocation());
-                        sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId()); //reset state
+                        sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId()); // reset state
                         toRemove.add(block);
                     }
                     break;
@@ -52,10 +52,11 @@ public class BlockDestroyRunnable extends BukkitRunnable {
             }
         }
         for (ExpiringBlock block : toRemove) {
-            blocks.remove(block); //remove after to avoid causing issues in the loop
+            blocks.remove(block); // remove after to avoid causing issues in the loop
         }
     }
 
+    @SuppressWarnings("deprecation") // block.getTypeId()
     private void breakBlockParticles(Location loc) {
         World world = loc.getWorld();
         Block block = loc.getBlock();
@@ -64,13 +65,13 @@ public class BlockDestroyRunnable extends BukkitRunnable {
         block.setType(Material.AIR);
 
         for (int i = 0; i < 20; i++) {
-            //proper API only on 1.9+, to rework
+            // proper API only on 1.9+, to rework
             world.playEffect(loc, Effect.TILE_BREAK, typeId, 500);
         }
     }
 
     private void sendBreakBlockPacket(Location loc, int stage, int breakerId) {
-        //-> see https://www.spigotmc.org/threads/block-break-state.266966/
+        // -> see https://www.spigotmc.org/threads/block-break-state.266966/
         int x = loc.getBlockX();
         int y = loc.getBlockY();
         int z = loc.getBlockZ();
@@ -106,7 +107,7 @@ public class BlockDestroyRunnable extends BukkitRunnable {
     public void removeBlock(Location location) {
         for (ExpiringBlock b : blocks) {
             if (location.equals(b.asLocation())) {
-                sendBreakBlockPacket(b.asLocation(), 10, b.getBreakerId()); //reset state
+                sendBreakBlockPacket(b.asLocation(), 10, b.getBreakerId()); // reset state
                 blocks.remove(b);
                 break; // should only ever be 1 at the same place so breaking is fine
             }
