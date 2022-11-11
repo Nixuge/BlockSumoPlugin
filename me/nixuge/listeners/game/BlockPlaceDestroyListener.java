@@ -1,4 +1,4 @@
-package me.nixuge.listeners;
+package me.nixuge.listeners.game;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -14,17 +14,11 @@ import me.nixuge.utils.BsPlayer;
 
 public class BlockPlaceDestroyListener implements Listener {
     //TODO:
-    //PLACE BLOCKS IN ARRAYLIST OR SMTH -> DONE
-    //W TIME OF PLACING -> SHOULD BE DONE TOO
-    //AND 
     //->CHANGE COLORS A BIT AFTER PLACING
-    //->DELETE AFTER A WHILE IF CLOSE TO MID
+    //->DELETE AFTER A SHORTER WHILE IF CLOSE TO MID
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent blockPlaceEvent) {
-        if (!BlockSumo.getInstance().getGameManager().getGameState().equals(GameState.PLAYING)) return;
-        //could be cleaner and only enable the event while game playing
-        //but oh well will see later
         Player player = blockPlaceEvent.getPlayer();
         Block block = blockPlaceEvent.getBlockPlaced();
 

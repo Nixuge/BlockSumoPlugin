@@ -20,7 +20,7 @@ public class MiddleParticleRunnable extends BukkitRunnable {
             .getMcMap().getCenter();
 
     private float y = 3;
-    private float offset = 0;
+    private float yOffset = 0;
     private Location particleLoc;
     private int tick = 0;
     private int maxTick = 0;
@@ -32,9 +32,9 @@ public class MiddleParticleRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (y > 2.1 + offset) {
-            offset = rand.nextFloat() * 1;
-            y = offset;
+        if (y > 2.1 + yOffset) {
+            yOffset = rand.nextFloat() * 1;
+            y = yOffset;
             particleLoc = originalParticleLoc.clone().add(0, -y, 0);
         }
         summonCurrentParticle(0);
@@ -48,10 +48,10 @@ public class MiddleParticleRunnable extends BukkitRunnable {
         tick++;
     }
 
-    private void summonCurrentParticle(float yAdder) {
+    private void summonCurrentParticle(float yAdd) {
         float radius = 0.75f;
-        double x = radius * Math.cos((y + yAdder) * 5);
-        double z = radius * Math.sin((y + yAdder) * 5);
+        double x = radius * Math.cos((y + yAdd) * 5);
+        double z = radius * Math.sin((y + yAdd) * 5);
 
         // PacketPlayOutWorldParticles:
         // particle, bool, x, y, z, x+-, y+-, z+-, idk, idk

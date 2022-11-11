@@ -2,6 +2,7 @@ package me.nixuge;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,11 +10,9 @@ import me.nixuge.commands.JoinCommand;
 import me.nixuge.commands.QuitCommand;
 import me.nixuge.commands.StartCommand;
 import me.nixuge.commands.TestCommand;
-import me.nixuge.listeners.BlockPlaceDestroyListener;
-import me.nixuge.listeners.InventoryChangeListener;
-import me.nixuge.listeners.JoinListener;
-import me.nixuge.listeners.QuitListener;
 import me.nixuge.listeners.RandomChangeListener;
+import me.nixuge.listeners.game.BlockPlaceDestroyListener;
+import me.nixuge.listeners.game.GameInventoryChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
 
 public class BlockSumo extends JavaPlugin {
@@ -28,12 +27,20 @@ public class BlockSumo extends JavaPlugin {
         return gameManager;
     }
 
+    private PluginManager pluginManager;
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
+
+
     private LobbyRunnable lobbyRunnable;
     //TODO
     
     @Override
     public void onEnable() {
         main = this;
+        pluginManager = getServer().getPluginManager();
+
         gameManager = new GameManager();
 
         Bukkit.broadcastMessage("enabled");
@@ -42,20 +49,16 @@ public class BlockSumo extends JavaPlugin {
         getCommand("start_blocksumo").setExecutor(new StartCommand());
         getCommand("testcommand").setExecutor(new TestCommand());
 
-        PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new JoinListener(), this);
-        pluginManager.registerEvents(new QuitListener(), this);
+        //this one staying here since it's always on
         pluginManager.registerEvents(new RandomChangeListener(), this);
-        pluginManager.registerEvents(new BlockPlaceDestroyListener(), this);
-        pluginManager.registerEvents(new InventoryChangeListener(), this);
+
         // start runtime here
-        lobbyRunnable = new LobbyRunnable();
+        lobbyRunnable = new LobbyRunnable(2, 8);
         lobbyRunnable.runTaskTimer(this, 20, 20);
 
         //add players instead of kicking 
         for (Player player : Bukkit.getOnlinePlayers()) {
             gameManager.addPlayer(player);
-        }
-        
+        }        
     }
 }

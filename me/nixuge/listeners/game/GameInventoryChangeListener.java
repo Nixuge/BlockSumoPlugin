@@ -1,9 +1,9 @@
-package me.nixuge.listeners;
+package me.nixuge.listeners.game;
 
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryEvent;
 
-public class InventoryChangeListener implements Listener {
+public class GameInventoryChangeListener implements Listener {
     //TODO:
     //prevent inventory changes
     //IF POSSIBLE custom kits while in the lobby

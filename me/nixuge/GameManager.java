@@ -6,6 +6,8 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 
 import me.nixuge.enums.GameState;
 import me.nixuge.enums.PlayerState;
@@ -24,7 +26,26 @@ public class GameManager {
 
         map = new McMap(spawns, new Location(Bukkit.getWorld("world"), 93.5, 67, 64.5), Bukkit.getWorld("world"));
         blockSumo = BlockSumo.getInstance();
+        setGameState(GameState.WAITING);
     }
+
+    private void setGameState(GameState gameState) {
+        Bukkit.broadcastMessage("changing gamestate!!");
+        Listener[] listeners = state.getListeners();
+        for (Listener listener : listeners) {
+            HandlerList.unregisterAll(listener);
+        }
+        
+        state = gameState;
+        for (Listener listener : gameState.getListeners()) {
+            Bukkit.broadcastMessage(String.valueOf(listener));
+            Bukkit.broadcastMessage(String.valueOf(blockSumo));
+            // Bukkit.broadcastMessage(String.valueOf(blockSumo));
+
+            blockSumo.getPluginManager().registerEvents(listener, blockSumo);
+        }
+    }
+
 
     // HARDCODED FOR NOW
     private McMap map;
@@ -105,6 +126,7 @@ public class GameManager {
     public void startGame() {
         startGame(false);
     }
+
     public void startGame(boolean bypass) {
         if (players.size() < 2 && !bypass) {
             Bukkit.broadcastMessage("Not enough players !");
@@ -116,10 +138,13 @@ public class GameManager {
         }
         TextUtils.broadcastGame("Starting!");
 
-        state = GameState.PLAYING;
+        setGameState(GameState.PLAYING);
+
         players.forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
+
         blockDestroyRunnable = new BlockDestroyRunnable();
         blockDestroyRunnable.runTaskTimer(blockSumo, 1, 1);
+
         gameRunnable = new GameRunnable();
         gameRunnable.runTaskTimer(blockSumo, 20, 20);
     }
