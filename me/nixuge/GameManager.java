@@ -30,18 +30,14 @@ public class GameManager {
     }
 
     private void setGameState(GameState gameState) {
-        Bukkit.broadcastMessage("changing gamestate!!");
+        //unregister previous ones
         Listener[] listeners = state.getListeners();
         for (Listener listener : listeners) {
             HandlerList.unregisterAll(listener);
         }
-
+        //register new ones & set state
         state = gameState;
         for (Listener listener : gameState.getListeners()) {
-            Bukkit.broadcastMessage(String.valueOf(listener));
-            Bukkit.broadcastMessage(String.valueOf(blockSumo));
-            // Bukkit.broadcastMessage(String.valueOf(blockSumo));
-
             blockSumo.getPluginManager().registerEvents(listener, blockSumo);
         }
     }
