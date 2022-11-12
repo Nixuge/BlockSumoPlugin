@@ -107,10 +107,10 @@ public class GameManager {
                 alivePlayerCount++;
         }
         if (alivePlayerCount < 2)
-            endGame();
+            forceEndGame();
     }
 
-    private void endGame() {
+    public void forceEndGame() {
         List<BsPlayer> winners = new ArrayList<BsPlayer>();
         for (BsPlayer p : pManager.getPlayers()) {
             if (!p.isDead())
@@ -118,6 +118,11 @@ public class GameManager {
         }
 
         setGameState(GameState.DONE);
-        Bukkit.broadcastMessage("GAME DONE PLAYING !");
+        gameRunnable.cancel();
+
+        Bukkit.broadcastMessage("GAME DONE PLAYING ! WINNER(s):");
+        for (BsPlayer p : winners) {
+            Bukkit.broadcastMessage(p.getBukkitPlayer().getName());
+        }
     }
 }

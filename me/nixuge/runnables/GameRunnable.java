@@ -21,6 +21,16 @@ public class GameRunnable extends BukkitRunnable {
     public void run() {
         manageBonus();
 
+        if (time == 1140) {
+            TextUtils.broadcastGame("§4§lGame ending in 1 minute.");
+        } else if (time >= 1200) {
+            plugin.getGameMgr().forceEndGame();
+        } 
+        else if (time > 1190) {
+            TextUtils.broadcastGame("§4§lGame ending in "+ (1200 - time) +"s.");
+        } 
+
+
         time++;
         previousLastBonusSpawn = lastBonusSpawn;
         lastBonusSpawn++;
@@ -36,7 +46,7 @@ public class GameRunnable extends BukkitRunnable {
 
         } else if (lastBonusSpawn > 0 && willBonusSpawn()) {
             lastBonusSpawn = -15;
-            MiddleParticleRunnable run = new MiddleParticleRunnable(220);
+            MiddleParticleRunnable run = new MiddleParticleRunnable(300);
             run.runTaskTimer(plugin, 1, 1);
         }
     }

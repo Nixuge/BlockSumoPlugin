@@ -15,6 +15,8 @@ import me.nixuge.utils.ScoreboardUtils;
 
 public class BlockSumo extends JavaPlugin {
 
+    //TODO: add sounds
+
     private static BlockSumo main;
     public static BlockSumo getInstance() {
         return main;

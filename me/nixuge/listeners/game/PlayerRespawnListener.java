@@ -26,6 +26,11 @@ public class PlayerRespawnListener implements Listener {
         if (player.isDead()) {
             gameMgr.checkGameEnd();
         }
+
+        //note: need to call the respawn event manually
+        //since spigot().respawn() doesn't
+        p.spigot().respawn();
+        onRespawn(new PlayerRespawnEvent(p, null, false));
     }
 
     @EventHandler

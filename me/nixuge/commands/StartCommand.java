@@ -12,7 +12,6 @@ public class StartCommand implements CommandExecutor{
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        // TODO Auto-generated method stub
         if (!(sender instanceof Player)) return false;
         Bukkit.broadcastMessage("IMPORTANT: dev command, testing only NEEDS TO BE REMOVED IN THE FINAL BUILD.");
         

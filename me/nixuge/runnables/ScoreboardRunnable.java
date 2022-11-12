@@ -1,6 +1,5 @@
 package me.nixuge.runnables;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,15 +31,15 @@ public class ScoreboardRunnable extends BukkitRunnable {
         return objective;
     }
 
-    private String coloredStringFromLives(int lives) {
+    private String colorFromLives(int lives) {
         if (lives >= 6) {
-            return Color.GREEN.getChatColor() + lives;
+            return Color.GREEN.getChatColor();
         } else if (lives >= 4) {
-            return Color.LIME.getChatColor() + lives;
+            return Color.LIME.getChatColor();
         } else if (lives >= 2) {
-            return Color.YELLOW.getChatColor() + lives;
+            return Color.YELLOW.getChatColor();
         }
-        return Color.RED.getChatColor() + lives; // lives <= 1
+        return Color.RED.getChatColor(); // lives <= 1
     }
 
     private int setPlayerScoreboard(Objective objective, int currentIndex) {
@@ -48,12 +47,17 @@ public class ScoreboardRunnable extends BukkitRunnable {
             if (player.isDead())
                 continue;
             
-            String str1 = player.getColor().getChatColor() + player.getBukkitPlayer().getName() + ": §r";
-            String str2 = coloredStringFromLives(player.getLives());
+            int lives = player.getLives();
+            boolean isLoggedOn = player.isLoggedOn();
 
-            
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(isLoggedOn ? player.getColor().getChatColor() : "§7§m§o");
+            stringBuilder.append(player.getBukkitPlayer().getName());
+            stringBuilder.append(": ");
+            stringBuilder.append(isLoggedOn ? colorFromLives(lives) : "§7§m§o");
+            stringBuilder.append(lives);
 
-            objective.getScore(str1 + str2).setScore(currentIndex);
+            objective.getScore(stringBuilder.toString()).setScore(currentIndex);
             currentIndex++;
         }
 
@@ -80,6 +84,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         // display score for every player
         currentIndex = setPlayerScoreboard(objective, currentIndex);
 
+        //game timer
         objective.getScore(
                 "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()))
                 .setScore(currentIndex);
