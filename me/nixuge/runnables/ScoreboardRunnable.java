@@ -58,8 +58,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         } else {
             currentSBValues.put(incr.getNumber(), "§e§l§l§o§6§oplay.nixuge.me");
         }
-        currentSBValues.put(incr.getNumber(), "§r§r§8§m--------------------");
-        currentSBValues.put(incr.getNumber(), "§e§l§l§o§r"); 
+        currentSBValues.put(incr.getNumber(), "§r§r§8§m-------------------");
     }
 
     private void _buildPlayerLives() {
@@ -79,6 +78,8 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
             currentSBValues.put(incr.getNumber(), stringBuilder.toString());
         }
+        currentSBValues.put(incr.getNumber(), "§r§r§r");
+        currentSBValues.put(incr.getNumber(), "§nPlayer lives:");
     }
 
     private String colorFromLives(int lives) {
@@ -93,7 +94,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
     }
 
     private void _buildTop() {
-        currentSBValues.put(incr.getNumber(), "§r§r§r");
+        currentSBValues.put(incr.getNumber(), "§r§r§r§8§m-------------------");
         killsIndex = incr.getNumber(); //"kills" line
         currentSBValues.put(incr.getNumber(), "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()));
     }
