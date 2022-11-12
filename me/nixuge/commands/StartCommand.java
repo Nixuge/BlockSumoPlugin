@@ -17,7 +17,7 @@ public class StartCommand implements CommandExecutor{
         Bukkit.broadcastMessage("IMPORTANT: dev command, testing only NEEDS TO BE REMOVED IN THE FINAL BUILD.");
         
 
-        BlockSumo.getInstance().getGameManager().startGame(true);
+        BlockSumo.getInstance().getGameMgr().startGame(true);
 
         return true;
     }

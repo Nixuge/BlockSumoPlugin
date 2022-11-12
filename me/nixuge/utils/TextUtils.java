@@ -23,8 +23,7 @@ public class TextUtils {
     // }
 
     public static void broadcastGame(String message) {
-        BlockSumo.getInstance().getGameManager().getPlayers().forEach(
-            (p) -> p.getBukkitPlayer().sendMessage(message)
-        );
+        BlockSumo.getInstance().getGameMgr().getPlayerMgr().getPlayers().forEach(
+                (p) -> p.getBukkitPlayer().sendMessage(message));
     }
 }

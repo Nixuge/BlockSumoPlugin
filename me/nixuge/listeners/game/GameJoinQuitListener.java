@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.GameManager;
+import me.nixuge.PlayerManager;
 import me.nixuge.enums.PlayerState;
 
 public class GameJoinQuitListener implements Listener {
@@ -15,7 +15,7 @@ public class GameJoinQuitListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage(event.getPlayer().getName() + " rejoined the game !");
 
-        GameManager mgr = BlockSumo.getInstance().getGameManager();
+        PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         if (!mgr.isPlayerInGameList(event.getPlayer())) {
             event.getPlayer().kickPlayer("Game already started !");
             return;
@@ -27,7 +27,7 @@ public class GameJoinQuitListener implements Listener {
     public void onPlayerLeave(PlayerQuitEvent event) {
         event.setQuitMessage(event.getPlayer().getName() + " quit the game !");
 
-        GameManager mgr = BlockSumo.getInstance().getGameManager();
+        PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         mgr.setPlayerLogin(event.getPlayer(), PlayerState.LOGGED_OFF);
     }
 }

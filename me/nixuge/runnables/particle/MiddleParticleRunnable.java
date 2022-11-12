@@ -13,7 +13,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 public class MiddleParticleRunnable extends BukkitRunnable {
 
     private final Random rand = new Random();
-    private final Location originalParticleLoc = BlockSumo.getInstance().getGameManager()
+    private final Location originalParticleLoc = BlockSumo.getInstance().getGameMgr()
             .getMcMap().getCenter();
 
     private float y = 3;

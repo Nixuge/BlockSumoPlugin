@@ -11,6 +11,7 @@ import me.nixuge.commands.StartCommand;
 import me.nixuge.commands.TestCommand;
 import me.nixuge.listeners.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
+import me.nixuge.scoreboard.ScoreboardTest;
 
 public class BlockSumo extends JavaPlugin {
 
@@ -20,7 +21,7 @@ public class BlockSumo extends JavaPlugin {
     }
 
     private GameManager gameManager;
-    public GameManager getGameManager() {
+    public GameManager getGameMgr() {
         return gameManager;
     }
 
@@ -29,8 +30,8 @@ public class BlockSumo extends JavaPlugin {
         return pluginManager;
     }
 
-
     private LobbyRunnable lobbyRunnable;
+    
     
     @Override
     public void onEnable() {
@@ -54,7 +55,8 @@ public class BlockSumo extends JavaPlugin {
 
         //add players instead of kicking 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            gameManager.addPlayer(player);
-        }        
+            gameManager.getPlayerMgr().addPlayer(player);
+        }
+        ScoreboardTest t = new ScoreboardTest();
     }
 }

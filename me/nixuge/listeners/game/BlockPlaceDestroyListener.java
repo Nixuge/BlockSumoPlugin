@@ -22,7 +22,7 @@ public class BlockPlaceDestroyListener implements Listener {
         Player player = blockPlaceEvent.getPlayer();
         Block block = blockPlaceEvent.getBlockPlaced();
 
-        BsPlayer bsPlayer = BlockSumo.getInstance().getGameManager().getExistingBsPlayerFromBukkit(player);
+        BsPlayer bsPlayer = BlockSumo.getInstance().getGameMgr().getPlayerMgr().getExistingBsPlayerFromBukkit(player);
         if (bsPlayer == null) return;
 
         bsPlayer.addBlock(block);
@@ -30,7 +30,7 @@ public class BlockPlaceDestroyListener implements Listener {
 
     @EventHandler
     public void onBlockDestroy(BlockBreakEvent event) {
-        GameManager gameMgr = BlockSumo.getInstance().getGameManager();
+        GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
         if (gameMgr.getGameState() != GameState.PLAYING) return;
         
         gameMgr.getBlockDestroyRunnable().removeBlock(event.getBlock().getLocation());

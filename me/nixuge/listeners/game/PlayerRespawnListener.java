@@ -12,7 +12,7 @@ public class PlayerRespawnListener implements Listener {
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
-        Location spawn = BlockSumo.getInstance().getGameManager().getMcMap().getRandomSpawn();
+        Location spawn = BlockSumo.getInstance().getGameMgr().getMcMap().getRandomSpawn();
         event.setRespawnLocation(spawn);
 
         BlockSumo plugin = BlockSumo.getInstance();

@@ -6,14 +6,14 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.GameManager;
+import me.nixuge.PlayerManager;
 
 public class LobbyJoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage(event.getPlayer().getName() + " joined the lobby !");
 
-        GameManager mgr = BlockSumo.getInstance().getGameManager();
+        PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         mgr.addPlayer(event.getPlayer());
     }
 
@@ -21,7 +21,7 @@ public class LobbyJoinQuitListener implements Listener {
     public void onPlayerLeave(PlayerQuitEvent event) {
         event.setQuitMessage(event.getPlayer().getName() + " left the lobby !");
 
-        GameManager mgr = BlockSumo.getInstance().getGameManager();
+        PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         mgr.removePlayer(event.getPlayer());
     }
 }

@@ -5,15 +5,12 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import me.nixuge.enums.GameState;
-import me.nixuge.enums.PlayerState;
 import me.nixuge.runnables.BlockDestroyRunnable;
 import me.nixuge.runnables.GameRunnable;
-import me.nixuge.utils.BsPlayer;
 import me.nixuge.utils.TextUtils;
 
 public class GameManager {
@@ -42,13 +39,11 @@ public class GameManager {
         }
     }
 
-    // HARDCODED FOR NOW
     private McMap map;
-    private List<BsPlayer> players = new ArrayList<BsPlayer>();
+    private PlayerManager pManager = new PlayerManager();
     private GameState state = GameState.WAITING;
     private BlockSumo blockSumo;
 
-    // runnables
     private GameRunnable gameRunnable;
     private BlockDestroyRunnable blockDestroyRunnable;
 
@@ -68,66 +63,17 @@ public class GameManager {
         return map;
     }
 
-    public List<BsPlayer> getPlayers() {
-        return players;
+    public PlayerManager getPlayerMgr() {
+        return pManager;
     }
 
-    public boolean isPlayerInGameList(BsPlayer bsPlayer) {
-        return players.contains(bsPlayer);
-    }
-
-    public boolean isPlayerInGameList(Player player) {
-        return getExistingBsPlayerFromBukkit(player) != null;
-        // if non null; player present.
-    }
-
-    public BsPlayer getExistingBsPlayerFromBukkit(Player player) {
-        String playerName = player.getName();
-        for (BsPlayer bsPlayer : players) {
-            if (bsPlayer.getBukkitPlayer().getName().equals(playerName)) {
-                return bsPlayer;
-            }
-        }
-        return null;
-    }
-
-    public int getPlayerCount() {
-        return players.size();
-    }
-
-    public void addPlayer(Player player) {
-        if (!isPlayerInGameList(player)) {
-            Bukkit.broadcastMessage("Player " + player.getName() + " joined.");
-            players.add(new BsPlayer(player));
-        }
-    }
-
-    public void removePlayer(Player player) {
-        BsPlayer bsPlayer = getExistingBsPlayerFromBukkit(player);
-        if (bsPlayer == null)
-            return;
-        players.remove(bsPlayer);
-    }
-
-    public void setPlayerLogin(Player player, PlayerState pstate) {
-        BsPlayer bsPlayer = getExistingBsPlayerFromBukkit(player);
-        if (bsPlayer == null)
-            return;
-
-        bsPlayer.setState(pstate);
-        bsPlayer.setBukkitPlayer(player);
-        
-        String bc = pstate.equals(PlayerState.LOGGED_ON) ? "Player " + player.getName() + "logged back on"
-                : "Player " + player.getName() + "logged off";
-        TextUtils.broadcastGame(bc);
-    }
 
     public void startGame() {
         startGame(false);
     }
 
     public void startGame(boolean bypass) {
-        if (players.size() < 2 && !bypass) {
+        if (pManager.getPlayers().size() < 2 && !bypass) {
             Bukkit.broadcastMessage("Not enough players !");
             return;
         }
@@ -139,7 +85,7 @@ public class GameManager {
 
         setGameState(GameState.PLAYING);
 
-        players.forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
+        pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
 
         blockDestroyRunnable = new BlockDestroyRunnable();
         blockDestroyRunnable.runTaskTimer(blockSumo, 1, 1);

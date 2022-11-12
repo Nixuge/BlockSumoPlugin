@@ -82,10 +82,11 @@ public class BlockDestroyRunnable extends BukkitRunnable {
 
         int dimension;
 
-        List<BsPlayer> onlinePlayers = BlockSumo.getInstance().getGameManager().getPlayers();
+        List<BsPlayer> onlinePlayers = BlockSumo.getInstance().getGameMgr()
+                .getPlayerMgr().getPlayers();
 
         for (BsPlayer bsPlayer : onlinePlayers) {
-            if (bsPlayer.getPlayerState().equals(PlayerState.LOGGED_OFF))
+            if (bsPlayer.getState().equals(PlayerState.LOGGED_OFF))
                 return;
             Player player = bsPlayer.getBukkitPlayer();
 
