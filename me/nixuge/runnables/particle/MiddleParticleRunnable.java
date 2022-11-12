@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.utils.PacketUtils;
+import me.nixuge.utils.specific.PacketUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 

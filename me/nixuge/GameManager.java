@@ -12,9 +12,9 @@ import me.nixuge.enums.GameState;
 import me.nixuge.runnables.BlockDestroyRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
-import me.nixuge.utils.BsPlayer;
-import me.nixuge.utils.ScoreboardUtils;
-import me.nixuge.utils.TextUtils;
+import me.nixuge.utils.game.BsPlayer;
+import me.nixuge.utils.specific.ScoreboardUtils;
+import me.nixuge.utils.specific.TextUtils;
 
 public class GameManager {
 

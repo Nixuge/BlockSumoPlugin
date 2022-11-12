@@ -1,4 +1,4 @@
-package me.nixuge.utils;
+package me.nixuge.utils.game;
 
 import java.util.Random;
 

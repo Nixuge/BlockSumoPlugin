@@ -1,4 +1,4 @@
-package me.nixuge.utils;
+package me.nixuge.utils.specific;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class ItemUtils {
         ItemStack item = new ItemStack(Material.POTION, count);
         PotionMeta meta = (PotionMeta) item.getItemMeta();
 
-        meta.setDisplayName(itemName);
+        meta.setDisplayName("§r" + itemName);
         meta.setLore(lore);
 
         meta.setMainEffect(effectType);

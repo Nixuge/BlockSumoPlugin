@@ -1,4 +1,4 @@
-package me.nixuge.utils;
+package me.nixuge.utils.specific;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

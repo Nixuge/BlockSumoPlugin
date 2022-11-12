@@ -17,9 +17,9 @@ import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
 import me.nixuge.enums.Color;
 import me.nixuge.enums.GameState;
-import me.nixuge.utils.BsPlayer;
 import me.nixuge.utils.IncreasingNumber;
-import me.nixuge.utils.TextUtils;
+import me.nixuge.utils.game.BsPlayer;
+import me.nixuge.utils.specific.TextUtils;
 
 public class ScoreboardRunnable extends BukkitRunnable {
     // pretty dirty class
@@ -95,7 +95,6 @@ public class ScoreboardRunnable extends BukkitRunnable {
         currentSBValues.put(incr.getNumber(), "§r§r§r");
         killsIndex = incr.getNumber(); //"kills" line
         currentSBValues.put(incr.getNumber(), "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()));
-
     }
 
     @Override

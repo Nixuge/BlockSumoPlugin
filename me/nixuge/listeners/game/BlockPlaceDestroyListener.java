@@ -13,7 +13,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.enums.GameState;
-import me.nixuge.utils.BsPlayer;
+import me.nixuge.utils.game.BsPlayer;
 
 public class BlockPlaceDestroyListener implements Listener {
     //TODO:

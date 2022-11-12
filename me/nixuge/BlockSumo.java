@@ -11,7 +11,7 @@ import me.nixuge.commands.StartCommand;
 import me.nixuge.commands.TestCommand;
 import me.nixuge.listeners.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
-import me.nixuge.utils.ScoreboardUtils;
+import me.nixuge.utils.specific.ScoreboardUtils;
 
 public class BlockSumo extends JavaPlugin {
 
