@@ -16,6 +16,9 @@ import me.nixuge.utils.ScoreboardUtils;
 public class BlockSumo extends JavaPlugin {
 
     //TODO: add sounds
+    //TODO: target system
+    //if a player is a lot on top, add a bounty
+    //that make the players that kills him gain a life
 
     private static BlockSumo main;
     public static BlockSumo getInstance() {

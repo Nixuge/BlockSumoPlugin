@@ -15,6 +15,7 @@ public class BsPlayer {
     private Player player;
     private boolean isLoggedOn;
     private int lives = 5;
+    private int kills = 0;
 
     public BsPlayer(Player player, Color color) {
         this.player = player;
@@ -53,6 +54,14 @@ public class BsPlayer {
     public int getLives() {
         return lives;
     }
+
+    public void addKill() {
+        this.kills++;
+    }
+    public int getKills() {
+        return kills;
+    }
+
 
     public Color getColor() {
         return color;

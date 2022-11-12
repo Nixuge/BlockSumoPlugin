@@ -23,7 +23,7 @@ public class ItemUtils {
         ItemStack item = new ItemStack(material, count);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(itemName);
+        meta.setDisplayName("§r" + itemName);
         meta.setLore(loreArr);
         
         if (enchantment1 != null) {

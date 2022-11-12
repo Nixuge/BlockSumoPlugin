@@ -14,14 +14,22 @@ import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
 import me.nixuge.enums.Color;
+import me.nixuge.enums.GameState;
 import me.nixuge.utils.BsPlayer;
 import me.nixuge.utils.TextUtils;
 
 public class ScoreboardRunnable extends BukkitRunnable {
 
-    private GameManager gameManager = BlockSumo.getInstance().getGameMgr();
-    private PlayerManager pManager = gameManager.getPlayerMgr();
+    // pretty dirty class
+    // but it's technically made of a bunch of string building
+    // with conditions, so yeah excepted
+    // also TODO: find if you can clone the scoreboard content to another one
+    // since everything is the same across all players (except kills) and yet
+    // the logic is repeating
+    private final GameManager gameManager = BlockSumo.getInstance().getGameMgr();
+    private final PlayerManager pManager = gameManager.getPlayerMgr();
     private List<BsPlayer> orderedPlayerList = new ArrayList<BsPlayer>();
+    private boolean isEnded = false;
 
     private Objective getBaseObjective(Scoreboard scoreboard) {
         Objective objective = scoreboard.registerNewObjective("BlockSumo", "main");
@@ -46,7 +54,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         for (BsPlayer player : orderedPlayerList) {
             if (player.isDead())
                 continue;
-            
+
             int lives = player.getLives();
             boolean isLoggedOn = player.isLoggedOn();
 
@@ -64,17 +72,23 @@ public class ScoreboardRunnable extends BukkitRunnable {
         return currentIndex;
     }
 
-    private Scoreboard buildScoreboard(Scoreboard scoreboard) {
+    private Scoreboard buildScoreboard(Scoreboard scoreboard, BsPlayer bsPlayer) {
         Objective objective = getBaseObjective(scoreboard);
         int currentIndex = 2;
 
+        if (isEnded) {
+            objective.getScore("§nGame ended !").setScore(currentIndex);
+            currentIndex++;
+            objective.getScore("§e§l§l§o§r").setScore(currentIndex);
+            currentIndex++;
+        }
         // if bonus spawning, display that
         int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
-        if (nextSpawnTime > -3) { // -3 = 3s after the bonus spawn
+        if (nextSpawnTime > -3 && !isEnded) { // -3 = 3s after the bonus spawn
             if (nextSpawnTime > 0) {
-                objective.getScore("§fBonus in " + nextSpawnTime + "s").setScore(currentIndex);
+                objective.getScore("§fMid bonus in " + nextSpawnTime + "s").setScore(currentIndex);
             } else {
-                objective.getScore("§fBonus spawned !").setScore(currentIndex);
+                objective.getScore("§fMid bonus spawned !").setScore(currentIndex);
             }
             currentIndex++;
             objective.getScore("§e§l§l§o§r").setScore(currentIndex);
@@ -84,14 +98,15 @@ public class ScoreboardRunnable extends BukkitRunnable {
         // display score for every player
         currentIndex = setPlayerScoreboard(objective, currentIndex);
 
-        //game timer
+        // game timer
         objective.getScore("§r§r§r").setScore(currentIndex);
+        currentIndex++;
+        objective.getScore("§fKills: §c" + bsPlayer.getKills()).setScore(currentIndex);
         currentIndex++;
         objective.getScore(
                 "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()))
                 .setScore(currentIndex);
         currentIndex++;
-
 
         objective.getScore("§r§8§m--------------------").setScore(currentIndex);
         return scoreboard;
@@ -103,6 +118,8 @@ public class ScoreboardRunnable extends BukkitRunnable {
         orderedPlayerList = new ArrayList<>(pManager.getPlayers());
         orderedPlayerList.sort(Comparator.comparing(BsPlayer::getLives));
 
+        isEnded = gameManager.getGameState().equals(GameState.DONE);
+
         for (BsPlayer bsPlayer : orderedPlayerList) {
             Player p = bsPlayer.getBukkitPlayer();
 
@@ -111,10 +128,13 @@ public class ScoreboardRunnable extends BukkitRunnable {
             if (tmp != null)
                 tmp.unregister();
 
-            Scoreboard bScoreboard = buildScoreboard(p.getScoreboard());
+            Scoreboard bScoreboard = buildScoreboard(p.getScoreboard(), bsPlayer);
 
             if (bsPlayer.isLoggedOn())
                 p.setScoreboard(bScoreboard);
+
+            if (isEnded)
+                cancel();
         }
     }
 }

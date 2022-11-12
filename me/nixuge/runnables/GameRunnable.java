@@ -2,6 +2,7 @@ package me.nixuge.runnables;
 
 import java.util.Random;
 
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
@@ -53,11 +54,10 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void manageMiddleBonus() {
-        if (lastMiddleBonusSpawn < 0 && (lastMiddleBonusSpawn == -10 || lastMiddleBonusSpawn >= -3)) {
-            TextUtils.broadcastGame("Bonus spawning in " + -lastMiddleBonusSpawn + "s.");
+        if (lastMiddleBonusSpawn == -10) {
+            TextUtils.broadcastGame("§7An §6§lOP Bonus§r§7 will be spawning in §a10s§7.");
 
         } else if (lastMiddleBonusSpawn == 0) {
-            TextUtils.broadcastGame("Bonus spawning now !");
             spawnMiddleBonus();
 
         } else if (lastMiddleBonusSpawn > 0 && willBonusSpawn(lastMiddleBonusSpawn)) {
@@ -85,16 +85,20 @@ public class GameRunnable extends BukkitRunnable {
         PacketUtils.sendPacketAllPlayers(packet);
 
         MiddleItem item = MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
+        ItemStack stack = item.getItemStack();
+        TextUtils.broadcastGame("§e" + item.getPrefix() + " §6§n" + item.getName() + "§r§e spawned at mid!");
 
         McMap map = plugin.getGameMgr().getMcMap();
-        map.getWorld().dropItemNaturally(map.getCenter(), item.getItemStack());
+        map.getWorld().dropItemNaturally(map.getCenter(), stack);
     }
 
     private void spawnGlobalBonus() {
         GlobalItem item = GlobalItem.values()[rand.nextInt(GlobalItem.values().length)];
+        ItemStack stack = item.getItemStack();
         for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {
-            TextUtils.broadcastGame("Spawned global bonus: " + item.toString());
-            p.getBukkitPlayer().getInventory().addItem(item.getItemStack());
+
+            TextUtils.broadcastGame("§7Everyone got " + item.getPrefix() + " §b§n" + item.getName() + "§r§7.");
+            p.getBukkitPlayer().getInventory().addItem(stack);
         }
     }
 
