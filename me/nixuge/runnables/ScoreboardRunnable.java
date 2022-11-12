@@ -48,17 +48,18 @@ public class ScoreboardRunnable extends BukkitRunnable {
     }
 
     private void _buildFooter() {
+         // if bonus spawning, display that
+         int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
         if (isEnded) {
             currentSBValues.put(incr.getNumber(), "§nGame ended !");
-            currentSBValues.put(incr.getNumber(), "§e§l§l§o§r");
-        }
-        // if bonus spawning, display that
-        int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
-        if (nextSpawnTime > -3 && !isEnded) { // -3 = 3s after the bonus spawn
-            String s = nextSpawnTime > 0 ? "§fMid bonus in " + nextSpawnTime + "s" : "§fMid bonus spawned !";
+        } else if (nextSpawnTime > -3) { // -3 = 3s after the bonus spawn
+            String s = nextSpawnTime > 0 ? "§6§lOP Bonus§r§f in §a" + nextSpawnTime + "s" : "§6§lOP Bonus§r§f spawned !";
             currentSBValues.put(incr.getNumber(), s);
-            currentSBValues.put(incr.getNumber(), "§e§l§l§o§r");
+        } else {
+            currentSBValues.put(incr.getNumber(), "§e§l§l§o§6§oplay.nixuge.me");
         }
+        currentSBValues.put(incr.getNumber(), "§r§r§8§m--------------------");
+        currentSBValues.put(incr.getNumber(), "§e§l§l§o§r"); 
     }
 
     private void _buildPlayerLives() {
