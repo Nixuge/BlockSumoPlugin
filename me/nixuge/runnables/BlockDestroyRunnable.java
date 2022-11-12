@@ -18,7 +18,6 @@ import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.enums.PlayerState;
 import me.nixuge.utils.BsPlayer;
 import me.nixuge.utils.ExpiringBlock;
 
@@ -82,12 +81,13 @@ public class BlockDestroyRunnable extends BukkitRunnable {
 
         int dimension;
 
-        List<BsPlayer> onlinePlayers = BlockSumo.getInstance().getGameMgr()
+        List<BsPlayer> gamePlayers = BlockSumo.getInstance().getGameMgr()
                 .getPlayerMgr().getPlayers();
 
-        for (BsPlayer bsPlayer : onlinePlayers) {
-            if (bsPlayer.getState().equals(PlayerState.LOGGED_OFF))
+        for (BsPlayer bsPlayer : gamePlayers) {
+            if (!bsPlayer.isLoggedOn())
                 return;
+            
             Player player = bsPlayer.getBukkitPlayer();
 
             dimension = ((CraftWorld) player.getWorld()).getHandle().dimension;

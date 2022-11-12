@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.PlayerManager;
-import me.nixuge.enums.PlayerState;
 
 public class GameJoinQuitListener implements Listener {
     
@@ -25,7 +24,7 @@ public class GameJoinQuitListener implements Listener {
         event.setJoinMessage(event.getPlayer().getName() + " rejoined the game !");
 
         PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
-        mgr.setPlayerLogin(event.getPlayer(), PlayerState.LOGGED_ON);
+        mgr.setPlayerLogin(event.getPlayer(), true);
     }
 
     @EventHandler
@@ -33,6 +32,6 @@ public class GameJoinQuitListener implements Listener {
         event.setQuitMessage(event.getPlayer().getName() + " quit the game !");
 
         PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
-        mgr.setPlayerLogin(event.getPlayer(), PlayerState.LOGGED_OFF);
+        mgr.setPlayerLogin(event.getPlayer(), false);
     }
 }

@@ -7,7 +7,6 @@ import java.util.Random;
 import org.bukkit.entity.Player;
 
 import me.nixuge.enums.Color;
-import me.nixuge.enums.PlayerState;
 import me.nixuge.utils.BsPlayer;
 
 public class PlayerManager {
@@ -63,12 +62,12 @@ public class PlayerManager {
         players.remove(bsPlayer);
     }
 
-    public void setPlayerLogin(Player player, PlayerState pstate) {
+    public void setPlayerLogin(Player player, boolean isLoggedOn) {
         BsPlayer bsPlayer = getExistingBsPlayerFromBukkit(player);
         if (bsPlayer == null)
             return;
 
-        bsPlayer.setState(pstate);
+        bsPlayer.setIsLoggedOn(isLoggedOn);
         bsPlayer.setBukkitPlayer(player);
     }
 }

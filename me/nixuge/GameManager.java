@@ -30,12 +30,12 @@ public class GameManager {
     }
 
     private void setGameState(GameState gameState) {
-        //unregister previous ones
+        // unregister previous ones
         Listener[] listeners = state.getListeners();
         for (Listener listener : listeners) {
             HandlerList.unregisterAll(listener);
         }
-        //register new ones & set state
+        // register new ones & set state
         state = gameState;
         for (Listener listener : gameState.getListeners()) {
             blockSumo.getPluginManager().registerEvents(listener, blockSumo);
@@ -70,7 +70,6 @@ public class GameManager {
         return pManager;
     }
 
-
     public void startGame() {
         startGame(false);
     }
@@ -98,17 +97,27 @@ public class GameManager {
 
         ScoreboardUtils.resetScoreboards();
         ScoreboardRunnable r = new ScoreboardRunnable();
-        r.runTaskTimer(blockSumo, 20, 20);
+        r.runTaskTimer(blockSumo, 0, 20);
     }
 
     public void checkGameEnd() {
+        int alivePlayerCount = 0;
         for (BsPlayer p : pManager.getPlayers()) {
-            if (!p.isDead()) return;
+            if (!p.isDead())
+                alivePlayerCount++;
         }
-        endGame();
+        if (alivePlayerCount < 2)
+            endGame();
     }
 
     private void endGame() {
+        List<BsPlayer> winners = new ArrayList<BsPlayer>();
+        for (BsPlayer p : pManager.getPlayers()) {
+            if (!p.isDead())
+                winners.add(p);
+        }
 
+        setGameState(GameState.DONE);
+        Bukkit.broadcastMessage("GAME DONE PLAYING !");
     }
 }

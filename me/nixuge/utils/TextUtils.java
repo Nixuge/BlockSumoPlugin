@@ -26,4 +26,8 @@ public class TextUtils {
         BlockSumo.getInstance().getGameMgr().getPlayerMgr().getPlayers().forEach(
                 (p) -> p.getBukkitPlayer().sendMessage(message));
     }
+
+    public static String secondsToMMSS(int seconds) {
+        return String.format("%02d:%02d", (seconds / 60) % 60, seconds % 60);
+    }
 }

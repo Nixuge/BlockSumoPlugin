@@ -8,24 +8,23 @@ import org.bukkit.entity.Player;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.Color;
-import me.nixuge.enums.PlayerState;
 import me.nixuge.runnables.BlockDestroyRunnable;
 
 public class BsPlayer {
     private final Color color;
     private Player player;
-    private PlayerState state;
+    private boolean isLoggedOn;
     private int lives = 5;
 
     public BsPlayer(Player player, Color color) {
         this.player = player;
-        this.state = PlayerState.LOGGED_ON;
+        this.isLoggedOn = true;
         this.color = color;
     }
 
     public BsPlayer(Player player) {
         this.player = player;
-        this.state = PlayerState.LOGGED_ON;
+        this.isLoggedOn = true;
         this.color = Color.values()[new Random().nextInt(Color.values().length)];
     }
 
@@ -37,11 +36,11 @@ public class BsPlayer {
         return player;
     }
 
-    public void setState(PlayerState state) {
-        this.state = state;
+    public void setIsLoggedOn(boolean isLoggedOn) {
+        this.isLoggedOn = isLoggedOn;
     }
-    public PlayerState getState() {
-        return state;
+    public boolean isLoggedOn() {
+        return isLoggedOn;
     }
 
     public void addLive() {

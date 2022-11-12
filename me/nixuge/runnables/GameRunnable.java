@@ -27,7 +27,7 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void manageBonus() {
-        if (lastBonusSpawn < 0 && (lastBonusSpawn == -10 || lastBonusSpawn >= -5)) {
+        if (lastBonusSpawn < 0 && (lastBonusSpawn == -10 || lastBonusSpawn >= -3)) {
             TextUtils.broadcastGame("Bonus spawning in " + -lastBonusSpawn + "s.");
 
         } else if (lastBonusSpawn == 0) {
@@ -35,7 +35,7 @@ public class GameRunnable extends BukkitRunnable {
             spawnBonus();
 
         } else if (lastBonusSpawn > 0 && willBonusSpawn()) {
-            lastBonusSpawn = -11;
+            lastBonusSpawn = -15;
             MiddleParticleRunnable run = new MiddleParticleRunnable(220);
             run.runTaskTimer(plugin, 1, 1);
         }
@@ -55,5 +55,9 @@ public class GameRunnable extends BukkitRunnable {
 
     public int getNextSpawnTime() {
         return -previousLastBonusSpawn;
+    }
+    
+    public int getTime() {
+        return time;
     }
 }

@@ -22,10 +22,10 @@ public class PlayerRespawnListener implements Listener {
         BsPlayer player = gameMgr.getPlayerMgr().getExistingBsPlayerFromBukkit(p);
 
         player.removeLive();
-        p.sendMessage("You're now dead.");
-        p.setGameMode(GameMode.SPECTATOR);
 
-        gameMgr.checkGameEnd();
+        if (player.isDead()) {
+            gameMgr.checkGameEnd();
+        }
     }
 
     @EventHandler
@@ -34,8 +34,10 @@ public class PlayerRespawnListener implements Listener {
         Player p = event.getPlayer();
 
         if (gameMgr.getPlayerMgr().getExistingBsPlayerFromBukkit(p).isDead()) {
+            p.setGameMode(GameMode.SPECTATOR);
             Location spawn = gameMgr.getMcMap().getCenter();
             event.setRespawnLocation(spawn);
+            p.sendMessage("You're now dead.");
             return;
         }
 

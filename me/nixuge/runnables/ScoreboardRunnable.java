@@ -1,5 +1,6 @@
 package me.nixuge.runnables;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -14,8 +15,8 @@ import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
 import me.nixuge.enums.Color;
-import me.nixuge.enums.PlayerState;
 import me.nixuge.utils.BsPlayer;
+import me.nixuge.utils.TextUtils;
 
 public class ScoreboardRunnable extends BukkitRunnable {
 
@@ -44,10 +45,15 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
     private int setPlayerScoreboard(Objective objective, int currentIndex) {
         for (BsPlayer player : orderedPlayerList) {
-            if (player.isDead()) continue;
-            String str = player.getColor().getChatColor() + player.getBukkitPlayer().getName() +
-                    ": §r" + coloredStringFromLives(player.getLives());
-            objective.getScore(str).setScore(currentIndex);
+            if (player.isDead())
+                continue;
+            
+            String str1 = player.getColor().getChatColor() + player.getBukkitPlayer().getName() + ": §r";
+            String str2 = coloredStringFromLives(player.getLives());
+
+            
+
+            objective.getScore(str1 + str2).setScore(currentIndex);
             currentIndex++;
         }
 
@@ -60,7 +66,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
         // if bonus spawning, display that
         int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
-        if (nextSpawnTime > -3) { //-3 = 3s after the bonus spawn
+        if (nextSpawnTime > -3) { // -3 = 3s after the bonus spawn
             if (nextSpawnTime > 0) {
                 objective.getScore("§fBonus in " + nextSpawnTime + "s").setScore(currentIndex);
             } else {
@@ -74,26 +80,32 @@ public class ScoreboardRunnable extends BukkitRunnable {
         // display score for every player
         currentIndex = setPlayerScoreboard(objective, currentIndex);
 
+        objective.getScore(
+                "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()))
+                .setScore(currentIndex);
+        currentIndex++;
+
         objective.getScore("§r§8§m--------------------").setScore(currentIndex);
         return scoreboard;
     }
 
     @Override
     public void run() {
-        //copy the arraylist to order it w/o concurrency errors
+        // copy the arraylist to order it w/o concurrency errors
         orderedPlayerList = new ArrayList<>(pManager.getPlayers());
         orderedPlayerList.sort(Comparator.comparing(BsPlayer::getLives));
 
         for (BsPlayer bsPlayer : orderedPlayerList) {
             Player p = bsPlayer.getBukkitPlayer();
 
+            // reset the objective
             Objective tmp = p.getScoreboard().getObjective("BlockSumo");
             if (tmp != null)
                 tmp.unregister();
 
             Scoreboard bScoreboard = buildScoreboard(p.getScoreboard());
 
-            if (bsPlayer.getState() == PlayerState.LOGGED_ON)
+            if (bsPlayer.isLoggedOn())
                 p.setScoreboard(bScoreboard);
         }
     }
