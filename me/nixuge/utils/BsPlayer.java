@@ -5,6 +5,7 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.Color;
@@ -13,6 +14,7 @@ import me.nixuge.runnables.BlockDestroyRunnable;
 
 public class BsPlayer {
     private final Color color;
+    private Scoreboard scoreboard;
     private Player player;
     private PlayerState state;
     private int lives = 5;
@@ -54,6 +56,14 @@ public class BsPlayer {
     public int getLives() {
         return lives;
     }
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
+    public void setPlayerScoreboard(Scoreboard scoreboard) {
+        this.scoreboard = scoreboard;
+    }
+
 
     public void addBlock(Block block) {
         BlockDestroyRunnable bdr = BlockSumo.getInstance().getGameMgr().getBlockDestroyRunnable();

@@ -51,4 +51,11 @@ public class GameRunnable extends BukkitRunnable {
         //TODO
     }
 
+    public int getNextSpawnTime() {
+        if (lastBonusSpawn < 0) {
+            return -lastBonusSpawn;
+        }
+        return -1;
+    }
+
 }

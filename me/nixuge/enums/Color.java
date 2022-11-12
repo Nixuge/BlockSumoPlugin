@@ -7,8 +7,9 @@ public enum Color {
     DARK_RED("§4", DyeColor.RED.getWoolData()),
     RED("§c", DyeColor.RED.getWoolData()),
     ORANGE("§6", DyeColor.ORANGE.getWoolData()),
-    YELLOW("§e", DyeColor.YELLOW.getWoolData());
-
+    YELLOW("§e", DyeColor.YELLOW.getWoolData()),
+    LIME("§a", DyeColor.LIME.getWoolData()),
+    GREEN("§2", DyeColor.GREEN.getWoolData());
 
     private final String chatColor;
     private final byte byteColor;

@@ -13,7 +13,7 @@ public class ScoreboardTest {
     public ScoreboardTest() {
         run();
     }
-
+    
     private void run() {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard board = manager.getNewScoreboard();

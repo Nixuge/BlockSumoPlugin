@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 import me.nixuge.enums.PlayerState;
 import me.nixuge.utils.BsPlayer;
-import me.nixuge.utils.TextUtils;
 
 public class PlayerManager {
     private List<BsPlayer> players = new ArrayList<BsPlayer>();
@@ -41,7 +40,6 @@ public class PlayerManager {
 
     public void addPlayer(Player player) {
         if (!isPlayerInGameList(player)) {
-            Bukkit.broadcastMessage("Player " + player.getName() + " joined.");
             players.add(new BsPlayer(player));
         }
     }

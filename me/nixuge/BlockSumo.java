@@ -11,6 +11,7 @@ import me.nixuge.commands.StartCommand;
 import me.nixuge.commands.TestCommand;
 import me.nixuge.listeners.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
+import me.nixuge.runnables.ScoreboardRunnable;
 import me.nixuge.scoreboard.ScoreboardTest;
 
 public class BlockSumo extends JavaPlugin {
@@ -57,6 +58,5 @@ public class BlockSumo extends JavaPlugin {
         for (Player player : Bukkit.getOnlinePlayers()) {
             gameManager.getPlayerMgr().addPlayer(player);
         }
-        ScoreboardTest t = new ScoreboardTest();
     }
 }
