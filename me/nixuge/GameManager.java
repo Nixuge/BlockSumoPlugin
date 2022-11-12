@@ -12,6 +12,7 @@ import me.nixuge.enums.GameState;
 import me.nixuge.runnables.BlockDestroyRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
+import me.nixuge.utils.ScoreboardUtils;
 import me.nixuge.utils.TextUtils;
 
 public class GameManager {
@@ -94,8 +95,8 @@ public class GameManager {
         gameRunnable = new GameRunnable();
         gameRunnable.runTaskTimer(blockSumo, 20, 20);
 
+        ScoreboardUtils.resetScoreboards();
         ScoreboardRunnable r = new ScoreboardRunnable();
-        r.init();
         r.runTaskTimer(blockSumo, 20, 20);
     }
 }

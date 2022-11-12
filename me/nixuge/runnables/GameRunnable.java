@@ -14,7 +14,7 @@ public class GameRunnable extends BukkitRunnable {
     private final Random rand = new Random();
 
     private int time = 1;
-    private int lastBonusSpawn = 30;
+    private int lastBonusSpawn = 60;
 
     @Override
     public void run() {
@@ -52,10 +52,12 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     public int getNextSpawnTime() {
-        if (lastBonusSpawn < 0) {
+        //since updating is done after the logic,
+        //need to remove 1
+        int correctLastBonusSpawn = lastBonusSpawn - 1;
+        // if (correctLastBonusSpawn < 0) {
             return -lastBonusSpawn;
-        }
-        return -1;
+        // }
     }
 
 }

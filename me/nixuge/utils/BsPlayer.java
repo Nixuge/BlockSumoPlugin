@@ -14,7 +14,6 @@ import me.nixuge.runnables.BlockDestroyRunnable;
 
 public class BsPlayer {
     private final Color color;
-    private Scoreboard scoreboard;
     private Player player;
     private PlayerState state;
     private int lives = 5;
@@ -57,11 +56,8 @@ public class BsPlayer {
         return lives;
     }
 
-    public Scoreboard getScoreboard() {
-        return scoreboard;
-    }
-    public void setPlayerScoreboard(Scoreboard scoreboard) {
-        this.scoreboard = scoreboard;
+    public Color getColor() {
+        return color;
     }
 
 

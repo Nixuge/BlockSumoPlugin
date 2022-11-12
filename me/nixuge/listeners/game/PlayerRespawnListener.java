@@ -10,6 +10,9 @@ import me.nixuge.runnables.particle.PlayerRespawnParticle;
 
 public class PlayerRespawnListener implements Listener {
 
+    // @EventHandler
+    // public void 
+
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         Location spawn = BlockSumo.getInstance().getGameMgr().getMcMap().getRandomSpawn();

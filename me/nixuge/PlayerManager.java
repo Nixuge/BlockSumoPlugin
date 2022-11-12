@@ -2,15 +2,18 @@ package me.nixuge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import me.nixuge.enums.Color;
 import me.nixuge.enums.PlayerState;
 import me.nixuge.utils.BsPlayer;
 
 public class PlayerManager {
+    private final Random rand = new Random();
     private List<BsPlayer> players = new ArrayList<BsPlayer>();
+    private List<Color> usedColors = new ArrayList<Color>();
 
     public List<BsPlayer> getPlayers() {
         return players;
@@ -19,6 +22,7 @@ public class PlayerManager {
     public boolean isPlayerInGameList(BsPlayer bsPlayer) {
         return players.contains(bsPlayer);
     }
+
     public boolean isPlayerInGameList(Player player) {
         return getExistingBsPlayerFromBukkit(player) != null;
         // if non null; player present.
@@ -39,9 +43,16 @@ public class PlayerManager {
     }
 
     public void addPlayer(Player player) {
-        if (!isPlayerInGameList(player)) {
-            players.add(new BsPlayer(player));
+        if (isPlayerInGameList(player))
+            return;
+        // get random color
+        Color color = Color.values()[rand.nextInt(Color.values().length)];
+        if (!(usedColors.size() >= Color.values().length)) {
+            while (usedColors.contains(color)) {
+                color = Color.values()[rand.nextInt(Color.values().length)];
+            }
         }
+        players.add(new BsPlayer(player, color));
     }
 
     public void removePlayer(Player player) {
