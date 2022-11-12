@@ -84,7 +84,6 @@ public class GameManager {
     public BsPlayer getExistingBsPlayerFromBukkit(Player player) {
         String playerName = player.getName();
         for (BsPlayer bsPlayer : players) {
-            // if (bsPlayer.getBukkitPlayer().equals(player)) {
             if (bsPlayer.getBukkitPlayer().getName().equals(playerName)) {
                 return bsPlayer;
             }
@@ -116,6 +115,8 @@ public class GameManager {
             return;
 
         bsPlayer.setState(pstate);
+        bsPlayer.setBukkitPlayer(player);
+        
         String bc = pstate.equals(PlayerState.LOGGED_ON) ? "Player " + player.getName() + "logged back on"
                 : "Player " + player.getName() + "logged off";
         TextUtils.broadcastGame(bc);

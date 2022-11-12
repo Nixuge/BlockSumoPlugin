@@ -9,7 +9,7 @@ import me.nixuge.enums.PlayerState;
 import me.nixuge.runnables.BlockDestroyRunnable;
 
 public class BsPlayer {
-    private final Player player;
+    private Player player;
     private PlayerState state;
 
     public BsPlayer(Player player, PlayerState pState) {
@@ -20,6 +20,12 @@ public class BsPlayer {
     public BsPlayer(Player player) {
         this.player = player;
         this.state = PlayerState.LOGGED_ON;
+    }
+
+    public void setBukkitPlayer(Player player) {
+        //Bukkit player object gets changed on relog
+        //so need this
+        this.player = player;
     }
 
     public Player getBukkitPlayer() {
