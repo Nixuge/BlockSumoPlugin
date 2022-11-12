@@ -15,12 +15,6 @@ public enum MiddleItem {
     JUMPBOOST("Jump Boost Potion",ItemUtils.getItemStackPotion("Jump Boost Potion", 1, "To go up fast", PotionEffectType.JUMP, 600, 5)),
     MEGA_BAT("Mega Bat",ItemUtils.getItemStack(Material.IRON_SWORD, "Mega bat", 1, "§f§bHITS HARD", Enchantment.KNOCKBACK, 10, Enchantment.FIRE_ASPECT, 5)),
     EXPLOSION_GUN("An","Explosion Gun",ItemUtils.getItemStack(Material.GOLD_HOE, "Epic gun", 1, "§6Right click pointing at a block to send someone in the air !"));
-    
-    //implemented as of now:
-    //bonuslife
-    //jumpboost
-    //explosiongun
-
 
     private final String prefix;
     private final String name;
