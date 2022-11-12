@@ -85,10 +85,13 @@ public class ScoreboardRunnable extends BukkitRunnable {
         currentIndex = setPlayerScoreboard(objective, currentIndex);
 
         //game timer
+        objective.getScore("§r§r§r").setScore(currentIndex);
+        currentIndex++;
         objective.getScore(
                 "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()))
                 .setScore(currentIndex);
         currentIndex++;
+
 
         objective.getScore("§r§8§m--------------------").setScore(currentIndex);
         return scoreboard;

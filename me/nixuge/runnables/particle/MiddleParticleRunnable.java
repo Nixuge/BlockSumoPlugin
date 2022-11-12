@@ -28,7 +28,7 @@ public class MiddleParticleRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (y > 2.2 + yOffset) {
+        if (y > 2.1 + yOffset) {
             yOffset = rand.nextFloat() * 1;
             y = yOffset;
             particleLoc = originalParticleLoc.clone().add(0, -y, 0);
