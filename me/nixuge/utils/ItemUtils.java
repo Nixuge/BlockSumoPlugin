@@ -15,8 +15,7 @@ public class ItemUtils {
     //method overloading at its finest
 
     public static ItemStack getItemStack(Material material, String itemName, int count, String lore,
-            Enchantment enchantment1, int enchantLevel1, Enchantment enchantment2, int enchantLevel2, 
-            short durability) {
+            Enchantment enchantment1, int enchantLevel1, Enchantment enchantment2, int enchantLevel2) {
         
         List<String> loreArr = new ArrayList<>();
         loreArr.add(lore);
@@ -33,16 +32,13 @@ public class ItemUtils {
         if (enchantment2 != null) {
             meta.addEnchant(enchantment2, enchantLevel2, true);
         }
-        if (durability >= 0) {
-            item.setDurability(durability);
-        }
 
         item.setItemMeta(meta);
         return item;
     }
 
     public static ItemStack getItemStack(Material material, String itemName, int count, String lore) {
-        return getItemStack(material, itemName, count, lore, null, 0, null, 0, (short)-1);
+        return getItemStack(material, itemName, count, lore, null, 0, null, 0);
     }
 
     public static ItemStack getItemStack(Material material, String itemName, int count) {
@@ -51,10 +47,6 @@ public class ItemUtils {
 
     public static ItemStack getItemStack(Material material, String itemName) {
         return getItemStack(material, itemName, 1, "");
-    }
-
-    public static ItemStack getItemStack(Material material, String itemName, String lore, short durability) {
-        return getItemStack(material, itemName, 1, lore, null, 0, null, 0, durability);
     }
 
 
@@ -67,7 +59,7 @@ public class ItemUtils {
         meta.setLore(lore);
 
         meta.setMainEffect(effectType);
-        meta.addCustomEffect(new PotionEffect(effectType, durationTicks, effectLevel), true);
+        meta.addCustomEffect(new PotionEffect(effectType, durationTicks, effectLevel), false);
 
         item.setItemMeta(meta);
         return item;

@@ -5,8 +5,15 @@ import java.util.Random;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.McMap;
+import me.nixuge.enums.items.GlobalItem;
+import me.nixuge.enums.items.MiddleItem;
 import me.nixuge.runnables.particle.MiddleParticleRunnable;
+import me.nixuge.utils.BsPlayer;
+import me.nixuge.utils.PacketUtils;
 import me.nixuge.utils.TextUtils;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class GameRunnable extends BukkitRunnable {
 
@@ -14,59 +21,87 @@ public class GameRunnable extends BukkitRunnable {
     private final Random rand = new Random();
 
     private int time = 1;
-    private int previousLastBonusSpawn = 59;
-    private int lastBonusSpawn = 60;
+    private int previousLastMiddleBonusSpawn = 59;
+    private int lastMiddleBonusSpawn = 40;
+    private int lastGlobalBonusSpawn = 1;
 
     @Override
     public void run() {
-        manageBonus();
+        manageMiddleBonus();
+        manageGlobalBonus();
 
         if (time == 1140) {
             TextUtils.broadcastGame("§4§lGame ending in 1 minute.");
         } else if (time >= 1200) {
             plugin.getGameMgr().forceEndGame();
-        } 
-        else if (time > 1190) {
-            TextUtils.broadcastGame("§4§lGame ending in "+ (1200 - time) +"s.");
-        } 
-
+        } else if (time > 1190) {
+            TextUtils.broadcastGame("§4§lGame ending in " + (1200 - time) + "s.");
+        }
 
         time++;
-        previousLastBonusSpawn = lastBonusSpawn;
-        lastBonusSpawn++;
+        previousLastMiddleBonusSpawn = lastMiddleBonusSpawn;
+        lastMiddleBonusSpawn++;
+        lastGlobalBonusSpawn++;
     }
 
-    private void manageBonus() {
-        if (lastBonusSpawn < 0 && (lastBonusSpawn == -10 || lastBonusSpawn >= -3)) {
-            TextUtils.broadcastGame("Bonus spawning in " + -lastBonusSpawn + "s.");
+    private void manageGlobalBonus() {
+        // if (willBonusSpawn(lastGlobalBonusSpawn, .00125))
+        if (willBonusSpawn(lastGlobalBonusSpawn)) {
+            lastGlobalBonusSpawn = 0;
+            spawnGlobalBonus();
+        }
+    }
 
-        } else if (lastBonusSpawn == 0) {
+    private void manageMiddleBonus() {
+        if (lastMiddleBonusSpawn < 0 && (lastMiddleBonusSpawn == -10 || lastMiddleBonusSpawn >= -3)) {
+            TextUtils.broadcastGame("Bonus spawning in " + -lastMiddleBonusSpawn + "s.");
+
+        } else if (lastMiddleBonusSpawn == 0) {
             TextUtils.broadcastGame("Bonus spawning now !");
-            spawnBonus();
+            spawnMiddleBonus();
 
-        } else if (lastBonusSpawn > 0 && willBonusSpawn()) {
-            lastBonusSpawn = -15;
+        } else if (lastMiddleBonusSpawn > 0 && willBonusSpawn(lastMiddleBonusSpawn)) {
+            lastMiddleBonusSpawn = -15;
             MiddleParticleRunnable run = new MiddleParticleRunnable(300);
             run.runTaskTimer(plugin, 1, 1);
         }
     }
 
-    private boolean willBonusSpawn() {
-        int randomPercent = rand.nextInt(100);
-        //totally random formula
-        double neededPercent = ((.0025 * (lastBonusSpawn * lastBonusSpawn)) - .2);
-        // Bukkit.broadcastMessage("needed: " + neededPercent + " | random: " + randomPercent + " | time: " + time + " | lbs:" + last_bonus_spawn);
-        return neededPercent  > randomPercent;
+    private boolean willBonusSpawn(int lastSpawn) {
+        return willBonusSpawn(lastSpawn, .0025);
     }
 
-    private void spawnBonus() {
-        //TODO
+    private boolean willBonusSpawn(int lastSpawn, double multiplier) {
+        int randomPercent = rand.nextInt(100);
+        // totally random formula
+        double neededPercent = ((multiplier * (lastSpawn * lastSpawn)) - .2);
+        return neededPercent > randomPercent;
+    }
+
+    private void spawnMiddleBonus() {
+        PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(EnumParticle.FIREWORKS_SPARK,
+                plugin.getGameMgr().getMcMap().getCenter(), .7, .5, .7, 50);
+
+        PacketUtils.sendPacketAllPlayers(packet);
+
+        MiddleItem item = MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
+
+        McMap map = plugin.getGameMgr().getMcMap();
+        map.getWorld().dropItemNaturally(map.getCenter(), item.getItemStack());
+    }
+
+    private void spawnGlobalBonus() {
+        GlobalItem item = GlobalItem.values()[rand.nextInt(GlobalItem.values().length)];
+        for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {
+            TextUtils.broadcastGame("Spawned global bonus: " + item.toString());
+            p.getBukkitPlayer().getInventory().addItem(item.getItemStack());
+        }
     }
 
     public int getNextSpawnTime() {
-        return -previousLastBonusSpawn;
+        return -previousLastMiddleBonusSpawn;
     }
-    
+
     public int getTime() {
         return time;
     }

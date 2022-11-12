@@ -1,6 +1,7 @@
 package me.nixuge.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -22,8 +23,17 @@ public class PacketUtils {
         return packet;
     }
 
+    public static PacketPlayOutWorldParticles getParticlePacket(EnumParticle particle, Location loc,
+            double xPlus, double yPlus, double zPlus, int number) {
+        return getParticlePacket(particle, loc.getX(), loc.getY(), loc.getZ(), xPlus, yPlus, zPlus, number);
+    }
+
     public static PacketPlayOutWorldParticles getParticlePacket(EnumParticle particle, double x, double y, double z) {
         return getParticlePacket(particle, x, y, z, 0, 0, 0, 1);
+    }
+
+    public static PacketPlayOutWorldParticles getParticlePacket(EnumParticle particle, Location loc) {
+        return getParticlePacket(particle, loc.getX(), loc.getY(), loc.getZ(), 0, 0, 0, 1);
     }
 
     public static void sendPacketAllPlayers(PacketPlayOutWorldParticles packet) {

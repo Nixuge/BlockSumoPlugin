@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
@@ -29,7 +30,12 @@ public class PlayerRespawnListener implements Listener {
 
         //note: need to call the respawn event manually
         //since spigot().respawn() doesn't
-        p.spigot().respawn();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                p.spigot().respawn();
+            }
+        }.runTaskLater(BlockSumo.getInstance(), 20);
         onRespawn(new PlayerRespawnEvent(p, null, false));
     }
 
