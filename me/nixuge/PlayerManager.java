@@ -52,6 +52,7 @@ public class PlayerManager {
                 color = Color.values()[rand.nextInt(Color.values().length)];
             }
         }
+        usedColors.add(color);
         players.add(new BsPlayer(player, color));
     }
 

@@ -1,13 +1,14 @@
 package me.nixuge.runnables;
 
-import org.bukkit.Bukkit;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
@@ -20,6 +21,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
     private GameManager gameManager = BlockSumo.getInstance().getGameMgr();
     private PlayerManager pManager = gameManager.getPlayerMgr();
+    private List<BsPlayer> orderedPlayerList = new ArrayList<BsPlayer>();
 
     private Objective getBaseObjective(Scoreboard scoreboard) {
         Objective objective = scoreboard.registerNewObjective("BlockSumo", "main");
@@ -41,7 +43,8 @@ public class ScoreboardRunnable extends BukkitRunnable {
     }
 
     private int setPlayerScoreboard(Objective objective, int currentIndex) {
-        for (BsPlayer player : pManager.getPlayers()) {
+        for (BsPlayer player : orderedPlayerList) {
+            if (player.isDead()) continue;
             String str = player.getColor().getChatColor() + player.getBukkitPlayer().getName() +
                     ": §r" + coloredStringFromLives(player.getLives());
             objective.getScore(str).setScore(currentIndex);
@@ -77,7 +80,11 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        for (BsPlayer bsPlayer : pManager.getPlayers()) {
+        //copy the arraylist to order it w/o concurrency errors
+        orderedPlayerList = new ArrayList<>(pManager.getPlayers());
+        orderedPlayerList.sort(Comparator.comparing(BsPlayer::getLives));
+
+        for (BsPlayer bsPlayer : orderedPlayerList) {
             Player p = bsPlayer.getBukkitPlayer();
 
             Objective tmp = p.getScoreboard().getObjective("BlockSumo");

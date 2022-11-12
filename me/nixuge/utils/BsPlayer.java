@@ -5,7 +5,6 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.Color;
@@ -58,6 +57,10 @@ public class BsPlayer {
 
     public Color getColor() {
         return color;
+    }
+
+    public boolean isDead() {
+        return lives < 1;
     }
 
 

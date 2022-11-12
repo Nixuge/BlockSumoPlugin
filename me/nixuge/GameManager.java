@@ -12,6 +12,7 @@ import me.nixuge.enums.GameState;
 import me.nixuge.runnables.BlockDestroyRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
+import me.nixuge.utils.BsPlayer;
 import me.nixuge.utils.ScoreboardUtils;
 import me.nixuge.utils.TextUtils;
 
@@ -98,5 +99,16 @@ public class GameManager {
         ScoreboardUtils.resetScoreboards();
         ScoreboardRunnable r = new ScoreboardRunnable();
         r.runTaskTimer(blockSumo, 20, 20);
+    }
+
+    public void checkGameEnd() {
+        for (BsPlayer p : pManager.getPlayers()) {
+            if (!p.isDead()) return;
+        }
+        endGame();
+    }
+
+    private void endGame() {
+
     }
 }
