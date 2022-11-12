@@ -96,7 +96,7 @@ public class GameRunnable extends BukkitRunnable {
         GlobalItem item = GlobalItem.values()[rand.nextInt(GlobalItem.values().length)];
         ItemStack stack = item.getItemStack();
         for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {
-
+            plugin.getGameMgr().getScoreboardRunnable().addMessage("Got " + item.getPrefix() + " §b§n" + item.getName() + "§r !");
             TextUtils.broadcastGame("§7Everyone got " + item.getPrefix() + " §b§n" + item.getName() + "§r§7.");
             p.getBukkitPlayer().getInventory().addItem(stack);
         }

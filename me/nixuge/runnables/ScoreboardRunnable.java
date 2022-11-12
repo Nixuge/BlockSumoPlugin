@@ -12,6 +12,8 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
@@ -33,32 +35,44 @@ public class ScoreboardRunnable extends BukkitRunnable {
     private Map<Integer, String> currentSBValues;
     private IncreasingNumber incr;
     private int killsIndex;
+    private int pingIndex;
+
+    private int messageTimer;
+    private String message;
 
     private void buildValuesMap() {
         currentSBValues = new HashMap<Integer, String>();
         incr = new IncreasingNumber();
+        pingIndex = -1;
 
-        currentSBValues.put(incr.getNumber(), "§8§m--------------------"); 
+        currentSBValues.put(incr.getNumber(), "§8§m--------------------");
 
         _buildFooter();
         _buildPlayerLives();
         _buildTop();
 
-        currentSBValues.put(incr.getNumber(), "§r§8§m--------------------"); 
+        currentSBValues.put(incr.getNumber(), "§r§8§m--------------------");
     }
 
     private void _buildFooter() {
-         // if bonus spawning, display that
-         int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
+        // if bonus spawning, display that
+        int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
         if (isEnded) {
             currentSBValues.put(incr.getNumber(), "§nGame ended !");
-        } else if (nextSpawnTime > -3) { // -3 = 3s after the bonus spawn
-            String s = nextSpawnTime > 0 ? "§6§lOP Bonus§r§f in §a" + nextSpawnTime + "s" : "§6§lOP Bonus§r§f spawned !";
-            currentSBValues.put(incr.getNumber(), s);
-        } else {
-            currentSBValues.put(incr.getNumber(), "§e§l§l§o§6§oplay.nixuge.me");
+            currentSBValues.put(incr.getNumber(), "§r§r§8§m-------------------");
+        
+        } else if (messageTimer > 0 || nextSpawnTime > -3){// -3 = 3s after the bonus spawn
+            if (messageTimer > 0) {
+                currentSBValues.put(incr.getNumber(), message);
+                messageTimer--;
+            } 
+            if (nextSpawnTime > -3) { 
+                String s = nextSpawnTime > 0 ? "§6§lOP Bonus§r§f in §a" + nextSpawnTime + "s"
+                        : "§6§lOP Bonus§r§f spawned !";
+                currentSBValues.put(incr.getNumber(), s);
+            }
+            currentSBValues.put(incr.getNumber(), "§r§r§8§m-------------------");
         }
-        currentSBValues.put(incr.getNumber(), "§r§r§8§m-------------------");
     }
 
     private void _buildPlayerLives() {
@@ -95,8 +109,10 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
     private void _buildTop() {
         currentSBValues.put(incr.getNumber(), "§r§r§r§8§m-------------------");
-        killsIndex = incr.getNumber(); //"kills" line
-        currentSBValues.put(incr.getNumber(), "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()));
+        pingIndex = incr.getNumber();
+        killsIndex = incr.getNumber(); // "kills" line
+        currentSBValues.put(incr.getNumber(),
+                "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()));
     }
 
     @Override
@@ -118,18 +134,19 @@ public class ScoreboardRunnable extends BukkitRunnable {
             if (tmp != null)
                 tmp.unregister();
 
-            //init it again
+            // init it again
             Objective objective = scoreboard.registerNewObjective("BlockSumo", "main");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName("§b§6BlockSumo");
 
-            //build scoreboard from the map
-            currentSBValues.forEach((index, string) -> 
-                objective.getScore(string).setScore(index)
-            );
-            //build the missing kill key (different for every player)
+            // build scoreboard from the map
+            currentSBValues.forEach((index, string) -> objective.getScore(string).setScore(index));
+            // build the missing ping key (different for every player)
+            objective.getScore("Ping: §c" + ((CraftPlayer) p).getHandle().ping + "ms").setScore(pingIndex);
+            // same for kills
             objective.getScore("§fKills: §c" + bsPlayer.getKills()).setScore(killsIndex);
-
+            
+            
 
             if (bsPlayer.isLoggedOn())
                 p.setScoreboard(scoreboard);
@@ -137,5 +154,10 @@ public class ScoreboardRunnable extends BukkitRunnable {
             if (isEnded)
                 cancel();
         }
+    }
+
+    public void addMessage(String message) {
+        this.messageTimer = 4;
+        this.message = message;
     }
 }

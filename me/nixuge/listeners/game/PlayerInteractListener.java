@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,15 +23,18 @@ public class PlayerInteractListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         BlockSumo plugin = BlockSumo.getInstance();
         GameManager gameMgr = plugin.getGameMgr();
-        Action action = event.getAction();
+        // Action action = event.getAction();
         Player p = event.getPlayer();
         BsPlayer bsPlayer = gameMgr.getPlayerMgr().getExistingBsPlayerFromBukkit(p);
         ItemStack item = event.getItem();
+        if (item == null) return;
         Material material = item.getType();
         
+
+        if (material == null) return;
         switch (material) {
             case NETHER_STAR:
-                p.sendMessage("§aYou gained a live !");
+                p.sendMessage("§aYou gained a life !");
                 bsPlayer.addLive();
                 int amount = p.getItemInHand().getAmount();
                 if (amount > 1) {
@@ -42,7 +44,6 @@ public class PlayerInteractListener implements Listener {
                 }
                 break;
             case GOLD_HOE:
-                Bukkit.broadcastMessage("<TEST2>");
                 Location loc = p.getLocation();
                 double yaw = loc.getYaw();
                 double pitch = loc.getPitch();
@@ -53,18 +54,21 @@ public class PlayerInteractListener implements Listener {
                     x -= Math.sin(Math.toRadians(yaw));
                     z += Math.cos(Math.toRadians(yaw));
                     y -= Math.sin(Math.toRadians(pitch));
-                    
+
                     PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(EnumParticle.FIREWORKS_SPARK, new Location(
                         Bukkit.getWorld("world"), x, y+1, z), 0, 0, 0, 10);
                     
                     PacketUtils.sendPacketAllPlayers(packet);
+
+                    loc = new Location(gameMgr.getMcMap().getWorld(), x, y, z); 
+                    if (loc.getBlock().getType() != Material.AIR) {
+                        p.sendMessage("§4BOOM!");
+                        gameMgr.getMcMap().getWorld().createExplosion(loc, 3, false);
+                        
+                        return;
+                    }
                 }
-
-                
-                // Bukkit.broadcastMessage(advancementX + " | a" + advancementZ);
-
-
-
+                p.sendMessage("bad aim");
                 break;
             default:
                 break;

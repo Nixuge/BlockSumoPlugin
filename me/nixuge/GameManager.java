@@ -49,6 +49,7 @@ public class GameManager {
 
     private GameRunnable gameRunnable;
     private BlockDestroyRunnable blockDestroyRunnable;
+    private ScoreboardRunnable scoreboardRunnable;
 
     public GameRunnable getGameRunnable() {
         return gameRunnable;
@@ -56,6 +57,10 @@ public class GameManager {
 
     public BlockDestroyRunnable getBlockDestroyRunnable() {
         return blockDestroyRunnable;
+    }
+
+    public ScoreboardRunnable getScoreboardRunnable() {
+        return scoreboardRunnable;
     }
 
     public GameState getGameState() {
@@ -96,8 +101,8 @@ public class GameManager {
         gameRunnable.runTaskTimer(blockSumo, 20, 20);
 
         ScoreboardUtils.resetScoreboards();
-        ScoreboardRunnable r = new ScoreboardRunnable();
-        r.runTaskTimer(blockSumo, 0, 20);
+        scoreboardRunnable = new ScoreboardRunnable();
+        scoreboardRunnable.runTaskTimer(blockSumo, 0, 20);
     }
 
     public void checkGameEnd() {
