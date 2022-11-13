@@ -45,7 +45,7 @@ public class PlayerManager {
         if (isPlayerInGameList(player))
             return;
         // get random color
-        Color color = Color.values()[rand.nextInt(Color.values().length)];
+        Color color = Color.getRandomColor();
         if (!(usedColors.size() >= Color.values().length)) {
             while (usedColors.contains(color)) {
                 color = Color.values()[rand.nextInt(Color.values().length)];

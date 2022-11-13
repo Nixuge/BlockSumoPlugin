@@ -13,7 +13,7 @@ import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.maths.Area;
 import me.nixuge.objects.maths.XYZ;
-import me.nixuge.runnables.BlockDestroyRunnable;
+import me.nixuge.runnables.BlockManagerRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
 import me.nixuge.utils.ScoreboardUtils;
@@ -58,14 +58,14 @@ public class GameManager {
     private BlockSumo blockSumo;
 
     private GameRunnable gameRunnable;
-    private BlockDestroyRunnable blockDestroyRunnable;
+    private BlockManagerRunnable blockDestroyRunnable;
     private ScoreboardRunnable scoreboardRunnable;
 
     public GameRunnable getGameRunnable() {
         return gameRunnable;
     }
 
-    public BlockDestroyRunnable getBlockDestroyRunnable() {
+    public BlockManagerRunnable getBlockDestroyRunnable() {
         return blockDestroyRunnable;
     }
 
@@ -104,7 +104,7 @@ public class GameManager {
 
         pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
 
-        blockDestroyRunnable = new BlockDestroyRunnable();
+        blockDestroyRunnable = new BlockManagerRunnable();
         blockDestroyRunnable.runTaskTimer(blockSumo, 1, 1);
 
         gameRunnable = new GameRunnable();

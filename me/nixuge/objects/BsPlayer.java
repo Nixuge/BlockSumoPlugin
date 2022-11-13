@@ -1,7 +1,5 @@
 package me.nixuge.objects;
 
-import java.util.Random;
-
 import org.bukkit.entity.Player;
 
 import me.nixuge.enums.Color;
@@ -23,7 +21,7 @@ public class BsPlayer {
     public BsPlayer(Player player) {
         this.player = player;
         this.isLoggedOn = true;
-        this.color = Color.values()[new Random().nextInt(Color.values().length)];
+        this.color = Color.getRandomColor();
     }
 
     public void setBukkitPlayer(Player player) {

@@ -18,40 +18,58 @@ import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.enums.Color;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.ExpiringBlock;
 
-public class BlockDestroyRunnable extends BukkitRunnable {
+public class BlockManagerRunnable extends BukkitRunnable {
     private int tick_time = 0;
     private List<ExpiringBlock> blocks = new ArrayList<>();
+    List<ExpiringBlock> toRemove;
 
     @Override
     public void run() {
         tick_time++;
-        changeExpiringBlocks(tick_time);
-    }
-
-    private void changeExpiringBlocks(int time) {
-        List<ExpiringBlock> toRemove = new ArrayList<>();
+        toRemove = new ArrayList<>();
 
         for (ExpiringBlock block : blocks) {
-
-            int[] states = block.getStates();
-            for (int i = 0; i < states.length; i++) {
-                if (states[i] == time) {
-                    if (i < 10) {
-                        sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
-                    } else {
-                        breakBlockParticles(block.asLocation());
-                        sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId()); // reset state
-                        toRemove.add(block);
-                    }
-                    break;
-                }
-            }
+            loopBlockStates(block);
+            loopBlockColors(block);
         }
         for (ExpiringBlock block : toRemove) {
             blocks.remove(block); // remove after to avoid causing issues in the loop
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void loopBlockColors(ExpiringBlock block) {
+        int[] colors = block.getColorChanges();
+        int length = colors.length;
+        for (int i = 0; i < length; i++) {
+            if (colors[i] == tick_time) {
+                Location loc = block.asLocation();
+                if (i+1 == length) { //if last element
+                    loc.getBlock().setData(block.getLastColor().getByteColor());
+                } else {
+                    loc.getBlock().setData(Color.getRandomColor().getByteColor());
+                }
+            }
+        }
+    }
+
+    private void loopBlockStates(ExpiringBlock block) {
+        int[] states = block.getStates();
+        for (int i = 0; i < states.length; i++) {
+            if (states[i] == tick_time) {
+                if (i < 10) {
+                    sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
+                } else {
+                    breakBlockParticles(block.asLocation());
+                    sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId()); // reset state
+                    toRemove.add(block);
+                }
+                break;
+            }
         }
     }
 

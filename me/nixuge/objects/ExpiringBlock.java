@@ -4,22 +4,32 @@ import java.util.Random;
 
 import org.bukkit.Location;
 
+import me.nixuge.enums.Color;
+
 public class ExpiringBlock {
+    private final Random rand = new Random();
     private final Location location;
+
     private final int[] states;
     private final int breakerId;
 
-    public ExpiringBlock(int currentTime, Location location) {
+    private final int[] colorChanges;
+    private final Color lastColor;
+
+    public ExpiringBlock(int currentTime, Location location, Color color) {
         //breakTime: 60s; breakStartTime: 900s.
-        this(currentTime, location, 1200, 900);
+        this(currentTime, location, color, 1200, 900);
     }
 
-    public ExpiringBlock(int currentTime, Location location, int breakTime, int breakStartTime) {
+    public ExpiringBlock(int currentTime, Location location, Color color, int breakTime, int breakStartTime) {
         //use center of block instead of edge
         this.location = location.clone().add(0.5, 0, 0.5); 
 
-        this.states = getStatesAfterTime(currentTime, breakTime, breakStartTime); //default 45s
-        this.breakerId = new Random().nextInt(Integer.MAX_VALUE); 
+        this.states = getStatesAfterTime(currentTime, breakTime, breakStartTime);
+        this.breakerId = rand.nextInt(Integer.MAX_VALUE);
+
+        this.colorChanges = getRandomColorChanges(currentTime);
+        this.lastColor = color;
     }
     
     private int[] getStatesLinear(int currentTime, int breakTime) {
@@ -38,6 +48,17 @@ public class ExpiringBlock {
         return getStatesLinear(newCurrentTime, newBreakTime);
     }
 
+    private int[] getRandomColorChanges(int currentTime) {
+        int changesCount = rand.nextInt(7-1) + 1; //1 to 6 color change
+
+        int[] tempChanges = new int[changesCount];
+        
+        for (int i = 0; i < changesCount; i++) {
+            tempChanges[i] = currentTime + ((i+1)* 5); //i+1 bc starts at 0
+        }
+        return tempChanges;
+    }
+
     public Location asLocation() {
         return location;
     }
@@ -46,5 +67,11 @@ public class ExpiringBlock {
     }
     public int getBreakerId() {
         return breakerId;
+    }
+    public int[] getColorChanges() {
+        return colorChanges;
+    }
+    public Color getLastColor() {
+        return lastColor;
     }
 }
