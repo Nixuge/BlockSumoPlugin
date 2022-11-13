@@ -1,4 +1,4 @@
-package me.nixuge.utils.game.items.middle;
+package me.nixuge.utils.bonuses.middle;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,7 +26,7 @@ public class ExplosionGun {
         double yaw = loc.getYaw();
         double pitch = loc.getPitch();
         double x = loc.getX();
-        double y = loc.getY();
+        double y = loc.getY() + 1;
         double z = loc.getZ();
         for (int i=0; i < 40; i++) {
             x -= Math.sin(Math.toRadians(yaw));
@@ -34,7 +34,7 @@ public class ExplosionGun {
             y -= Math.sin(Math.toRadians(pitch));
 
             PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(EnumParticle.FIREWORKS_SPARK, new Location(
-                p.getWorld(), x, y+1, z), 0, 0, 0, 10);
+                p.getWorld(), x, y, z), 0, 0, 0, 10);
             
             PacketUtils.sendPacketAllPlayers(packet);
 

@@ -1,16 +1,14 @@
-package me.nixuge.utils.game.items.global;
+package me.nixuge.utils.bonuses.global;
 
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 
+import me.nixuge.utils.specific.ItemUtils;
+
 public class MovingFireball {
     public static void run(Player p) {
-        int amount = p.getItemInHand().getAmount();
-        if (amount > 1) {
-            p.getItemInHand().setAmount(amount - 1);
-        } else {
-            p.setItemInHand(null);
-        }
+        ItemUtils.removeSingleItemPlayerHand(p);
+
         Fireball fireball = p.launchProjectile(Fireball.class);
         fireball.setShooter(p);
         fireball.setIsIncendiary(false);

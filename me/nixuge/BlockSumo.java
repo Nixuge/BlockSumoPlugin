@@ -15,35 +15,53 @@ import me.nixuge.utils.specific.ScoreboardUtils;
 
 public class BlockSumo extends JavaPlugin {
 
-    //TODO: add sounds
-    //TODO: target system
-    //if a player is a lot on top, add a bounty
-    //that make the players that kills him gain a life
+    // TODO: add sounds
+    // TODO: target system
+    // if a player is a lot on top, add a bounty
+    // that make the players that kills him gain a life
 
     private static BlockSumo main;
+
     public static BlockSumo getInstance() {
         return main;
     }
 
     private GameManager gameManager;
+
     public GameManager getGameMgr() {
         return gameManager;
     }
 
     private PluginManager pluginManager;
+
     public PluginManager getPluginManager() {
         return pluginManager;
     }
 
     private LobbyRunnable lobbyRunnable;
-    
-    
-    @Override
-    public void onEnable() {
+
+    public void init() {
+        //set vars (order is important)
         main = this;
         pluginManager = getServer().getPluginManager();
-
         gameManager = new GameManager();
+
+        // start runtime here
+        lobbyRunnable = new LobbyRunnable(2, 8);
+        lobbyRunnable.runTaskTimer(this, 20, 20);
+
+        // add players instead of kicking
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            gameManager.getPlayerMgr().addPlayer(player);
+        }
+
+        // reset scoreboard
+        ScoreboardUtils.resetScoreboards();
+    }
+
+    @Override
+    public void onEnable() {
+        init();
 
         Bukkit.broadcastMessage("enabled");
         getCommand("join_blocksumo").setExecutor(new JoinCommand());
@@ -51,20 +69,7 @@ public class BlockSumo extends JavaPlugin {
         getCommand("start_blocksumo").setExecutor(new StartCommand());
         getCommand("testcommand").setExecutor(new TestCommand());
 
-        //this one staying here since it's always on
+        // this one staying here since it's always on
         pluginManager.registerEvents(new RandomChangeListener(), this);
-
-        // start runtime here
-        lobbyRunnable = new LobbyRunnable(2, 8);
-        lobbyRunnable.runTaskTimer(this, 20, 20);
-
-        //add players instead of kicking 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            gameManager.getPlayerMgr().addPlayer(player);
-        }
-
-        //reset scoreboard
-        ScoreboardUtils.resetScoreboards();
-
     }
 }

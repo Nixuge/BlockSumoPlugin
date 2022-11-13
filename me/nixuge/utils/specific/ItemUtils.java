@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -70,5 +71,14 @@ public class ItemUtils {
         List<String> loreArr = new ArrayList<>();
         loreArr.add(lore);
         return getItemStackPotion(itemName, count, loreArr, effectType, durationTicks, effectLevel);
+    }
+
+    public static void removeSingleItemPlayerHand(Player p) {
+        int amount = p.getItemInHand().getAmount();
+        if (amount > 1) {
+            p.getItemInHand().setAmount(amount - 1);
+        } else {
+            p.setItemInHand(null);
+        }
     }
 }

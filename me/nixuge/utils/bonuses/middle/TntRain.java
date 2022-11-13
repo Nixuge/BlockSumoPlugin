@@ -1,4 +1,4 @@
-package me.nixuge.utils.game.items.middle;
+package me.nixuge.utils.bonuses.middle;
 
 import java.util.List;
 
@@ -9,21 +9,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 
 import me.nixuge.utils.game.BsPlayer;
+import me.nixuge.utils.specific.ItemUtils;
 
 public class TntRain {
     public static void run(BsPlayer bsPlayer, List<BsPlayer> bsPlayers) {
         Player p = bsPlayer.getBukkitPlayer();
         World world = p.getWorld();
-        
+
+        ItemUtils.removeSingleItemPlayerHand(p);
+
         p.sendMessage("§6TNT rain for everyone !");
         bsPlayer.addLive();
-        int amount = p.getItemInHand().getAmount();
-        if (amount > 1) {
-            p.getItemInHand().setAmount(amount - 1);
-        } else {
-            p.setItemInHand(null);
-        }
-
+        
         for (BsPlayer innerBsPlayer : bsPlayers) {
             if (innerBsPlayer == bsPlayer) continue;
             Location innerLoc = innerBsPlayer.getBukkitPlayer().getLocation();

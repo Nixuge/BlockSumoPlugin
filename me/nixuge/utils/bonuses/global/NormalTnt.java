@@ -1,4 +1,4 @@
-package me.nixuge.utils.game.items.global;
+package me.nixuge.utils.bonuses.global;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
