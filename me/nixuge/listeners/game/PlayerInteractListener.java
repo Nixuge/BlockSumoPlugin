@@ -31,8 +31,6 @@ public class PlayerInteractListener implements Listener {
         if (item == null) return;
         Material material = item.getType();
         
-
-        if (material == null) return;
         switch (material) {
             //middle items
             case NETHER_STAR:
