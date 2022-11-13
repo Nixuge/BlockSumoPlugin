@@ -14,6 +14,7 @@ public class BsPlayer {
     private final Color color;
     private Player player;
     private boolean isLoggedOn;
+    private int lastExplosionGunFire = 0;
     private int lives = 5;
     private int kills = 0;
 
@@ -69,6 +70,13 @@ public class BsPlayer {
 
     public boolean isDead() {
         return lives < 1;
+    }
+
+    public int getLastExplosionGunFire() {
+        return lastExplosionGunFire;
+    }
+    public void setLastExplosionGunFire(int lastExplosionGunFire) {
+        this.lastExplosionGunFire = lastExplosionGunFire;
     }
 
 

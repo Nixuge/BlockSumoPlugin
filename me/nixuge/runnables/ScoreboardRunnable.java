@@ -59,7 +59,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
         if (isEnded) {
             currentSBValues.put(incr.getNumber(), "§nGame ended !");
-            currentSBValues.put(incr.getNumber(), "§r§r§8§m-------------------");
+            currentSBValues.put(incr.getNumber(), "§r§r§r§r§r§l§r");
         
         } else if (messageTimer > 0 || nextSpawnTime > -3){// -3 = 3s after the bonus spawn
             if (messageTimer > 0) {
@@ -71,7 +71,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
                         : "§6§lOP Bonus§r§f spawned !";
                 currentSBValues.put(incr.getNumber(), s);
             }
-            currentSBValues.put(incr.getNumber(), "§r§r§8§m-------------------");
+            currentSBValues.put(incr.getNumber(), "§r§r§r§r§r§r");
         }
     }
 
@@ -92,8 +92,8 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
             currentSBValues.put(incr.getNumber(), stringBuilder.toString());
         }
-        currentSBValues.put(incr.getNumber(), "§r§r§r");
-        currentSBValues.put(incr.getNumber(), "§nPlayer lives:");
+        // currentSBValues.put(incr.getNumber(), "§r§r§r");
+        // currentSBValues.put(incr.getNumber(), "Player lives:");
     }
 
     private String colorFromLives(int lives) {
@@ -108,7 +108,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
     }
 
     private void _buildTop() {
-        currentSBValues.put(incr.getNumber(), "§r§r§r§8§m-------------------");
+        currentSBValues.put(incr.getNumber(), "§r§r§r§r§r");
         pingIndex = incr.getNumber();
         killsIndex = incr.getNumber(); // "kills" line
         currentSBValues.put(incr.getNumber(),

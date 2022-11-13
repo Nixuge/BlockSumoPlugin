@@ -1,0 +1,62 @@
+package me.nixuge.utils.game.items.middle;
+
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import me.nixuge.GameManager;
+import me.nixuge.utils.game.BsPlayer;
+import me.nixuge.utils.specific.PacketUtils;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+
+public class ExplosionGun {
+    public static void run(GameManager gameMgr, BsPlayer bsPlayer, ItemStack item) {
+        Player p = bsPlayer.getBukkitPlayer();
+
+        int timer = gameMgr.getGameRunnable().getTime();
+        int lastExplosionGunFire = bsPlayer.getLastExplosionGunFire();
+        if (lastExplosionGunFire + 2 > timer) {
+            p.sendMessage("§6Please wait a bit before exploding something again");
+            return;
+        }
+
+        Location loc = p.getLocation();
+        double yaw = loc.getYaw();
+        double pitch = loc.getPitch();
+        double x = loc.getX();
+        double y = loc.getY();
+        double z = loc.getZ();
+        for (int i=0; i < 40; i++) {
+            x -= Math.sin(Math.toRadians(yaw));
+            z += Math.cos(Math.toRadians(yaw));
+            y -= Math.sin(Math.toRadians(pitch));
+
+            PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(EnumParticle.FIREWORKS_SPARK, new Location(
+                p.getWorld(), x, y+1, z), 0, 0, 0, 10);
+            
+            PacketUtils.sendPacketAllPlayers(packet);
+
+            loc = new Location(gameMgr.getMcMap().getWorld(), x, y, z); 
+            if (loc.getBlock().getType() != Material.AIR) {
+                p.sendMessage("§4§l§nB O O M!");
+                p.getWorld().createExplosion(loc, 3, false);
+                bsPlayer.setLastExplosionGunFire(timer);
+                switch (item.getDurability()) {
+                    case 0:
+                        item.setDurability((short)11);
+                        break;
+                    case 11:
+                        item.setDurability((short)22);
+                        break;
+                    default:
+                        p.setItemInHand(null);
+                        break;
+                }
+                return;
+            }
+        }
+        p.sendMessage("§6Aim at a block to made it explode.");
+    }
+}

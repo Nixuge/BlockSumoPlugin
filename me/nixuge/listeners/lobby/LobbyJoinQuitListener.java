@@ -7,11 +7,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.PlayerManager;
+import me.nixuge.utils.specific.ScoreboardUtils;
 
 public class LobbyJoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage(event.getPlayer().getName() + " joined the lobby !");
+        
+        ScoreboardUtils.resetScoreboard(event.getPlayer());
 
         PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         mgr.addPlayer(event.getPlayer());
