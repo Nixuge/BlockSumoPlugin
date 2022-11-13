@@ -7,16 +7,20 @@ import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import me.nixuge.objects.maths.Area;
+
 public class McMap {
 
     private final List<Location> spawnLocations;
     private final Location center;
+    private final Area centerArea;
     private final Random rand = new Random();
     private final World world;
     
-    public McMap(List<Location> spawnLocations, Location center, World world) {
+    public McMap(List<Location> spawnLocations, Location center, Area centerArea, World world) {
         this.spawnLocations = spawnLocations;
         this.center = center;
+        this.centerArea = centerArea;
         this.world = world;
     }
 
@@ -26,6 +30,9 @@ public class McMap {
     }
     public Location getCenter() {
         return center;
+    }
+    public Area getCenterArea() {
+        return centerArea;
     }
     public World getWorld() {
         return world;

@@ -2,13 +2,9 @@ package me.nixuge.objects;
 
 import java.util.Random;
 
-import org.bukkit.Bukkit;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import me.nixuge.BlockSumo;
 import me.nixuge.enums.Color;
-import me.nixuge.runnables.BlockDestroyRunnable;
 
 public class BsPlayer {
     private final Color color;
@@ -77,16 +73,5 @@ public class BsPlayer {
     }
     public void setLastExplosionGunFire(int lastExplosionGunFire) {
         this.lastExplosionGunFire = lastExplosionGunFire;
-    }
-
-
-    public void addBlock(Block block) {
-        BlockDestroyRunnable bdr = BlockSumo.getInstance().getGameMgr().getBlockDestroyRunnable();
-        if (bdr == null) {
-            Bukkit.broadcastMessage("This shouldn't happen! avoakn");
-            return;
-        }
-
-        bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation()));
     }
 }

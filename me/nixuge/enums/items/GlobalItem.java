@@ -12,8 +12,6 @@ public enum GlobalItem {
     SMALL_BAT("small bat", ItemUtils.getItemStack(Material.WOOD_SWORD, "Small bat", 1, "§fHits hard but not too much", Enchantment.KNOCKBACK, 1, null, 0)),
     TNT("TNT",ItemUtils.getItemStack(Material.TNT, "TNT", 1, "§4BOOM"));
 
-    //TODO: FIREBALL LAUNCH
-
     private final String prefix;
     private final String name;
     private final ItemStack itemStack;

@@ -10,14 +10,15 @@ public class ExpiringBlock {
     private final int breakerId;
 
     public ExpiringBlock(int currentTime, Location location) {
-        // IMPORTANT NOTE: FUNCTION NOW RUNNING EVERY 
-        // GAME TICK, SO MULTIPLY VALUES BY 20
-        // TO GET THE TIME FROM SECONDS
-        int breakTime = 1200; //default 60s
-        // this.location = location;
-        this.location = location.clone().add(0.5, 0, 0.5); //use center of block instead of edge
+        //breakTime: 60s; breakStartTime: 900s.
+        this(currentTime, location, 1200, 900);
+    }
 
-        this.states = getStatesAfterTime(currentTime, breakTime, 900); //default 45s
+    public ExpiringBlock(int currentTime, Location location, int breakTime, int breakStartTime) {
+        //use center of block instead of edge
+        this.location = location.clone().add(0.5, 0, 0.5); 
+
+        this.states = getStatesAfterTime(currentTime, breakTime, breakStartTime); //default 45s
         this.breakerId = new Random().nextInt(Integer.MAX_VALUE); 
     }
     

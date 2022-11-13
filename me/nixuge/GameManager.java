@@ -5,11 +5,14 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
+import me.nixuge.objects.maths.Area;
+import me.nixuge.objects.maths.XYZ;
 import me.nixuge.runnables.BlockDestroyRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
@@ -20,11 +23,18 @@ public class GameManager {
 
     public GameManager() {
         // HARDCODED FOR NOW
+        World world = Bukkit.getWorld("world");
         List<Location> spawns = new ArrayList<>();
-        spawns.add(new Location(Bukkit.getWorld("world"), 96, 67, 63));
-        spawns.add(new Location(Bukkit.getWorld("world"), 96, 67, 65));
+        spawns.add(new Location(world, 96, 67, 63));
+        spawns.add(new Location(world, 96, 67, 65));
+        Location center = new Location(world, 93.5, 67, 64.5);
 
-        map = new McMap(spawns, new Location(Bukkit.getWorld("world"), 93.5, 67, 64.5), Bukkit.getWorld("world"));
+        map = new McMap(
+            spawns, center,
+            new Area(
+                new XYZ(92, 66, 63),
+                new XYZ(94, 69, 65)
+            ), world);
         blockSumo = BlockSumo.getInstance();
         setGameState(GameState.WAITING);
     }
