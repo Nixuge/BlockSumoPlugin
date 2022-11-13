@@ -23,7 +23,7 @@ public class ExpiringBlock {
 
     public ExpiringBlock(int currentTime, Location location, Color color, int breakTime, int breakStartTime) {
         //use center of block instead of edge
-        this.location = location.clone().add(0.5, 0, 0.5); 
+        this.location = location; 
 
         this.states = getStatesAfterTime(currentTime, breakTime, breakStartTime);
         this.breakerId = rand.nextInt(Integer.MAX_VALUE);

@@ -13,7 +13,9 @@ public class PacketUtils {
     public static PacketPlayOutWorldParticles getParticlePacket(EnumParticle particle, double x, double y, double z,
             double xPlus, double yPlus, double zPlus, int number) {
         // PacketPlayOutWorldParticles:
-        // particle, boolidk, x, y, z, x+-, y+-, z+-, xyz+-?, number of particles
+        // particle, boolidk, x, y, z, x+-, y+-, z+-, speed, number of particles
+        //optional last argument: int[] data (see 
+        //spigotmc.org/threads/specify-block-data-on-effect-step_sound.196477)
         PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
                 particle, true,
                 (float) x, (float) y, (float) z,

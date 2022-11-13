@@ -33,7 +33,6 @@ public class BlockPlaceDestroyListener implements Listener {
             return;
         }
 
-
         GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
         BlockManagerRunnable bdr = gameMgr.getBlockDestroyRunnable();
         Area centerArea = gameMgr.getMcMap().getCenterArea();

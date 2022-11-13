@@ -3,9 +3,7 @@ package me.nixuge.runnables;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,12 +13,14 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 
 import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
-
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.Color;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.ExpiringBlock;
+import me.nixuge.utils.PacketUtils;
 
 public class BlockManagerRunnable extends BukkitRunnable {
     private int tick_time = 0;
@@ -49,6 +49,9 @@ public class BlockManagerRunnable extends BukkitRunnable {
             if (colors[i] == tick_time) {
                 Location loc = block.asLocation();
                 if (i+1 == length) { //if last element
+                    //NOTE: will see if I keep it like that
+                    //or just remove the lastColor altogether and do it just
+                    //like bwpractice rn. For now keeping it.
                     loc.getBlock().setData(block.getLastColor().getByteColor());
                 } else {
                     loc.getBlock().setData(Color.getRandomColor().getByteColor());
@@ -73,18 +76,23 @@ public class BlockManagerRunnable extends BukkitRunnable {
         }
     }
 
-    @SuppressWarnings("deprecation") // block.getTypeId()
+    @SuppressWarnings("deprecation")
     private void breakBlockParticles(Location loc) {
-        World world = loc.getWorld();
         Block block = loc.getBlock();
-        int typeId = block.getTypeId();
+        int id = block.getTypeId(); //=Material.WOOL.getId() in normal circumstances
+        byte data = block.getData();
 
         block.setType(Material.AIR);
 
-        for (int i = 0; i < 20; i++) {
-            // proper API only on 1.9+, to rework
-            world.playEffect(loc, Effect.TILE_BREAK, typeId, 500);
-        }
+        //See the "PacketUtils" class for more info about fields
+        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
+            EnumParticle.BLOCK_CRACK, true, 
+            (float)loc.getX() + .5f, (float)loc.getY(), (float)loc.getZ() + .5f,
+            0, 0, 0, 1, 10, 
+            new int[] { id | (data << 12) });
+
+
+        PacketUtils.sendPacketAllPlayers(packet);
     }
 
     private void sendBreakBlockPacket(Location loc, int stage, int breakerId) {
