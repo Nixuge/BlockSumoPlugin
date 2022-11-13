@@ -1,4 +1,4 @@
-package me.nixuge.utils;
+package me.nixuge.objects.maths;
 
 import org.bukkit.Location;
 import org.bukkit.World;

@@ -9,12 +9,12 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import me.nixuge.enums.GameState;
+import me.nixuge.objects.BsPlayer;
 import me.nixuge.runnables.BlockDestroyRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
-import me.nixuge.utils.game.BsPlayer;
-import me.nixuge.utils.specific.ScoreboardUtils;
-import me.nixuge.utils.specific.TextUtils;
+import me.nixuge.utils.ScoreboardUtils;
+import me.nixuge.utils.TextUtils;
 
 public class GameManager {
 

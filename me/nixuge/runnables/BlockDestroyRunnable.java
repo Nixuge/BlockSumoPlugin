@@ -18,8 +18,8 @@ import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.utils.game.BsPlayer;
-import me.nixuge.utils.game.ExpiringBlock;
+import me.nixuge.objects.BsPlayer;
+import me.nixuge.objects.ExpiringBlock;
 
 public class BlockDestroyRunnable extends BukkitRunnable {
     private int tick_time = 0;

@@ -11,8 +11,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
+import me.nixuge.objects.BsPlayer;
 import me.nixuge.runnables.particle.PlayerRespawnParticle;
-import me.nixuge.utils.game.BsPlayer;
 
 public class PlayerRespawnListener implements Listener {
 

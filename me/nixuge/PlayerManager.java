@@ -7,7 +7,7 @@ import java.util.Random;
 import org.bukkit.entity.Player;
 
 import me.nixuge.enums.Color;
-import me.nixuge.utils.game.BsPlayer;
+import me.nixuge.objects.BsPlayer;
 
 public class PlayerManager {
     private final Random rand = new Random();

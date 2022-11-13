@@ -9,10 +9,10 @@ import me.nixuge.BlockSumo;
 import me.nixuge.McMap;
 import me.nixuge.enums.items.GlobalItem;
 import me.nixuge.enums.items.MiddleItem;
+import me.nixuge.objects.BsPlayer;
 import me.nixuge.runnables.particle.MiddleParticleRunnable;
-import me.nixuge.utils.game.BsPlayer;
-import me.nixuge.utils.specific.PacketUtils;
-import me.nixuge.utils.specific.TextUtils;
+import me.nixuge.utils.PacketUtils;
+import me.nixuge.utils.TextUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 

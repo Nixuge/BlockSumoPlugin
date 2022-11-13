@@ -10,11 +10,11 @@ import org.bukkit.inventory.ItemStack;
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
+import me.nixuge.objects.BsPlayer;
 import me.nixuge.utils.bonuses.global.MovingFireball;
 import me.nixuge.utils.bonuses.middle.BonusLife;
 import me.nixuge.utils.bonuses.middle.ExplosionGun;
 import me.nixuge.utils.bonuses.middle.TntRain;
-import me.nixuge.utils.game.BsPlayer;
 
 public class PlayerInteractListener implements Listener {
 

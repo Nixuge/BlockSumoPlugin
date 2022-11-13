@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.GameManager;
-import me.nixuge.utils.game.BsPlayer;
-import me.nixuge.utils.specific.PacketUtils;
+import me.nixuge.objects.BsPlayer;
+import me.nixuge.utils.PacketUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 

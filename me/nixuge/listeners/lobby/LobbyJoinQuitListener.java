@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.PlayerManager;
-import me.nixuge.utils.specific.ScoreboardUtils;
+import me.nixuge.utils.ScoreboardUtils;
 
 public class LobbyJoinQuitListener implements Listener {
     @EventHandler

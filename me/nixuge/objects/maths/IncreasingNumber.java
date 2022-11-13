@@ -1,4 +1,4 @@
-package me.nixuge.utils;
+package me.nixuge.objects.maths;
 
 public class IncreasingNumber {
     private int number;

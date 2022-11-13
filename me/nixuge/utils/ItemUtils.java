@@ -1,4 +1,4 @@
-package me.nixuge.utils.specific;
+package me.nixuge.utils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,7 +3,7 @@ package me.nixuge.utils.bonuses.global;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 
-import me.nixuge.utils.specific.ItemUtils;
+import me.nixuge.utils.ItemUtils;
 
 public class MovingFireball {
     public static void run(Player p) {

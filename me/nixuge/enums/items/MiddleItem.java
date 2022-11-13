@@ -5,7 +5,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import me.nixuge.utils.specific.ItemUtils;
+import me.nixuge.utils.ItemUtils;
 
 public enum MiddleItem {
     //honestly, to rework if possible

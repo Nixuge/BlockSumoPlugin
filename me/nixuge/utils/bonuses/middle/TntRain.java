@@ -8,8 +8,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 
-import me.nixuge.utils.game.BsPlayer;
-import me.nixuge.utils.specific.ItemUtils;
+import me.nixuge.objects.BsPlayer;
+import me.nixuge.utils.ItemUtils;
 
 public class TntRain {
     public static void run(BsPlayer bsPlayer, List<BsPlayer> bsPlayers) {

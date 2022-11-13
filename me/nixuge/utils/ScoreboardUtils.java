@@ -1,11 +1,11 @@
-package me.nixuge.utils.specific;
+package me.nixuge.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.ScoreboardManager;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.utils.game.BsPlayer;
+import me.nixuge.objects.BsPlayer;
 
 public class ScoreboardUtils {
     private static ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
