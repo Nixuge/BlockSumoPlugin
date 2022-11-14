@@ -16,6 +16,10 @@ import me.nixuge.utils.ScoreboardUtils;
 
 public class BlockSumo extends JavaPlugin {
 
+    //TODO URGENT: config system for:
+    // kits
+    // localization
+
     // TODO: add sounds
     // TODO: target system
     // if a player is a lot on top, add a bounty
@@ -24,6 +28,7 @@ public class BlockSumo extends JavaPlugin {
     //TODO: proper game end (fireworks & other)
     //TODO: remove damage (shouldnt be too hard)
     //TODO: add javadocs (uh oh)
+    //TODO: disable item drops
 
     private static BlockSumo main;
 

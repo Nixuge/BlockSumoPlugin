@@ -7,11 +7,13 @@ import me.nixuge.listeners.game.GameInventoryChangeListener;
 import me.nixuge.listeners.game.GameJoinQuitListener;
 import me.nixuge.listeners.game.PlayerInteractListener;
 import me.nixuge.listeners.game.PlayerRespawnListener;
+import me.nixuge.listeners.lobby.InventoryListener;
 import me.nixuge.listeners.lobby.LobbyJoinQuitListener;
 
 public enum GameState {
     WAITING(new Listener[] {
         new LobbyJoinQuitListener(),
+        new InventoryListener()
     }),
     PLAYING(new Listener[] {
         new GameJoinQuitListener(),

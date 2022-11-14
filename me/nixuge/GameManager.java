@@ -39,24 +39,6 @@ public class GameManager {
         setGameState(GameState.WAITING);
     }
 
-    private void setGameState(GameState gameState) {
-        // unregister previous ones
-        Listener[] listeners = state.getListeners();
-        for (Listener listener : listeners) {
-            HandlerList.unregisterAll(listener);
-        }
-        // register new ones & set state
-        state = gameState;
-        for (Listener listener : gameState.getListeners()) {
-            blockSumo.getPluginManager().registerEvents(listener, blockSumo);
-        }
-    }
-
-    private McMap map;
-    private PlayerManager pManager = new PlayerManager();
-    private GameState state = GameState.WAITING;
-    private BlockSumo blockSumo;
-
     private GameRunnable gameRunnable;
     private BlockManagerRunnable blockDestroyRunnable;
     private ScoreboardRunnable scoreboardRunnable;
@@ -72,17 +54,35 @@ public class GameManager {
     public ScoreboardRunnable getScoreboardRunnable() {
         return scoreboardRunnable;
     }
-
-    public GameState getGameState() {
-        return state;
-    }
+    
+    private McMap map;
+    private PlayerManager pManager = new PlayerManager();
+    private GameState state = GameState.WAITING;
+    private BlockSumo blockSumo;
 
     public McMap getMcMap() {
         return map;
     }
 
+    public GameState getGameState() {
+        return state;
+    }
+
     public PlayerManager getPlayerMgr() {
         return pManager;
+    }
+
+    private void setGameState(GameState gameState) {
+        // unregister previous ones
+        Listener[] listeners = state.getListeners();
+        for (Listener listener : listeners) {
+            HandlerList.unregisterAll(listener);
+        }
+        // register new ones & set state
+        state = gameState;
+        for (Listener listener : gameState.getListeners()) {
+            blockSumo.getPluginManager().registerEvents(listener, blockSumo);
+        }
     }
 
     public void startGame() {

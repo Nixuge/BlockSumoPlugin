@@ -1,11 +1,13 @@
 package me.nixuge.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
+
+import me.nixuge.BlockSumo;
+import me.nixuge.enums.GameState;
+import me.nixuge.objects.KitEdit;
 
 public class KitCommand implements CommandExecutor {
 
@@ -13,13 +15,14 @@ public class KitCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) return false;
         Player p = (Player)sender;
+        if (BlockSumo.getInstance().getGameMgr().getGameState() != GameState.WAITING) {
+            p.sendMessage("Can't edit kit while in game.");
+            return true;
+        }
         
-        Inventory inv = Bukkit.createInventory(p, 0, "Please organize your inventory"); 
-        p.openInventory(inv);
-
-        p.getInventory();
+        
+        new KitEdit(p).spawnInventory();
         
         return true;
     }
-    
 }
