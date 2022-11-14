@@ -1,4 +1,4 @@
-package me.nixuge.commands;
+package me.nixuge.commands.dev;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

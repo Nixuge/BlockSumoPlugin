@@ -5,10 +5,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.nixuge.commands.JoinCommand;
-import me.nixuge.commands.QuitCommand;
-import me.nixuge.commands.StartCommand;
-import me.nixuge.commands.TestCommand;
+import me.nixuge.commands.KitCommand;
+import me.nixuge.commands.dev.EndCommand;
+import me.nixuge.commands.dev.JoinCommand;
+import me.nixuge.commands.dev.StartCommand;
+import me.nixuge.commands.dev.TestCommand;
 import me.nixuge.listeners.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
 import me.nixuge.utils.ScoreboardUtils;
@@ -19,6 +20,10 @@ public class BlockSumo extends JavaPlugin {
     // TODO: target system
     // if a player is a lot on top, add a bounty
     // that make the players that kills him gain a life
+
+    //TODO: proper game end (fireworks & other)
+    //TODO: remove damage (shouldnt be too hard)
+    //TODO: add javadocs (uh oh)
 
     private static BlockSumo main;
 
@@ -65,8 +70,9 @@ public class BlockSumo extends JavaPlugin {
 
         Bukkit.broadcastMessage("enabled");
         getCommand("join_blocksumo").setExecutor(new JoinCommand());
-        getCommand("quit_blocksumo").setExecutor(new QuitCommand());
+        getCommand("end_blocksumo").setExecutor(new EndCommand());
         getCommand("start_blocksumo").setExecutor(new StartCommand());
+        getCommand("kit").setExecutor(new KitCommand());
         getCommand("testcommand").setExecutor(new TestCommand());
 
         // this one staying here since it's always on

@@ -85,12 +85,12 @@ public class BlockManagerRunnable extends BukkitRunnable {
         block.setType(Material.AIR);
 
         //See the "PacketUtils" class for more info about fields
+        //not sure if I add .5f to the Y too, looks good rn
         PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
             EnumParticle.BLOCK_CRACK, true, 
             (float)loc.getX() + .5f, (float)loc.getY(), (float)loc.getZ() + .5f,
             0, 0, 0, 1, 10, 
             new int[] { id | (data << 12) });
-
 
         PacketUtils.sendPacketAllPlayers(packet);
     }

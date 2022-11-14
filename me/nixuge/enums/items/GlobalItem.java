@@ -8,8 +8,8 @@ import me.nixuge.utils.ItemUtils;
 
 public enum GlobalItem {
     FIREBALL("fireball", ItemUtils.getItemStack(Material.FIREBALL, "Fireball", 1, "Explosion")),
-    SNOWBALLS("some","snowballs", ItemUtils.getItemStack(Material.SNOW_BALL, "Snowball", 8)),
-    SMALL_BAT("small bat", ItemUtils.getItemStack(Material.WOOD_SWORD, "Small bat", 1, "§fHits hard but not too much", Enchantment.KNOCKBACK, 1, null, 0)),
+    SNOWBALLS("some","snowballs", ItemUtils.getItemStack(Material.SNOW_BALL, "Snowball", 8, "Snowboule")),
+    SMALL_BAT("small bat", ItemUtils.getItemStack(Material.WOOD_SWORD, "Small bat", 1, "§fHits hard but not too much", Enchantment.KNOCKBACK, 1, null, 0, (short)59)),
     TNT("TNT",ItemUtils.getItemStack(Material.TNT, "TNT", 1, "§4BOOM"));
 
     private final String prefix;

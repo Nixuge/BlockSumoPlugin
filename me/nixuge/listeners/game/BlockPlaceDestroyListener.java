@@ -19,9 +19,6 @@ import me.nixuge.runnables.BlockManagerRunnable;
 import me.nixuge.utils.bonuses.global.NormalTnt;
 
 public class BlockPlaceDestroyListener implements Listener {
-    //TODO:
-    //->CHANGE COLORS A BIT AFTER PLACING
-    //->DELETE AFTER A SHORTER WHILE IF CLOSE TO MID
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {

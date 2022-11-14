@@ -40,8 +40,8 @@ public class ExplosionGun {
 
             loc = new Location(gameMgr.getMcMap().getWorld(), x, y, z); 
             if (loc.getBlock().getType() != Material.AIR) {
-                p.sendMessage("§4§l§nB O O M!");
-                p.getWorld().createExplosion(loc, 3, false);
+                p.sendMessage("§4§l§nB O O M !");
+                p.getWorld().createExplosion(loc, 3f, false);
                 bsPlayer.setLastExplosionGunFire(timer);
                 switch (item.getDurability()) {
                     case 0:

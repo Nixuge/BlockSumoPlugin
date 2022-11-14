@@ -95,17 +95,7 @@ public class GameRunnable extends BukkitRunnable {
     private void spawnGlobalBonus() {
         GlobalItem item = GlobalItem.values()[rand.nextInt(GlobalItem.values().length)];
         ItemStack stack = item.getItemStack();
-        //dirty fix because it's buggy if i do it from the getitemstack
-        //still, to rework
-        switch (stack.getType()) { 
-            case IRON_SWORD:
-                stack.setDurability((short)250);
-                break;
-            case WOOD_SWORD:
-                stack.setDurability((short)59);
-                break;
-            default: break;
-        }
+        
         for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {
             plugin.getGameMgr().getScoreboardRunnable().addMessage("Got " + item.getPrefix() + " §b§n" + item.getName() + "§r !");
             TextUtils.broadcastGame("§7Everyone got " + item.getPrefix() + " §b§n" + item.getName() + "§r§7.");

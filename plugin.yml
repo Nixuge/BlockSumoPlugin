@@ -6,12 +6,15 @@ commands:
   join_blocksumo:
     description: join the blocksumo queue
     usage: /join_blocksumo
-  quit_blocksumo:
-    description: quit the blocksumo queue
-    usage: /quit_blocksumo
+  end_blocksumo:
+    description: force end the blocksumo /!\DEV ONLY/!\
+    usage: /end_blocksumo
   start_blocksumo:
-    description: force start the blocksumo queue /!\DEV ONLY/!\
+    description: force start the blocksumo /!\DEV ONLY/!\
     usage: /start_blocksumo
+  kit:
+    description: Change your kit
+    usage: /kit
   testcommand:
     description: test command used for various purposes while testing
     usage: /testcommand

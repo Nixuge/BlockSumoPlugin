@@ -55,8 +55,11 @@ public class PlayerRespawnListener implements Listener {
         Location spawn = gameMgr.getMcMap().getRandomSpawn();
         event.setRespawnLocation(spawn);
 
-        BlockSumo plugin = BlockSumo.getInstance();
-        PlayerRespawnParticle packet = new PlayerRespawnParticle(100, p);
-        packet.runTaskTimer(plugin, 1, 1);
+        if (!p.isDead()) {
+            BlockSumo plugin = BlockSumo.getInstance();
+            PlayerRespawnParticle packet = new PlayerRespawnParticle(60, p);
+            packet.runTaskTimer(plugin, 1, 1);
+        }
+
     }
 }
