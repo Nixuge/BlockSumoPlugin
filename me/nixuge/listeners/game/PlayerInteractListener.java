@@ -48,6 +48,7 @@ public class PlayerInteractListener implements Listener {
             //TNT in "BlockPlaceListener"
             case FIREBALL:
                 MovingFireball.run(p);
+                event.setCancelled(true); //avoid placing fire
                 break;
             case FEATHER:
                 BounceFeather.run(p);

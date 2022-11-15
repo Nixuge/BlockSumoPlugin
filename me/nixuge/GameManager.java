@@ -8,18 +8,17 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
-import me.nixuge.objects.Kit;
 import me.nixuge.objects.maths.Area;
 import me.nixuge.objects.maths.XYZ;
 import me.nixuge.runnables.BlockManagerRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
+import me.nixuge.utils.InventoryUtils;
 import me.nixuge.utils.ScoreboardUtils;
 import me.nixuge.utils.TextUtils;
 
@@ -107,6 +106,7 @@ public class GameManager {
     }
 
     public void startGame(boolean bypass) {
+        //checks
         if (pManager.getPlayers().size() < 2 && !bypass) {
             Bukkit.broadcastMessage("Not enough players !");
             return;
@@ -116,18 +116,14 @@ public class GameManager {
             return;
         }
         TextUtils.broadcastGame("Starting!");
-
+        
         setGameState(GameState.PLAYING);
 
+        //tp players & init their inventory
         pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
+        InventoryUtils.setupInventories(pManager.getPlayers());
 
-        for (BsPlayer bsPlayer : pManager.getPlayers()) {
-            Player p = bsPlayer.getBukkitPlayer();
-            p.getInventory().clear();
-            bsPlayer.setKit(Kit.loadKit(p));
-            bsPlayer.getKit().useKit(p, true);
-        }
-
+        //set runnables
         blockDestroyRunnable = new BlockManagerRunnable();
         blockDestroyRunnable.runTaskTimer(blockSumo, 1, 1);
 

@@ -52,9 +52,9 @@ public class BlockManagerRunnable extends BukkitRunnable {
                     //NOTE: will see if I keep it like that
                     //or just remove the lastColor altogether and do it just
                     //like bwpractice rn. For now keeping it.
-                    loc.getBlock().setData(block.getLastColor().getByteColor());
+                    loc.getBlock().setData(block.getLastColor().getWoolByteColor());
                 } else {
-                    loc.getBlock().setData(Color.getRandomColor().getByteColor());
+                    loc.getBlock().setData(Color.getRandomColor().getWoolByteColor());
                 }
             }
         }
@@ -82,6 +82,11 @@ public class BlockManagerRunnable extends BukkitRunnable {
         int id = block.getTypeId(); //=Material.WOOL.getId() in normal circumstances
         byte data = block.getData();
 
+        //NOTE: to be more safe, could get the material here and if it's air
+        //just not send any particles
+        //but that means if i have an issue somewhere else in my code
+        //with destroyed blocks not registering properly I won't see it
+        //so sticking with no checks here for now
         block.setType(Material.AIR);
 
         //See the "PacketUtils" class for more info about fields

@@ -6,33 +6,39 @@ import org.bukkit.DyeColor;
 
 @SuppressWarnings("deprecation")
 public enum Color {
-    DARK_RED("§4", DyeColor.RED.getWoolData()),
-    RED("§c", DyeColor.RED.getWoolData()),
-    ORANGE("§6", DyeColor.ORANGE.getWoolData()),
-    YELLOW("§e", DyeColor.YELLOW.getWoolData()),
-    GREEN("§2", DyeColor.GREEN.getWoolData()),
-    LIME("§a", DyeColor.LIME.getWoolData()),
-    AQUA("§b", DyeColor.LIGHT_BLUE.getWoolData()),
-    BLUE("§9", DyeColor.BLUE.getWoolData()),
-    PINK("§d", DyeColor.PINK.getWoolData()),
-    MAGENTA("§5", DyeColor.MAGENTA.getWoolData());
+    DARK_RED("§4", DyeColor.RED),
+    RED("§c", DyeColor.RED),
+    ORANGE("§6", DyeColor.ORANGE),
+    YELLOW("§e", DyeColor.YELLOW),
+    GREEN("§2", DyeColor.GREEN),
+    LIME("§a", DyeColor.LIME),
+    AQUA("§b", DyeColor.LIGHT_BLUE),
+    BLUE("§9", DyeColor.BLUE),
+    PINK("§d", DyeColor.PINK),
+    MAGENTA("§5", DyeColor.MAGENTA);
 
     private final String chatColor;
-    private final byte byteColor;
+    private final DyeColor dyeColor;
 
-    private Color(String chatColor, byte byteColor) {
+    private Color(String chatColor, DyeColor dyeColor) {
         this.chatColor = chatColor;
-        this.byteColor = byteColor;
+        this.dyeColor = dyeColor;
     }
 
     public String getChatColor() {
         return chatColor;
     }
-    public byte getByteColor() {
-        return byteColor;
+
+    public DyeColor getDyeColor() {
+        return dyeColor;
+    }
+
+    public byte getWoolByteColor() {
+        return dyeColor.getWoolData();
     }
 
     private static Random rand = new Random();
+
     public static Color getRandomColor() {
         return Color.values()[rand.nextInt(Color.values().length)];
     }
