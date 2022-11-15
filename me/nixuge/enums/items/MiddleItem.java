@@ -13,7 +13,7 @@ public enum MiddleItem {
     BONUS_LIFE("Bonus Life", ItemUtils.getItemStack(Material.NETHER_STAR, "Bonus life", 1, "§aRight click to gain a live !")),
     TNTRAIN("Tnt Rain",ItemUtils.getItemStack(Material.BLAZE_POWDER, "§eTNT rain", 1, "§6Right click to spawn a tnt on everyone !")),
     JUMPBOOST("Jump Boost Potion",ItemUtils.getItemStackPotion("Jump Boost Potion", 1, "To go up fast", PotionEffectType.JUMP, 600, 5)),
-    MEGA_BAT("Mega Bat",ItemUtils.getItemStack(Material.IRON_SWORD, "Mega bat", 1, "§f§bHITS HARD", Enchantment.KNOCKBACK, 10, Enchantment.FIRE_ASPECT, 5, (short)249)),
+    MEGA_BAT("Mega Bat",ItemUtils.getItemStack(Material.IRON_SWORD, "Mega bat", 1, "§f§bHITS HARD", Enchantment.KNOCKBACK, 10, Enchantment.FIRE_ASPECT, 5, (short)250)),
     EXPLOSION_GUN("An","Explosion Gun",ItemUtils.getItemStack(Material.GOLD_HOE, "Epic gun", 1, "§6Right click pointing at a block to send someone in the air !"));
 
     private final String prefix;

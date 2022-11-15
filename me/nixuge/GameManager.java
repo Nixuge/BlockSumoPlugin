@@ -1,5 +1,7 @@
 package me.nixuge;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +34,11 @@ public class GameManager {
         Location center = new Location(world, 93.5, 67, 64.5);
 
         map = new McMap(
-            spawns, center,
-            new Area(
-                new XYZ(92, 66, 63),
-                new XYZ(94, 69, 65)
-            ), world);
+                spawns, center,
+                new Area(
+                        new XYZ(92, 66, 63),
+                        new XYZ(94, 69, 65)),
+                world);
         blockSumo = BlockSumo.getInstance();
         setGameState(GameState.WAITING);
     }
@@ -56,7 +58,7 @@ public class GameManager {
     public ScoreboardRunnable getScoreboardRunnable() {
         return scoreboardRunnable;
     }
-    
+
     private McMap map;
     private PlayerManager pManager = new PlayerManager();
     private GameState state = GameState.WAITING;
@@ -76,14 +78,27 @@ public class GameManager {
 
     private void setGameState(GameState gameState) {
         // unregister previous ones
-        Listener[] listeners = state.getListeners();
-        for (Listener listener : listeners) {
+        for (Listener listener : state.getInstances()) {
             HandlerList.unregisterAll(listener);
         }
-        // register new ones & set state
+        state.clearInstances();
+
+        // set new state var
         state = gameState;
-        for (Listener listener : gameState.getListeners()) {
-            blockSumo.getPluginManager().registerEvents(listener, blockSumo);
+
+        // make new instances for the new ones from the classes
+        Class<?>[] classes = gameState.getListeners();
+        try {
+            for (Class<?> c : classes) {
+                Constructor<?> cons = c.getConstructor();
+                Listener listener = (Listener) cons.newInstance();
+                state.addInstance(listener);
+                blockSumo.getPluginManager().registerEvents(listener, blockSumo);
+            }
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException e) {
+            // ignore all errors because why should we look at those
+            e.printStackTrace();
         }
     }
 
@@ -108,6 +123,7 @@ public class GameManager {
 
         for (BsPlayer bsPlayer : pManager.getPlayers()) {
             Player p = bsPlayer.getBukkitPlayer();
+            p.getInventory().clear();
             bsPlayer.setKit(Kit.loadKit(p));
             bsPlayer.getKit().useKit(p, true);
         }

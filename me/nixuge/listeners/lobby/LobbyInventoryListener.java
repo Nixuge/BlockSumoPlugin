@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.utils.KitEdit;
 
-public class InventoryListener implements Listener {
+public class LobbyInventoryListener implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
@@ -20,7 +20,7 @@ public class InventoryListener implements Listener {
     }
 
     @EventHandler
-    public void onInventoryChange(InventoryClickEvent event) {
+    public void onInventoryClick(InventoryClickEvent event) {
         KitEdit kitEdit = KitEdit.getFromPlayer((Player)event.getWhoClicked());
         if (kitEdit == null) return;
 

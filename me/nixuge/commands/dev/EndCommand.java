@@ -14,7 +14,7 @@ public class EndCommand implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) return false;
 
-        Bukkit.broadcastMessage("Calling init; DEBUG COMMAND ONLY !");
+        Bukkit.broadcastMessage("Calling init; DEBUG COMMAND ONLY ! CAUSES ISSUES WITH PARTICLE TIMINGS AND MAYBE OTHER, USE WITH CAUTION!");
         BlockSumo.getInstance().init();
 
         return true;

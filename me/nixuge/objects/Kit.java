@@ -98,7 +98,7 @@ public class Kit {
     }
     public void useKit(Player p, boolean wool64) {
         // p.getInventory().setContents(items); unfortunately causes inventory update
-        // issues
+        // issues & can't set 64 wool
         Inventory playerInventory = p.getInventory();
         for (int i = 0; i < items.length; i++) {
             ItemStack item = items[i];
