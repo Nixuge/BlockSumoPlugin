@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import me.nixuge.utils.ItemUtils;
+
 public class Kit {
     public static boolean isInventoryValid(ItemStack[] items) {
         //possible materials hardcoded
@@ -93,10 +95,7 @@ public class Kit {
         }
     }
 
-    public void useKit(Player p) {
-        useKit(p, false);
-    }
-    public void useKit(Player p, boolean wool64) {
+    public void useKit(Player p, boolean inGame) {
         // p.getInventory().setContents(items); unfortunately causes inventory update
         // issues & can't set 64 wool
         Inventory playerInventory = p.getInventory();
@@ -105,8 +104,18 @@ public class Kit {
             if (item == null)
                 continue;
             
-            if (wool64 && item.getType().equals(Material.WOOL)) {
-                playerInventory.setItem(i, new ItemStack(item.getType(), 64));
+            //"dirty" fixes on the fly but not really a choice here ngl
+            if (inGame) {
+                switch (item.getType()) {
+                    case WOOL:
+                        playerInventory.setItem(i, new ItemStack(item.getType(), 64));
+                        break;
+                    case SHEARS:
+                        playerInventory.setItem(i, ItemUtils.setUnbreakable(item));
+                        break;
+                    default:
+                        break;
+                }
             } else {
                 playerInventory.setItem(i, items[i]);
             }

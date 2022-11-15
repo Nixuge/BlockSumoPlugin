@@ -10,7 +10,7 @@ import me.nixuge.commands.dev.EndCommand;
 import me.nixuge.commands.dev.JoinCommand;
 import me.nixuge.commands.dev.StartCommand;
 import me.nixuge.commands.dev.TestCommand;
-import me.nixuge.listeners.ItemSpawnListener;
+import me.nixuge.listeners.ItemSpawnDropListener;
 import me.nixuge.listeners.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
 import me.nixuge.utils.ScoreboardUtils;
@@ -83,6 +83,6 @@ public class BlockSumo extends JavaPlugin {
 
         // those remaining here because they're always needed
         pluginManager.registerEvents(new RandomChangeListener(), this);
-        pluginManager.registerEvents(new ItemSpawnListener(), this);
+        pluginManager.registerEvents(new ItemSpawnDropListener(), this);
     }
 }

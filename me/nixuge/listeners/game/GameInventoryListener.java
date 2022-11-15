@@ -1,13 +1,13 @@
 package me.nixuge.listeners.game;
 
-import org.bukkit.Bukkit;
+import java.util.Arrays;
+
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
-import me.nixuge.BlockSumo;
-import me.nixuge.enums.GameState;
 
 public class GameInventoryListener implements Listener {
 
@@ -22,10 +22,12 @@ public class GameInventoryListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        Bukkit.broadcastMessage(event.getCurrentItem() + "");
-        if (BlockSumo.getInstance().getGameMgr().getGameState().equals(GameState.PLAYING)) {
-            // boolean contains = Arrays.stream(unmoveableMaterials).anyMatch(
-                // drop -> drop.equals(material));
-        }
+        ItemStack item = event.getCurrentItem();
+        if (item == null) return;
+        Material mat = item.getType();
+
+        boolean contains = Arrays.stream(unmoveableMaterials).anyMatch(
+            drop -> drop.equals(mat));
+        if (contains) event.setCancelled(true);
     }
 }

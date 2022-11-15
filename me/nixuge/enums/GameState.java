@@ -6,7 +6,6 @@ import java.util.List;
 import org.bukkit.event.Listener;
 
 import me.nixuge.listeners.game.BlockPlaceDestroyListener;
-import me.nixuge.listeners.game.GameInventoryChangeListener;
 import me.nixuge.listeners.game.GameInventoryListener;
 import me.nixuge.listeners.game.GameJoinQuitListener;
 import me.nixuge.listeners.game.PlayerInteractListener;
@@ -22,7 +21,6 @@ public enum GameState {
     PLAYING(new Class<?>[] {
         GameJoinQuitListener.class,
         BlockPlaceDestroyListener.class,
-        GameInventoryChangeListener.class,
         PlayerRespawnListener.class,
         PlayerInteractListener.class,
         GameInventoryListener.class

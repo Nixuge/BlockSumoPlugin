@@ -80,4 +80,11 @@ public class ItemUtils {
             p.setItemInHand(null);
         }
     }
+
+    public static ItemStack setUnbreakable(ItemStack itemStack) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.spigot().setUnbreakable(true);
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
 }

@@ -50,7 +50,7 @@ public class KitEdit {
         playerInventory.clear();
 
         Kit currentKit = Kit.loadKit(p);
-        currentKit.useKit(p);
+        currentKit.useKit(p, false);
 
         playerInventory.setItem(17, ItemUtils.getItemStack(Material.DIAMOND_SWORD, "§aSave kit"));
         playerInventory.setItem(16, ItemUtils.getItemStack(Material.BARRIER, "§cCancel kit edit"));
