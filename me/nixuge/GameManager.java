@@ -6,11 +6,13 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
+import me.nixuge.objects.Kit;
 import me.nixuge.objects.maths.Area;
 import me.nixuge.objects.maths.XYZ;
 import me.nixuge.runnables.BlockManagerRunnable;
@@ -103,6 +105,12 @@ public class GameManager {
         setGameState(GameState.PLAYING);
 
         pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
+
+        for (BsPlayer bsPlayer : pManager.getPlayers()) {
+            Player p = bsPlayer.getBukkitPlayer();
+            bsPlayer.setKit(Kit.loadKit(p));
+            bsPlayer.getKit().useKit(p, true);
+        }
 
         blockDestroyRunnable = new BlockManagerRunnable();
         blockDestroyRunnable.runTaskTimer(blockSumo, 1, 1);

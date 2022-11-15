@@ -10,6 +10,7 @@ import me.nixuge.commands.dev.EndCommand;
 import me.nixuge.commands.dev.JoinCommand;
 import me.nixuge.commands.dev.StartCommand;
 import me.nixuge.commands.dev.TestCommand;
+import me.nixuge.listeners.ItemSpawnListener;
 import me.nixuge.listeners.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
 import me.nixuge.utils.ScoreboardUtils;
@@ -27,8 +28,8 @@ public class BlockSumo extends JavaPlugin {
 
     //TODO: proper game end (fireworks & other)
     //TODO: remove damage (shouldnt be too hard)
+    //TODO: change death messages
     //TODO: add javadocs (uh oh)
-    //TODO: disable item drops
 
     private static BlockSumo main;
 
@@ -80,7 +81,8 @@ public class BlockSumo extends JavaPlugin {
         getCommand("kit").setExecutor(new KitCommand());
         getCommand("testcommand").setExecutor(new TestCommand());
 
-        // this one staying here since it's always on
+        // those remaining here because they're always needed
         pluginManager.registerEvents(new RandomChangeListener(), this);
+        pluginManager.registerEvents(new ItemSpawnListener(), this);
     }
 }

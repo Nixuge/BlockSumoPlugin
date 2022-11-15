@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
@@ -42,7 +43,13 @@ public class BlockPlaceDestroyListener implements Listener {
         } else {
             bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color));
         }
-        
+
+        //re-give the wool
+        if (block.getType().equals(Material.WOOL)) {
+            ItemStack item = p.getItemInHand();
+            item.setAmount(64);
+            p.setItemInHand(item);
+        }
     }
 
     @EventHandler

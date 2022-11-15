@@ -15,7 +15,7 @@ public class TestCommand implements CommandExecutor {
         if (!(sender instanceof Player)) return false;
         Player p = (Player)sender;
 
-        Kit playerKit = Kit.loadKit(p.getName());
+        Kit playerKit = Kit.loadKit(p);
         if (playerKit == null) {
             p.sendMessage("§cYou don't have a kit saved or it failed to load !");
             return true;

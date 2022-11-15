@@ -3,7 +3,9 @@ package me.nixuge.objects;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,6 +14,37 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class Kit {
+    public static boolean isInventoryValid(ItemStack[] items) {
+        //possible materials hardcoded
+        //note: this inventory allows inventories of more than 8 size,
+        //however if anything not null is inside the slots at index 9+
+        //it'll return false
+        Map<Material, Integer> possibleMaterials = new HashMap<>();
+        possibleMaterials.put(Material.WOOL, 1);
+        possibleMaterials.put(Material.SHEARS, 1);
+
+        Map<Material, Integer> inventoryMaterials = new HashMap<>();
+
+        for (int i = 0; i < items.length; i++) {
+            ItemStack item = items[i];
+            if (item == null)
+                continue;
+
+            int amount = item.getAmount();
+            Material mat = item.getType();
+
+            if (i > 8) {
+                return false;
+            }
+            int currentMatQuantity = inventoryMaterials.containsKey(mat) ? inventoryMaterials.get(mat) + amount
+                    : amount;
+
+            inventoryMaterials.put(mat, currentMatQuantity);
+
+        }
+        return (possibleMaterials.equals(inventoryMaterials));
+    }
+
     // thanks to https://bukkit.org/threads/saving-individual-players-kits.375693/
     // for the inspiration
     private static String folderPath = "plugins" + File.separator + "BlockSumo" + File.separator + "Kits";
@@ -23,6 +56,9 @@ public class Kit {
         return new Kit(content);
     }
 
+    public static Kit loadKit(Player player) {
+        return loadKit(player.getName());
+    }
     @SuppressWarnings("unchecked")
     public static Kit loadKit(String playerName) {
         String filename = playerName + ".yml";
@@ -32,6 +68,11 @@ public class Kit {
             return loadDefaultKit();
 
         ItemStack[] content = ((List<ItemStack>) c.get("kitData")).toArray(new ItemStack[0]);
+
+        // in case the loaded kit is invalid/corrupted
+        if (!isInventoryValid(content))
+            return loadDefaultKit();
+
         return new Kit(content);
     }
 
@@ -53,12 +94,22 @@ public class Kit {
     }
 
     public void useKit(Player p) {
-        // p.getInventory().setContents(items); unfortunately causes inventory update issues
+        useKit(p, false);
+    }
+    public void useKit(Player p, boolean wool64) {
+        // p.getInventory().setContents(items); unfortunately causes inventory update
+        // issues
         Inventory playerInventory = p.getInventory();
         for (int i = 0; i < items.length; i++) {
-            if (items[i] == null)
+            ItemStack item = items[i];
+            if (item == null)
                 continue;
-            playerInventory.setItem(i, items[i]);
+            
+            if (wool64 && item.getType().equals(Material.WOOL)) {
+                playerInventory.setItem(i, new ItemStack(item.getType(), 64));
+            } else {
+                playerInventory.setItem(i, items[i]);
+            }
         }
     }
 

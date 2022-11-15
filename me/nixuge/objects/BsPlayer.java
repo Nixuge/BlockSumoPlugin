@@ -6,6 +6,7 @@ import me.nixuge.enums.Color;
 
 public class BsPlayer {
     private final Color color;
+    private Kit kit;
     private Player player;
     private boolean isLoggedOn;
     private int lastExplosionGunFire = 0;
@@ -55,6 +56,13 @@ public class BsPlayer {
     }
     public int getKills() {
         return kills;
+    }
+
+    public void setKit(Kit kit) {
+        this.kit = kit;
+    }
+    public Kit getKit() {
+        return kit;
     }
 
 
