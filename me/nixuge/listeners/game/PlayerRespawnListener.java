@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
+import me.nixuge.PlayerManager;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.runnables.particle.PlayerRespawnParticle;
 
@@ -18,14 +19,16 @@ public class PlayerRespawnListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
+        BlockSumo plugin = BlockSumo.getInstance();
+        PlayerManager playerMgr = plugin.getGameMgr().getPlayerMgr();
         Player p = event.getEntity();
-        BsPlayer player = gameMgr.getPlayerMgr().getExistingBsPlayerFromBukkit(p);
+        BsPlayer player = playerMgr.getExistingBsPlayerFromBukkit(p);
 
         player.removeLive();
+        playerMgr.getExistingBsPlayerFromBukkit(event.getEntity().getKiller()).addKill();
 
         if (player.isDead()) {
-            gameMgr.checkGameEnd();
+            plugin.getGameMgr().checkGameEnd();
         }
 
         //note: need to call the respawn event manually
@@ -35,7 +38,7 @@ public class PlayerRespawnListener implements Listener {
             public void run() {
                 p.spigot().respawn();
             }
-        }.runTaskLater(BlockSumo.getInstance(), 20);
+        }.runTaskLater(plugin, 10);
         onRespawn(new PlayerRespawnEvent(p, null, false));
     }
 

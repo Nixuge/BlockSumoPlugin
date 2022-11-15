@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 import me.nixuge.BlockSumo;
@@ -21,9 +22,17 @@ public class BlockExplodeListener implements Listener {
     //or not? idk will see
 
     @EventHandler
-    public void onBlockExplode(EntityExplodeEvent event) {
+    public void onEntityExplode(EntityExplodeEvent event) {
+        manageBlockExplode(event.blockList());
+    }
+
+    @EventHandler
+    public void onBlockExplode(BlockExplodeEvent event) {
+        manageBlockExplode(event.blockList());
+    }
+
+    private void manageBlockExplode(List<Block> blocks) {
         GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
-        List<Block> blocks = event.blockList();
 
         for (Block block : new ArrayList<>(blocks)) { //ConcurrentModificationException
             if (block.getType().equals(Material.WOOL)) {

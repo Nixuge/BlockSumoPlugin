@@ -9,6 +9,7 @@ public class BsPlayer {
     private Kit kit;
     private Player player;
     private boolean isLoggedOn;
+    private boolean isTarget;
     private int lastExplosionGunFire = 0;
     private int lives = 5;
     private int kills = 0;
@@ -46,7 +47,6 @@ public class BsPlayer {
     public void removeLive() {
         this.lives--;
     }
-
     public int getLives() {
         return lives;
     }
@@ -65,6 +65,12 @@ public class BsPlayer {
         return kit;
     }
 
+    public boolean getIsTarget() {
+        return isTarget;
+    }
+    public void setIsTarget(boolean isTarget) {
+        this.isTarget = isTarget;
+    }
 
     public Color getColor() {
         return color;

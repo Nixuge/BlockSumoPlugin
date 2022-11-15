@@ -21,6 +21,8 @@ public class BlockSumo extends JavaPlugin {
     //TODO URGENT: config system for:
     // kits
     // localization
+    // blocs to be destroyed & to not be destroyed
+    // target system?
 
     // TODO: add sounds
     // TODO: target system
@@ -28,7 +30,6 @@ public class BlockSumo extends JavaPlugin {
     // that make the players that kills him gain a life
 
     //TODO: proper game end (fireworks & other)
-    //TODO: remove damage (shouldnt be too hard)
     //TODO: change death messages
     //TODO: add javadocs (uh oh)
 

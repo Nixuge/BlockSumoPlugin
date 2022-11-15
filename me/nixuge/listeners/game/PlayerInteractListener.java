@@ -39,6 +39,7 @@ public class PlayerInteractListener implements Listener {
                 break;
             case GOLD_HOE:
                 ExplosionGun.run(gameMgr, bsPlayer, item);
+                event.setCancelled(true); //avoid hoeing dirt/grass
                 break;
             case BLAZE_POWDER:
                 TntRain.run(bsPlayer, pManager.getPlayers());
