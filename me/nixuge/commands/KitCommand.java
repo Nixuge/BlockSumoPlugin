@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.GameState;
-import me.nixuge.objects.KitEdit;
+import me.nixuge.utils.KitEdit;
 
 public class KitCommand implements CommandExecutor {
 
@@ -19,7 +19,6 @@ public class KitCommand implements CommandExecutor {
             p.sendMessage("Can't edit kit while in game.");
             return true;
         }
-        
         
         new KitEdit(p).spawnInventory();
         

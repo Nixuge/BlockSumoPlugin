@@ -1,4 +1,4 @@
-package me.nixuge.objects;
+package me.nixuge.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import me.nixuge.utils.ItemUtils;
+import me.nixuge.objects.Kit;
 
 public class KitEdit {
     //bit different approach to other classes
@@ -44,15 +44,22 @@ public class KitEdit {
     }
 
     public void spawnInventory() {
-        Inventory inv = Bukkit.createInventory(p, 0, "Please organize your inventory"); 
+        Inventory inv = Bukkit.createInventory(p, 0, "Please organize your"); 
         p.openInventory(inv);
 
         Inventory playerInventory = p.getInventory();
         playerInventory.clear();
+
+        Kit currentKit = Kit.loadKit(p.getName());
+        if (!isInventoryValid(currentKit.getItems())) { //in case the kit is invalid/corrupted
+            Kit.loadDefaultKit().saveKit(p);
+            currentKit = Kit.loadKit(p.getName());
+        }
+
+        currentKit.useKit(p);
+        
         playerInventory.setItem(17, ItemUtils.getItemStack(Material.DIAMOND_SWORD, "§aSave kit"));
         playerInventory.setItem(16, ItemUtils.getItemStack(Material.BARRIER, "§cCancel kit edit"));
-        playerInventory.setItem(1, new ItemStack(Material.WOOL));
-        playerInventory.setItem(2, new ItemStack(Material.SHEARS));
     }
 
     private boolean isInventoryValid(ItemStack[] items) {
@@ -61,12 +68,8 @@ public class KitEdit {
         possibleMaterials.put(Material.SHEARS, 1);
 
         Map<Material, Integer> inventoryMaterials = new HashMap<>();
-
-        //override the barrier & diamond sword items
-        items[16] = null; 
-        items[17] = null;
+        
         for (int i=0; i < items.length; i++) {
-            // possibleMaterials.forEach((k, v) -> Bukkit.broadcastMessage(k + ""));
             ItemStack item = items[i];
             if (item == null) continue;
 
@@ -84,17 +87,20 @@ public class KitEdit {
 
         }
         return (possibleMaterials.equals(inventoryMaterials));
-        // return true;
     }
 
     public void saveKit() {
         Inventory playerInventory = p.getInventory();
 
         ItemStack[] items = playerInventory.getContents();
+        //override the barrier & diamond sword items
+        items[16] = null; 
+        items[17] = null;
+
         if (isInventoryValid(items)) {
             success = true;
             closeInventory();
-            //TODO: save to file here
+            new Kit(items).saveKit(p);
         } else {
             p.sendMessage("§cInvalid kit !");
         }
@@ -110,6 +116,7 @@ public class KitEdit {
             "§aSaved kit !" :
             "§cKit edit cancelled !";
         p.sendMessage(str);
+        p.getInventory().clear();
         kitEdits.remove(this);
     }
 }

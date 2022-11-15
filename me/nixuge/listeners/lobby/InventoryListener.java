@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import me.nixuge.objects.KitEdit;
+import me.nixuge.utils.KitEdit;
 
 public class InventoryListener implements Listener {
 
