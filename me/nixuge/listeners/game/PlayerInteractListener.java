@@ -11,6 +11,7 @@ import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
 import me.nixuge.objects.BsPlayer;
+import me.nixuge.utils.bonuses.global.BounceFeather;
 import me.nixuge.utils.bonuses.global.MovingFireball;
 import me.nixuge.utils.bonuses.middle.BonusLife;
 import me.nixuge.utils.bonuses.middle.ExplosionGun;
@@ -47,6 +48,10 @@ public class PlayerInteractListener implements Listener {
             //TNT in "BlockPlaceListener"
             case FIREBALL:
                 MovingFireball.run(p);
+                break;
+            case FEATHER:
+                BounceFeather.run(p);
+                break;
             default:
                 break;
         }

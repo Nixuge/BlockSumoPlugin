@@ -10,6 +10,7 @@ import org.bukkit.entity.TNTPrimed;
 
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.utils.ItemUtils;
+import me.nixuge.utils.TextUtils;
 
 public class TntRain {
     public static void run(BsPlayer bsPlayer, List<BsPlayer> bsPlayers) {
@@ -18,7 +19,7 @@ public class TntRain {
 
         ItemUtils.removeSingleItemPlayerHand(p);
 
-        p.sendMessage("§6TNT rain for everyone !");
+        TextUtils.broadcastGame("§6TNT rain for everyone !");
         bsPlayer.addLive();
         
         for (BsPlayer innerBsPlayer : bsPlayers) {

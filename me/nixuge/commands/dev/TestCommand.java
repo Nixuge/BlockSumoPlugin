@@ -20,7 +20,7 @@ public class TestCommand implements CommandExecutor {
             p.sendMessage("§cYou don't have a kit saved or it failed to load !");
             return true;
         }
-        playerKit.useKit(p);
+        playerKit.useKit(p, true);
 
         return true;
     }

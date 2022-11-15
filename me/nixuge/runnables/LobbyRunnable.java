@@ -15,8 +15,7 @@ public class LobbyRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        
+        //TODO: lobby lol
     }
     
     public int getRemainingTime() {

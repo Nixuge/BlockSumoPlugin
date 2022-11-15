@@ -18,8 +18,10 @@ public class ItemSpawnDropListener implements Listener {
         Material.NETHER_STAR,
         Material.BLAZE_POWDER,
         Material.POTION,
+        Material.GLASS_BOTTLE,
         Material.IRON_SWORD,
-        Material.GOLD_HOE
+        Material.GOLD_HOE,
+        Material.FEATHER
     };
 
     @EventHandler

@@ -10,7 +10,8 @@ public enum GlobalItem {
     FIREBALL("fireball", ItemUtils.getItemStack(Material.FIREBALL, "Fireball", 1, "Explosion")),
     SNOWBALLS("some","snowballs", ItemUtils.getItemStack(Material.SNOW_BALL, "Snowball", 8, "Snowboule")),
     SMALL_BAT("small bat", ItemUtils.getItemStack(Material.WOOD_SWORD, "Small bat", 1, "§fHits hard but not too much", Enchantment.KNOCKBACK, 1, null, 0, (short)59)),
-    TNT("TNT",ItemUtils.getItemStack(Material.TNT, "TNT", 1, "§4BOOM"));
+    TNT("TNT", ItemUtils.getItemStack(Material.TNT, "TNT", 1, "§4BOOM")),
+    BOUNCE_FEATHER("Bouncy feather", ItemUtils.getItemStack(Material.FEATHER, "Bouncy feather", 1, "Goes wooosh"));
 
     private final String prefix;
     private final String name;
