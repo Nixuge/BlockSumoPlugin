@@ -17,5 +17,4 @@ public class IncreasingNumber {
     public void skipNumber() {
         number++;
     }
-
 }

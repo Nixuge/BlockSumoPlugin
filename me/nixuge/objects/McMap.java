@@ -1,4 +1,4 @@
-package me.nixuge;
+package me.nixuge.objects;
 
 import java.util.List;
 

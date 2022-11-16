@@ -22,7 +22,6 @@ public class InventoryUtils {
         bsPlayer.setKit(Kit.loadKit(p));
         bsPlayer.getKit().useKit(p, true);
 
-        // bsPlayer.getColor().getDyeColor().getClass()
         Material[] materials = {
                 Material.LEATHER_BOOTS,
                 Material.LEATHER_LEGGINGS,

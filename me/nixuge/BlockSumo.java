@@ -1,6 +1,7 @@
 package me.nixuge;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,6 +11,7 @@ import me.nixuge.commands.dev.EndCommand;
 import me.nixuge.commands.dev.JoinCommand;
 import me.nixuge.commands.dev.StartCommand;
 import me.nixuge.commands.dev.TestCommand;
+import me.nixuge.config.Config;
 import me.nixuge.listeners.ItemSpawnDropListener;
 import me.nixuge.listeners.PlayerDamageListener;
 import me.nixuge.listeners.RandomChangeListener;
@@ -54,13 +56,15 @@ public class BlockSumo extends JavaPlugin {
     private LobbyRunnable lobbyRunnable;
 
     public void init() {
-        //set vars (order is important)
+        //set vars & config (order is important)
         main = this;
+        Config.setFileConfig(this.getConfig());
+        Config.enable();
         pluginManager = getServer().getPluginManager();
         gameManager = new GameManager();
 
         // start runtime here
-        lobbyRunnable = new LobbyRunnable(2, 8);
+        lobbyRunnable = new LobbyRunnable();
         lobbyRunnable.runTaskTimer(this, 20, 20);
 
         // add players instead of kicking
