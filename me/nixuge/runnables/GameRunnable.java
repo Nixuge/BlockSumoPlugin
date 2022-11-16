@@ -6,10 +6,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.McMap;
 import me.nixuge.enums.items.GlobalItem;
 import me.nixuge.enums.items.MiddleItem;
 import me.nixuge.objects.BsPlayer;
+import me.nixuge.objects.McMap;
 import me.nixuge.runnables.particle.MiddleParticleRunnable;
 import me.nixuge.utils.PacketUtils;
 import me.nixuge.utils.TextUtils;
