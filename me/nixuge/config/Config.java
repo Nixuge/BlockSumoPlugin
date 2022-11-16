@@ -1,7 +1,5 @@
 package me.nixuge.config;
 
-import java.util.Set;
-
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,6 +34,7 @@ public class Config {
 
     public static void getSpawns() {
         Bukkit.broadcastMessage(GameConfig.getMaxPlayers() + "");
+        MapConfig.getCenterBlock();
     }
     public static ConfigurationSection getFileConfigBlock(String str) {
         return fileConf.getConfigurationSection(str);

@@ -2,11 +2,11 @@ game:
   minPlayerCount: 2
   maxPlayerCount: 8
 map: #NOTE: use block coordinates (ints without ,s)
-  centerFirstCorner: [0, 0, 0]
-  centerSecondCorner: [5, 5, 5]
-
+  world: world
+  centerBlock: 2 1 2
+  centerAreaFirstCorner: 0 1 0
+  centerAreaSecondCorner: 4 1 4
   spawns:
-    - 0 0 0
-    - 0 0 0
-    - 0 0 0
-   
+    - 0 1 0
+    - 5 1 5
+    - 10 1 10

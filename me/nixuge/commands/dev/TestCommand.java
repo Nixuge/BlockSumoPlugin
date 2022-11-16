@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 // import org.bukkit.entity.Player;
 
 import me.nixuge.config.Config;
+import me.nixuge.config.MapConfig;
 
 public class TestCommand implements CommandExecutor {
 
@@ -15,7 +16,7 @@ public class TestCommand implements CommandExecutor {
         // if (!(sender instanceof Player)) return false;
         // Player p = (Player)sender;
 
-        Config.getSpawns();
+        MapConfig.getSpawns();
 
         return true;
     }

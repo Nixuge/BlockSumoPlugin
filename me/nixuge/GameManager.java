@@ -6,16 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
+import me.nixuge.config.GameConfig;
+import me.nixuge.config.MapConfig;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.McMap;
-import me.nixuge.objects.maths.Area;
-import me.nixuge.objects.maths.XYZ;
 import me.nixuge.runnables.BlockManagerRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
@@ -26,19 +24,12 @@ import me.nixuge.utils.TextUtils;
 public class GameManager {
 
     public GameManager() {
-        // HARDCODED FOR NOW
-        World world = Bukkit.getWorld("world");
-        List<Location> spawns = new ArrayList<>();
-        spawns.add(new Location(world, 96, 67, 63));
-        spawns.add(new Location(world, 96, 67, 65));
-        Location center = new Location(world, 93.5, 67, 64.5);
-
         map = new McMap(
-                spawns, center,
-                new Area(
-                        new XYZ(92, 66, 63),
-                        new XYZ(94, 69, 65)),
-                world);
+                MapConfig.getSpawns(),
+                MapConfig.getCenterBlock(),
+                MapConfig.getCenterArea(),
+                MapConfig.getWorld());
+
         blockSumo = BlockSumo.getInstance();
         setGameState(GameState.WAITING);
     }
@@ -107,8 +98,8 @@ public class GameManager {
     }
 
     public void startGame(boolean bypass) {
-        //checks
-        if (pManager.getPlayers().size() < 2 && !bypass) {
+        // checks
+        if (pManager.getPlayers().size() < GameConfig.getMinPlayers() && !bypass) {
             Bukkit.broadcastMessage("Not enough players !");
             return;
         }
@@ -117,14 +108,14 @@ public class GameManager {
             return;
         }
         TextUtils.broadcastGame("Starting!");
-        
+
         setGameState(GameState.PLAYING);
 
-        //tp players & init their inventory
+        // tp players & init their inventory
         pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
         InventoryUtils.setupInventories(pManager.getPlayers());
 
-        //set runnables
+        // set runnables
         blockDestroyRunnable = new BlockManagerRunnable();
         blockDestroyRunnable.runTaskTimer(blockSumo, 1, 1);
 
@@ -156,6 +147,7 @@ public class GameManager {
         setGameState(GameState.DONE);
         gameRunnable.cancel();
 
+        //TODO HERE: better end bc this sucks
         Bukkit.broadcastMessage("GAME DONE PLAYING ! WINNER(s):");
         for (BsPlayer p : winners) {
             Bukkit.broadcastMessage(p.getBukkitPlayer().getName());
