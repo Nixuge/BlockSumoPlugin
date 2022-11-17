@@ -9,8 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-import me.nixuge.config.GameConfig;
-import me.nixuge.config.MapConfig;
+import me.nixuge.config.Config;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.McMap;
@@ -25,10 +24,10 @@ public class GameManager {
 
     public GameManager() {
         map = new McMap(
-                MapConfig.getSpawns(),
-                MapConfig.getCenterBlock(),
-                MapConfig.getCenterArea(),
-                MapConfig.getWorld());
+                Config.map.getSpawns(),
+                Config.map.getCenterBlock(),
+                Config.map.getCenterArea(),
+                Config.map.getWorld());
 
         blockSumo = BlockSumo.getInstance();
         setGameState(GameState.WAITING);
@@ -99,7 +98,7 @@ public class GameManager {
 
     public void startGame(boolean bypass) {
         // checks
-        if (pManager.getPlayers().size() < GameConfig.getMinPlayers() && !bypass) {
+        if (pManager.getPlayers().size() < Config.game.getMinPlayers() && !bypass) {
             Bukkit.broadcastMessage("Not enough players !");
             return;
         }

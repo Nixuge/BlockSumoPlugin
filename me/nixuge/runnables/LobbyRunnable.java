@@ -2,7 +2,7 @@ package me.nixuge.runnables;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.nixuge.config.GameConfig;
+import me.nixuge.config.Config;
 
 public class LobbyRunnable extends BukkitRunnable {
 
@@ -11,8 +11,8 @@ public class LobbyRunnable extends BukkitRunnable {
     private int remainingTime = 0;
 
     public LobbyRunnable() {
-        this.minPlayerCount = GameConfig.getMinPlayers();
-        this.maxPlayerCount = GameConfig.getMaxPlayers();
+        this.minPlayerCount = Config.game.getMinPlayers();
+        this.maxPlayerCount = Config.game.getMaxPlayers();
     }
 
     @Override

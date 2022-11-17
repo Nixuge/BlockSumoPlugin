@@ -3,12 +3,18 @@ package me.nixuge.config;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class GameConfig {
-    private static final ConfigurationSection conf = Config.getFileConfigBlock("game");
-
-    public static int getMinPlayers() {
-        return conf.getInt("minimumPlayerCount");
+    public GameConfig(ConfigurationSection conf) {
+        minPlayerCount = conf.getInt("minPlayerCount");
+        maxPlayerCount = conf.getInt("maxPlayerCount");
     }
-    public static int getMaxPlayers() {
-        return conf.getInt("maxPlayerCount");
+
+    private final int minPlayerCount;
+    private final int maxPlayerCount;
+
+    public int getMinPlayers() {
+        return minPlayerCount;
+    }
+    public int getMaxPlayers() {
+        return maxPlayerCount;
     }
 }

@@ -7,20 +7,34 @@ import org.bukkit.configuration.file.FileConfiguration;
 import me.nixuge.BlockSumo;
 
 public class Config {
-    //not using an interface bc static thingys cant be inherited
-    //TODO: write the config system
-    //the kit config was moved on the "objects/Kit.java" file
+    // WHY THIS WEIRD FORMAT?
+    // main reason: I want to access things using
+    // Config.<map/game/etc>.getSomething()
+    // and that's about it, hence why those classes are pretty exotic
+    // this is the file that handles the actual config management, other classes are
+    // mostly parsing
 
-    //note:
-    //do all the parsing here (or at least in the "config" folder, with this as a "config main"
-    //& other files are specified config)
-    //and have all of the logic to transform the yml into objects here
-    //so you can just call for example TargetConfig.getTargetHeight
+    // HOW OTHER FILES ARE STRUCTURED:
+    // 1- All of the fields are set without an assignement as final values
+    // 2- The constructor does the job of basically running all of the logic to
+    //// parse those values & set them
+    // 3- The rest of the class is just getters for easy access
+
+    // would've liked to use inheritance, but unneeded & overcomplicated for this.
+
     private static BlockSumo plugin = BlockSumo.getInstance();
     private static FileConfiguration fileConf;
+    public static ExpiringBlockConfig expiringBlock;
+    public static GameConfig game;
+    public static MapConfig map;
+    public static TargetConfig target;
 
-    public static void setFileConfig(FileConfiguration fileConf) {
+    public static void init(FileConfiguration fileConf) {
         Config.fileConf = fileConf;
+        expiringBlock = new ExpiringBlockConfig(getFileConfigBlock("expiringBlock"));
+        game = new GameConfig(getFileConfigBlock("game"));
+        map = new MapConfig(getFileConfigBlock("map"));
+        target = new TargetConfig(getFileConfigBlock("target"));
     }
 
     public static void enable() {
@@ -28,15 +42,11 @@ public class Config {
         plugin.saveConfig();
     }
 
-    public FileConfiguration getFileConfig() {
-        return fileConf;
-    }
-
-    public static void getSpawns() {
-        Bukkit.broadcastMessage(GameConfig.getMaxPlayers() + "");
-        MapConfig.getCenterBlock();
-    }
     public static ConfigurationSection getFileConfigBlock(String str) {
         return fileConf.getConfigurationSection(str);
+    }
+
+    public static void test() {
+        Bukkit.broadcastMessage(expiringBlock.getTickBreakTime() + "");
     }
 }

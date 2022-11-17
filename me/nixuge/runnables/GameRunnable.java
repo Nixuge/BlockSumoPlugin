@@ -21,8 +21,8 @@ public class GameRunnable extends BukkitRunnable {
     private final BlockSumo plugin = BlockSumo.getInstance();
     private final Random rand = new Random();
 
-    private int time = 1;
-    private int previousLastMiddleBonusSpawn = 59;
+    private int time = 0;
+    private int previousLastMiddleBonusSpawn = 39;
     private int lastMiddleBonusSpawn = 40;
     private int lastGlobalBonusSpawn = 1;
 

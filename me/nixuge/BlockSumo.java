@@ -57,7 +57,7 @@ public class BlockSumo extends JavaPlugin {
     public void init() {
         //set vars & config (order is important)
         main = this;
-        Config.setFileConfig(this.getConfig());
+        Config.init(this.getConfig());
         Config.enable();
         pluginManager = getServer().getPluginManager();
         gameManager = new GameManager();

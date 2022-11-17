@@ -12,7 +12,24 @@ import me.nixuge.objects.maths.Area;
 import me.nixuge.objects.maths.XYZ;
 
 public class MapConfig {
-    private static final ConfigurationSection conf = Config.getFileConfigBlock("map");
+    public MapConfig(ConfigurationSection conf) {
+        centerArea = new Area(
+                getXYZfromString(conf.getString("centerAreaFirstCorner")),
+                getXYZfromString(conf.getString("centerAreaSecondCorner")));
+        world = Bukkit.getWorld(conf.getString("world"));
+
+        centerBlock = getXYZfromString(conf.getString("centerBlock")).asLocation(getWorld()).add(.5, 1, .5);
+
+        spawns = new ArrayList<>();
+        for (String str : conf.getStringList("spawns")) {
+            spawns.add(getXYZfromString(str).asLocation(getWorld()).add(.5, 1, .5));
+        }
+    }
+
+    private final Area centerArea;
+    private final Location centerBlock;
+    private final World world;
+    private final List<Location> spawns;
 
     private static XYZ getXYZfromString(String str) {
         String[] parts = str.split(" ");
@@ -38,33 +55,20 @@ public class MapConfig {
         return new XYZ(xyz[0], xyz[1], xyz[2]);
     }
 
-    private static Location getCenterLocation(Location loc) {
-        // should mutate original as well but still returning
-        loc.add(.5, 0, .5);
-        return loc;
+    public World getWorld() {
+        return world;
     }
 
-    public static World getWorld() {
-        return Bukkit.getWorld(conf.getString("world"));
+    public Area getCenterArea() {
+        return centerArea;
     }
 
-    public static Area getCenterArea() {
-        return new Area(
-                getXYZfromString(conf.getString("centerAreaFirstCorner")),
-                getXYZfromString(conf.getString("centerAreaSecondtCorner")));
+    public Location getCenterBlock() {
+        return centerBlock;
     }
 
-    public static Location getCenterBlock() {
-        return getCenterLocation(getXYZfromString(conf.getString("centerBlock")).asLocation(getWorld())).add(.5, 1, .5);
-    }
+    public List<Location> getSpawns() {
 
-    public static List<Location> getSpawns() {
-        List<Location> spawns = new ArrayList<>();
-
-        for (String str : conf.getStringList("spawns")) {
-            spawns.add(getXYZfromString(str).asLocation(getWorld()).add(.5, 1, .5));
-        }
-        Bukkit.broadcastMessage(spawns + "");
         return spawns;
     }
 }

@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
+import me.nixuge.config.Config;
 import me.nixuge.enums.Color;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
@@ -39,7 +40,7 @@ public class BlockPlaceDestroyListener implements Listener {
         Color color = bsPlayer.getColor();
 
         if ( centerArea.containsBlock(block.getLocation()) ) {
-            bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color, 60, 0));
+            bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color, Config.expiringBlock.getCenterTickBreakTime(), Config.expiringBlock.getCenterTickBreakStartTime()));
         } else {
             bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color));
         }

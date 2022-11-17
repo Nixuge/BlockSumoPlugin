@@ -10,3 +10,11 @@ map: #NOTE: use block coordinates (ints without ,s)
     - 0 1 0
     - 5 1 5
     - 10 1 10
+expiringBlock:
+  tickBreakTime: 1200
+  tickBreakStartTime: 900
+  centerTickBreakTime: 60
+  centerTickBreakStartTime: 0
+  minColorChangeCount: 1
+  maxColorChangeCount: 6
+language: fr
