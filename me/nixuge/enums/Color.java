@@ -4,7 +4,6 @@ import java.util.Random;
 
 import org.bukkit.DyeColor;
 
-@SuppressWarnings("deprecation")
 public enum Color {
     DARK_RED("§4", DyeColor.RED),
     RED("§c", DyeColor.RED),
@@ -32,7 +31,8 @@ public enum Color {
     public DyeColor getDyeColor() {
         return dyeColor;
     }
-
+    
+    @SuppressWarnings("deprecation")
     public byte getWoolByteColor() {
         return dyeColor.getWoolData();
     }

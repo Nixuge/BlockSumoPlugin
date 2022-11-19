@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import me.nixuge.config.Lang;
 import me.nixuge.objects.Kit;
 
 public class KitEdit {
@@ -43,7 +44,7 @@ public class KitEdit {
     }
 
     public void spawnInventory() {
-        Inventory inv = Bukkit.createInventory(p, 0, "Please organize your");
+        Inventory inv = Bukkit.createInventory(p, 0, Lang.get("kit.organiseInventory"));
         p.openInventory(inv);
 
         Inventory playerInventory = p.getInventory();
@@ -52,8 +53,8 @@ public class KitEdit {
         Kit currentKit = Kit.loadKit(p);
         currentKit.useKit(p, false);
 
-        playerInventory.setItem(17, ItemUtils.getItemStack(Material.DIAMOND_SWORD, "§aSave kit"));
-        playerInventory.setItem(16, ItemUtils.getItemStack(Material.BARRIER, "§cCancel kit edit"));
+        playerInventory.setItem(17, ItemUtils.getItemStack(Material.DIAMOND_SWORD, Lang.get("kit.saveKit")));
+        playerInventory.setItem(16, ItemUtils.getItemStack(Material.BARRIER, Lang.get("kit.cancelKit")));
     }
 
     public void saveKit() {
@@ -69,7 +70,7 @@ public class KitEdit {
             closeInventory();
             new Kit(items).saveKit(p);
         } else {
-            p.sendMessage("§cInvalid kit !");
+            p.sendMessage(Lang.get("kit.invalidKit"));
         }
     }
 
@@ -79,7 +80,7 @@ public class KitEdit {
 
     public void onInventoryClose() {
         // note: to be called only on inventory close
-        String str = success ? "§aSaved kit !" : "§cKit edit cancelled !";
+        String str = success ? Lang.get("kit.savedKit") : Lang.get("kit.cancelledKit");
         p.sendMessage(str);
         p.getInventory().clear();
         kitEdits.remove(this);

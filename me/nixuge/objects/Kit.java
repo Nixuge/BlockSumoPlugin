@@ -14,6 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.config.Lang;
 import me.nixuge.utils.ItemUtils;
 
 public class Kit {
@@ -93,7 +94,7 @@ public class Kit {
         try {
             c.save(new File(folderPath, p.getName() + ".yml"));
         } catch (IOException e) {
-            p.sendMessage("§l§4Critical error happened. Please report.");
+            p.sendMessage(Lang.get("errors.kit.critical"));
             e.printStackTrace();
         }
     }

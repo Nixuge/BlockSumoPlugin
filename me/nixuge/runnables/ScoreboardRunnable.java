@@ -17,6 +17,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
+import me.nixuge.config.Lang;
 import me.nixuge.enums.Color;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
@@ -58,17 +59,17 @@ public class ScoreboardRunnable extends BukkitRunnable {
         // if bonus spawning, display that
         int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
         if (isEnded) {
-            currentSBValues.put(incr.getNumber(), "§nGame ended !");
+            currentSBValues.put(incr.getNumber(), Lang.get("scoreboard.gameEnded"));
             currentSBValues.put(incr.getNumber(), "§r§r§r§r§r§l§r");
-        
-        } else if (messageTimer > 0 || nextSpawnTime > -3){// -3 = 3s after the bonus spawn
+
+        } else if (messageTimer > 0 || nextSpawnTime > -3) {// -3 = 3s after the bonus spawn
             if (messageTimer > 0) {
                 currentSBValues.put(incr.getNumber(), message);
                 messageTimer--;
-            } 
-            if (nextSpawnTime > -3) { 
-                String s = nextSpawnTime > 0 ? "§6§lOP Bonus§r§f in §a" + nextSpawnTime + "s"
-                        : "§6§lOP Bonus§r§f spawned !";
+            }
+            if (nextSpawnTime > -3) {
+                String s = nextSpawnTime > 0 ? Lang.get("scoreboard.opSpawnIn", nextSpawnTime)
+                        : Lang.get("scoreboard.opSpawnNow");
                 currentSBValues.put(incr.getNumber(), s);
             }
             currentSBValues.put(incr.getNumber(), "§r§r§r§r§r§r");
@@ -112,7 +113,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         pingIndex = incr.getNumber();
         killsIndex = incr.getNumber(); // "kills" line
         currentSBValues.put(incr.getNumber(),
-                "§fTimer: " + TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime()));
+                Lang.get("scoreboard.timer", TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime())));
     }
 
     @Override
@@ -142,11 +143,9 @@ public class ScoreboardRunnable extends BukkitRunnable {
             // build scoreboard from the map
             currentSBValues.forEach((index, string) -> objective.getScore(string).setScore(index));
             // build the missing ping key (different for every player)
-            objective.getScore("Ping: §c" + ((CraftPlayer) p).getHandle().ping + "ms").setScore(pingIndex);
+            objective.getScore(Lang.get("scoreboard.ping", ((CraftPlayer) p).getHandle().ping)).setScore(pingIndex);
             // same for kills
-            objective.getScore("§fKills: §c" + bsPlayer.getKills()).setScore(killsIndex);
-            
-            
+            objective.getScore(Lang.get("scoreboard.kills", bsPlayer.getKills())).setScore(killsIndex);
 
             if (bsPlayer.isLoggedOn())
                 p.setScoreboard(scoreboard);

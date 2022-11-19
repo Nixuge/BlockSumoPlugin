@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
+import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.runnables.particle.PlayerRespawnParticle;
 
@@ -31,14 +32,15 @@ public class PlayerRespawnListener implements Listener {
             plugin.getGameMgr().checkGameEnd();
         }
 
-        //note: need to call the respawn event manually
-        //since spigot().respawn() doesn't
         new BukkitRunnable() {
             @Override
             public void run() {
                 p.spigot().respawn();
             }
         }.runTaskLater(plugin, 10);
+
+        //note: need to call the respawn event manually
+        //since spigot().respawn() doesn't
         onRespawn(new PlayerRespawnEvent(p, null, false));
     }
 
@@ -51,7 +53,7 @@ public class PlayerRespawnListener implements Listener {
             p.setGameMode(GameMode.SPECTATOR);
             Location spawn = gameMgr.getMcMap().getCenter();
             event.setRespawnLocation(spawn);
-            p.sendMessage("You're now dead.");
+            p.sendMessage(Lang.get("general.dead"));
             return;
         }
 

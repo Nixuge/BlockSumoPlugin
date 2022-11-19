@@ -7,12 +7,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.PlayerManager;
+import me.nixuge.config.Lang;
 import me.nixuge.utils.ScoreboardUtils;
 
 public class LobbyJoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        event.setJoinMessage(event.getPlayer().getName() + " joined the lobby !");
+        event.setJoinMessage(Lang.get("joinQuit.lobby.joined", event.getPlayer().getName()));
         
         ScoreboardUtils.resetScoreboard(event.getPlayer());
 
@@ -22,7 +23,7 @@ public class LobbyJoinQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        event.setQuitMessage(event.getPlayer().getName() + " left the lobby !");
+        event.setQuitMessage(Lang.get("joinQuit.lobby.left", event.getPlayer().getName()));
 
         PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         mgr.removePlayer(event.getPlayer());

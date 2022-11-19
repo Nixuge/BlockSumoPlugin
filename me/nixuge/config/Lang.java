@@ -27,22 +27,15 @@ public class Lang {
         langCfg = YamlConfiguration.loadConfiguration(stream);
     }
 
-    // public static String get(String key) {
-    //     return get(key);
-    // }
-
-    // public static String get(String key, Object format) {
-    //     return get(key, new Object[] { format });
-    // }
-
     public static String get(String key, Object... formats) {
         if (langCfg == null)
-            return "null langCfg. Please call setLanguage before trying to get a key !";
+            return "null langCfg. Please call setLanguage";
 
         String unformattedString = langCfg.getString(key);
-        if (unformattedString == null)
-            return "null string for key \"" + key
-                    + "\". Something is wrong with either the plugin or the language file.";
+        if (unformattedString == null) {
+            Bukkit.broadcastMessage("ERROR WITH KEY " + key + ". Either the plugin or the locale files have a problem.");
+            return "null :/";
+        }
 
         return String.format(unformattedString, formats);
     }

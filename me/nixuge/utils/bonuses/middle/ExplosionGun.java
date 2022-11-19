@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.GameManager;
+import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.utils.PacketUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -18,7 +19,7 @@ public class ExplosionGun {
         int timer = gameMgr.getGameRunnable().getTime();
         int lastExplosionGunFire = bsPlayer.getLastExplosionGunFire();
         if (lastExplosionGunFire + 2 > timer) {
-            p.sendMessage("§6Please wait a bit before exploding something again");
+            p.sendMessage(Lang.get("bonuses.explosionGunWait"));
             return;
         }
 
@@ -40,7 +41,7 @@ public class ExplosionGun {
 
             loc = new Location(gameMgr.getMcMap().getWorld(), x, y, z); 
             if (loc.getBlock().getType() != Material.AIR) {
-                p.sendMessage("§4§l§nB O O M !");
+                p.sendMessage(Lang.get("bonuses.explosionGun"));
                 p.getWorld().createExplosion(loc, 3f, false);
                 bsPlayer.setLastExplosionGunFire(timer);
                 switch (item.getDurability()) {
@@ -57,6 +58,6 @@ public class ExplosionGun {
                 return;
             }
         }
-        p.sendMessage("§6Aim at a block to made it explode.");
+        p.sendMessage(Lang.get("bonuses.explosionGunBadAim"));
     }
 }

@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.config.Config;
+import me.nixuge.config.Lang;
 import me.nixuge.enums.Color;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
@@ -59,7 +60,7 @@ public class BlockPlaceDestroyListener implements Listener {
         if (gameMgr.getGameState() != GameState.PLAYING) return;
 
         if (event.getBlock().getType() != Material.WOOL) {
-            event.getPlayer().sendMessage("Can't destroy that block !");
+            event.getPlayer().sendMessage(Lang.get("general.cantDestroyBlock"));
             event.setCancelled(true);
             event.getPlayer().updateInventory(); //in case used w a kb sword in hand
             return;

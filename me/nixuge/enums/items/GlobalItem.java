@@ -4,14 +4,47 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
+import me.nixuge.config.Lang;
 import me.nixuge.utils.ItemUtils;
 
 public enum GlobalItem {
-    FIREBALL("fireball", ItemUtils.getItemStack(Material.FIREBALL, "Fireball", 1, "Explosion")),
-    SNOWBALLS("snowballs", ItemUtils.getItemStack(Material.SNOW_BALL, "Snowball", 8, "Snowboule")),
-    SMALL_BAT("small bat", ItemUtils.getItemStack(Material.WOOD_SWORD, "Small bat", 1, "§fHits hard but not too much", Enchantment.KNOCKBACK, 1, null, 0, (short)59)),
-    TNT("TNT", ItemUtils.getItemStack(Material.TNT, "TNT", 1, "§4BOOM")),
-    BOUNCE_FEATHER("Bouncy feather", ItemUtils.getItemStack(Material.FEATHER, "Bouncy feather", 1, "Goes wooosh"));
+    FIREBALL(Lang.get("bonusItems.normal.fireball.name"),
+            ItemUtils.getItemStack(
+                    Material.FIREBALL,
+                    Lang.get("bonusItems.normal.fireball.name"),
+                    1,
+                    Lang.get("bonusItems.normal.fireball.lore"))),
+
+    SNOWBALLS(Lang.get("bonusItems.normal.snowballs.name"),
+            ItemUtils.getItemStack(
+                    Material.SNOW_BALL,
+                    Lang.get("bonusItems.normal.snowballs.name"),
+                    8,
+                    Lang.get("bonusItems.normal.snowballs.lore"))),
+
+    SMALL_BAT(Lang.get("bonusItems.normal.smallBat.name"),
+            ItemUtils.getItemStack(
+                    Material.WOOD_SWORD,
+                    Lang.get("bonusItems.normal.smallBat.name"),
+                    1,
+                    Lang.get("bonusItems.normal.smallBat.lore"),
+                    Enchantment.KNOCKBACK, 1,
+                    null, 0,
+                    (short) 59)),
+
+    TNT(Lang.get("bonusItems.normal.tnt.name"),
+            ItemUtils.getItemStack(
+                    Material.TNT,
+                    Lang.get("bonusItems.normal.tnt.name"),
+                    1,
+                    Lang.get("bonusItems.normal.tnt.lore"))),
+
+    BOUNCE_FEATHER(Lang.get("bonusItems.normal.bouncyFeather.name"),
+            ItemUtils.getItemStack(
+                    Material.FEATHER,
+                    Lang.get("bonusItems.normal.bouncyFeather.name"),
+                    1,
+                    Lang.get("bonusItems.normal.bouncyFeather.lore")));
 
     private final String name;
     private final ItemStack itemStack;
@@ -24,8 +57,8 @@ public enum GlobalItem {
     public ItemStack getItemStack() {
         return itemStack;
     }
+
     public String getName() {
         return name;
     }
 }
-
