@@ -5,6 +5,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.config.InnerConfigs.ExpiringBlockConfig;
+import me.nixuge.config.InnerConfigs.GameConfig;
+import me.nixuge.config.InnerConfigs.GeneralConfig;
+import me.nixuge.config.InnerConfigs.MapConfig;
+import me.nixuge.config.InnerConfigs.TargetConfig;
 
 public class Config {
     // WHY THIS WEIRD FORMAT?
@@ -28,6 +33,7 @@ public class Config {
     public static GameConfig game;
     public static MapConfig map;
     public static TargetConfig target;
+    public static GeneralConfig general;
 
     public static void init(FileConfiguration fileConf) {
         Config.fileConf = fileConf;
@@ -35,6 +41,7 @@ public class Config {
         game = new GameConfig(getFileConfigBlock("game"));
         map = new MapConfig(getFileConfigBlock("map"));
         target = new TargetConfig(getFileConfigBlock("target"));
+        general = new GeneralConfig(getFileConfigBlock("general"));
     }
 
     public static void enable() {
@@ -44,9 +51,5 @@ public class Config {
 
     public static ConfigurationSection getFileConfigBlock(String str) {
         return fileConf.getConfigurationSection(str);
-    }
-
-    public static void test() {
-        Bukkit.broadcastMessage(expiringBlock.getTickBreakTime() + "");
     }
 }

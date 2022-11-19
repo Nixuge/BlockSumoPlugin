@@ -10,6 +10,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import me.nixuge.config.Config;
+import me.nixuge.config.Lang;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.McMap;
@@ -99,14 +100,14 @@ public class GameManager {
     public void startGame(boolean bypass) {
         // checks
         if (pManager.getPlayers().size() < Config.game.getMinPlayers() && !bypass) {
-            Bukkit.broadcastMessage("Not enough players !");
+            Bukkit.broadcastMessage(Lang.get("game.starting.notEnoughPlayers"));
             return;
         }
         if (state != GameState.WAITING && !bypass) {
-            Bukkit.broadcastMessage("Wrong state to start a game !" + state);
+            Bukkit.broadcastMessage(Lang.get("game.starting.wrongState", state));
             return;
         }
-        TextUtils.broadcastGame("Starting!");
+        TextUtils.broadcastGame(Lang.get("game.starting.starting"));
 
         setGameState(GameState.PLAYING);
 
@@ -147,7 +148,8 @@ public class GameManager {
         gameRunnable.cancel();
 
         //TODO HERE: better end bc this sucks
-        Bukkit.broadcastMessage("GAME DONE PLAYING ! WINNER(s):");
+        //TODO: gamedonewinner insteaed of gamedonewinners when single winner
+        Bukkit.broadcastMessage(Lang.get("game.ending.gameDoneWinners"));
         for (BsPlayer p : winners) {
             Bukkit.broadcastMessage(p.getBukkitPlayer().getName());
         }

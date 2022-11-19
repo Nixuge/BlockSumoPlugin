@@ -11,6 +11,7 @@ import me.nixuge.commands.dev.JoinCommand;
 import me.nixuge.commands.dev.StartCommand;
 import me.nixuge.commands.dev.TestCommand;
 import me.nixuge.config.Config;
+import me.nixuge.config.Lang;
 import me.nixuge.listeners.ItemSpawnDropListener;
 import me.nixuge.listeners.PlayerDamageListener;
 import me.nixuge.listeners.RandomChangeListener;
@@ -19,11 +20,9 @@ import me.nixuge.utils.ScoreboardUtils;
 
 public class BlockSumo extends JavaPlugin {
 
-    //TODO URGENT: config system for:
-    // kits
-    // localization
+    //TODO: add in config:
     // blocs to be destroyed & to not be destroyed
-    // target system?
+    // target system
 
     // TODO: add sounds
     // TODO: target system
@@ -59,6 +58,7 @@ public class BlockSumo extends JavaPlugin {
         main = this;
         Config.init(this.getConfig());
         Config.enable();
+        Lang.setLanguage(Config.general.getLanguage());
         pluginManager = getServer().getPluginManager();
         gameManager = new GameManager();
 
@@ -79,7 +79,8 @@ public class BlockSumo extends JavaPlugin {
     public void onEnable() {
         init();
 
-        Bukkit.broadcastMessage("enabled");
+        Bukkit.broadcastMessage(Lang.get("general.pluginEnabled"));
+
         getCommand("join_blocksumo").setExecutor(new JoinCommand());
         getCommand("end_blocksumo").setExecutor(new EndCommand());
         getCommand("start_blocksumo").setExecutor(new StartCommand());

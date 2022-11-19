@@ -1,4 +1,4 @@
-package me.nixuge.config;
+package me.nixuge.config.InnerConfigs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
+import me.nixuge.config.Lang;
 import me.nixuge.objects.maths.Area;
 import me.nixuge.objects.maths.XYZ;
 
@@ -20,6 +21,7 @@ public class MapConfig {
 
         centerBlock = getXYZfromString(conf.getString("centerBlock")).asLocation(getWorld()).add(.5, 1, .5);
 
+        //TODO: add orientation parsing
         spawns = new ArrayList<>();
         for (String str : conf.getStringList("spawns")) {
             spawns.add(getXYZfromString(str).asLocation(getWorld()).add(.5, 1, .5));
@@ -34,8 +36,7 @@ public class MapConfig {
     private static XYZ getXYZfromString(String str) {
         String[] parts = str.split(" ");
         if (parts.length != 3) {
-            Bukkit.broadcastMessage("§l§4Wrong number of string parts to create an XYZ object (" + parts.length
-                    + " instead of 3). @getXYZfromString for string \"" + str + "\".");
+            Bukkit.broadcastMessage(Lang.get("errors.mapConfig.wrongParse1", parts.length, str));
             return new XYZ(0, 0, 0);
         }
 
@@ -46,8 +47,7 @@ public class MapConfig {
             try {
                 xyz[i] = Integer.parseInt(part);
             } catch (NumberFormatException e) {
-                Bukkit.broadcastMessage(
-                        "§l§4ERROR IN CONF! @getXYZfromString for value \"" + part + "\" for string \"" + str + "\".");
+                Bukkit.broadcastMessage(Lang.get("errors.mapConfig.wrongParse2", part, str));
                 xyz[i] = 0;
             }
         }
@@ -68,7 +68,6 @@ public class MapConfig {
     }
 
     public List<Location> getSpawns() {
-
         return spawns;
     }
 }

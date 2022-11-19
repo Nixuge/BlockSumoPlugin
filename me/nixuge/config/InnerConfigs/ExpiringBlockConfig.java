@@ -1,4 +1,4 @@
-package me.nixuge.config;
+package me.nixuge.config.InnerConfigs;
 
 import org.bukkit.configuration.ConfigurationSection;
 

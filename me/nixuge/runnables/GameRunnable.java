@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.config.Lang;
 import me.nixuge.enums.items.GlobalItem;
 import me.nixuge.enums.items.MiddleItem;
 import me.nixuge.objects.BsPlayer;
@@ -32,11 +33,11 @@ public class GameRunnable extends BukkitRunnable {
         manageGlobalBonus();
 
         if (time == 1140) {
-            TextUtils.broadcastGame("§4§lGame ending in 1 minute.");
+            TextUtils.broadcastGame(Lang.get("game.ending.endingOneMinute"));
         } else if (time >= 1200) {
             plugin.getGameMgr().forceEndGame();
         } else if (time > 1190) {
-            TextUtils.broadcastGame("§4§lGame ending in " + (1200 - time) + "s.");
+            TextUtils.broadcastGame(Lang.get("game.ending.endingXSeconds", (1200 - time)));
         }
 
         time++;
@@ -55,7 +56,7 @@ public class GameRunnable extends BukkitRunnable {
 
     private void manageMiddleBonus() {
         if (lastMiddleBonusSpawn == -10) {
-            TextUtils.broadcastGame("§7An §6§lOP Bonus§r§7 will be spawning in §a10s§7.");
+            TextUtils.broadcastGame(Lang.get("bonuses.opInTenSeconds"));
 
         } else if (lastMiddleBonusSpawn == 0) {
             spawnMiddleBonus();
@@ -86,7 +87,7 @@ public class GameRunnable extends BukkitRunnable {
 
         MiddleItem item = MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
         ItemStack stack = item.getItemStack();
-        TextUtils.broadcastGame("§e" + item.getPrefix() + " §6§n" + item.getName() + "§r§e spawned at mid!");
+        TextUtils.broadcastGame(Lang.get("bonuses.opSpawn", item.getName()));
 
         McMap map = plugin.getGameMgr().getMcMap();
         map.getWorld().dropItemNaturally(map.getCenter(), stack);
@@ -97,8 +98,8 @@ public class GameRunnable extends BukkitRunnable {
         ItemStack stack = item.getItemStack();
         
         for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {
-            plugin.getGameMgr().getScoreboardRunnable().addMessage("Got " + item.getPrefix() + " §b§n" + item.getName() + "§r !");
-            TextUtils.broadcastGame("§7Everyone got " + item.getPrefix() + " §b§n" + item.getName() + "§r§7.");
+            plugin.getGameMgr().getScoreboardRunnable().addMessage(Lang.get("scoreboard.gotItem", item.getName()));
+            TextUtils.broadcastGame(Lang.get("bonuses.normalSpawn", item.getName()));
             p.getBukkitPlayer().getInventory().addItem(stack);
         }
     }

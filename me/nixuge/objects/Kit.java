@@ -13,9 +13,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import me.nixuge.BlockSumo;
 import me.nixuge.utils.ItemUtils;
 
 public class Kit {
+    private static BlockSumo plugin = BlockSumo.getInstance();
+
     public static boolean isInventoryValid(ItemStack[] items) {
         //possible materials hardcoded
         //note: this inventory allows inventories of more than 8 size,
@@ -49,7 +52,7 @@ public class Kit {
 
     // thanks to https://bukkit.org/threads/saving-individual-players-kits.375693/
     // for the inspiration
-    private static String folderPath = "plugins" + File.separator + "BlockSumo" + File.separator + "Kits";
+    private static String folderPath = plugin.getDataFolder() + File.separator + "BlockSumo" + File.separator + "Kits";
 
     public static Kit loadDefaultKit() {
         ItemStack[] content = new ItemStack[36];

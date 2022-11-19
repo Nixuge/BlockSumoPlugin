@@ -7,13 +7,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.config.Lang;
 
 public class StartCommand implements CommandExecutor{
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) return false;
-        Bukkit.broadcastMessage("IMPORTANT: dev command, testing only NEEDS TO BE REMOVED IN THE FINAL BUILD.");
+        Bukkit.broadcastMessage(Lang.get("debug.startCommand"));
         
         BlockSumo plugin = BlockSumo.getInstance();
         plugin.init();

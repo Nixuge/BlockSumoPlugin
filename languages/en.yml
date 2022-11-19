@@ -1,1 +1,31 @@
-#TODO too
+general:
+  pluginEnabled: "Plugin enabled !"
+
+game:
+  starting:
+    notEnoughPlayers: "Not enough players to start a game !"
+    wrongState: "Wrong state to start a game ! %s"
+    starting: "Starting game !"
+  ending:
+    endingOneMinute: "§4§lGame ending in 1 minute."
+    endingXSeconds: "§4§lGame ending in %ds."
+    gameDoneWinner: "Game ended ! Winner:"
+    gameDoneWinners: "Game ended ! Winners:"
+
+bonuses:
+  opInTenSeconds: "§7An §6§lOP Bonus§r§7 will be spawning in §a10s§7."
+  opSpawn: "§6§n%s§r§e spawned at mid!"
+  normalSpawn: "§7Everyone got §b§n%s§r§7."
+  tntRain: "§6TNT rain for everyone !"
+
+scoreboard:
+  gotItem: "Got §b§n" +  + "§r !"
+
+debug:
+  startCommand: "IMPORTANT: dev command, testing only NEEDS TO BE REMOVED IN THE FINAL BUILD."
+  endCommand: "Calling init; DEBUG COMMAND ONLY ! CAUSES ISSUES WITH PARTICLE TIMINGS AND MAYBE OTHER, USE WITH CAUTION!"
+
+errors:
+  mapConfig:
+    wrongParse1: "§l§4Wrong number of string parts to create an XYZ object (%d instead of 3). @getXYZfromString for string \"%s\"."
+    wrongParse2: "§l§4ERROR IN CONF! @getXYZfromString for value \"%s\" for string \"%s\"."
