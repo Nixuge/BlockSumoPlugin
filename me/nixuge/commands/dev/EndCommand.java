@@ -15,7 +15,7 @@ public class EndCommand implements CommandExecutor{
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) return false;
 
-        Bukkit.broadcastMessage(Lang.get("debug.endCommand"));
+        Bukkit.broadcastMessage(Lang.get("debug.endcommand"));
         BlockSumo.getInstance().init();
 
         return true;

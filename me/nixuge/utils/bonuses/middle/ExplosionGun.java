@@ -19,7 +19,7 @@ public class ExplosionGun {
         int timer = gameMgr.getGameRunnable().getTime();
         int lastExplosionGunFire = bsPlayer.getLastExplosionGunFire();
         if (lastExplosionGunFire + 2 > timer) {
-            p.sendMessage(Lang.get("bonuses.explosionGunWait"));
+            p.sendMessage(Lang.get("bonuses.explosiongunwait"));
             return;
         }
 
@@ -41,7 +41,7 @@ public class ExplosionGun {
 
             loc = new Location(gameMgr.getMcMap().getWorld(), x, y, z); 
             if (loc.getBlock().getType() != Material.AIR) {
-                p.sendMessage(Lang.get("bonuses.explosionGun"));
+                p.sendMessage(Lang.get("bonuses.explosiongun"));
                 p.getWorld().createExplosion(loc, 3f, false);
                 bsPlayer.setLastExplosionGunFire(timer);
                 switch (item.getDurability()) {
@@ -58,6 +58,6 @@ public class ExplosionGun {
                 return;
             }
         }
-        p.sendMessage(Lang.get("bonuses.explosionGunBadAim"));
+        p.sendMessage(Lang.get("bonuses.explosiongunbadaim"));
     }
 }

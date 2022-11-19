@@ -33,11 +33,11 @@ public class GameRunnable extends BukkitRunnable {
         manageGlobalBonus();
 
         if (time == 1140) {
-            TextUtils.broadcastGame(Lang.get("game.ending.endingOneMinute"));
+            TextUtils.broadcastGame(Lang.get("game.ending.endingoneminute"));
         } else if (time >= 1200) {
             plugin.getGameMgr().forceEndGame();
         } else if (time > 1190) {
-            TextUtils.broadcastGame(Lang.get("game.ending.endingXSeconds", (1200 - time)));
+            TextUtils.broadcastGame(Lang.get("game.ending.endingxseconds", (1200 - time)));
         }
 
         time++;
@@ -56,7 +56,7 @@ public class GameRunnable extends BukkitRunnable {
 
     private void manageMiddleBonus() {
         if (lastMiddleBonusSpawn == -10) {
-            TextUtils.broadcastGame(Lang.get("bonuses.opInTenSeconds"));
+            TextUtils.broadcastGame(Lang.get("bonuses.opintenseconds"));
 
         } else if (lastMiddleBonusSpawn == 0) {
             spawnMiddleBonus();
@@ -87,7 +87,7 @@ public class GameRunnable extends BukkitRunnable {
 
         MiddleItem item = MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
         ItemStack stack = item.getItemStack();
-        TextUtils.broadcastGame(Lang.get("bonuses.opSpawn", item.getName()));
+        TextUtils.broadcastGame(Lang.get("bonuses.opspawn", item.getName()));
 
         McMap map = plugin.getGameMgr().getMcMap();
         map.getWorld().dropItemNaturally(map.getCenter(), stack);
@@ -98,8 +98,8 @@ public class GameRunnable extends BukkitRunnable {
         ItemStack stack = item.getItemStack();
         
         for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {
-            plugin.getGameMgr().getScoreboardRunnable().addMessage(Lang.get("scoreboard.gotItem", item.getName()));
-            TextUtils.broadcastGame(Lang.get("bonuses.normalSpawn", item.getName()));
+            plugin.getGameMgr().getScoreboardRunnable().addMessage(Lang.get("scoreboard.gotitem", item.getName()));
+            TextUtils.broadcastGame(Lang.get("bonuses.normalspawn", item.getName()));
             p.getBukkitPlayer().getInventory().addItem(stack);
         }
     }

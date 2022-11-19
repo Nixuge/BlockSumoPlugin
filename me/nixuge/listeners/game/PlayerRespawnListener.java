@@ -1,5 +1,6 @@
 package me.nixuge.listeners.game;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -26,11 +27,16 @@ public class PlayerRespawnListener implements Listener {
         BsPlayer player = playerMgr.getExistingBsPlayerFromBukkit(p);
 
         player.removeLive();
-        playerMgr.getExistingBsPlayerFromBukkit(event.getEntity().getKiller()).addKill();
+
+        Player killer = event.getEntity().getKiller();
+        if (killer != null)
+            playerMgr.getExistingBsPlayerFromBukkit(killer).addKill();
 
         if (player.isDead()) {
             plugin.getGameMgr().checkGameEnd();
         }
+
+        // Bukkit.broadcastMessage("hello there " + event.getDeathMessage());
 
         new BukkitRunnable() {
             @Override

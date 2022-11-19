@@ -36,7 +36,7 @@ public class MapConfig {
     private static XYZ getXYZfromString(String str) {
         String[] parts = str.split(" ");
         if (parts.length != 3) {
-            Bukkit.broadcastMessage(Lang.get("errors.mapConfig.wrongParse1", parts.length, str));
+            Bukkit.broadcastMessage(Lang.get("errors.mapconfig.wrongparse1", parts.length, str));
             return new XYZ(0, 0, 0);
         }
 
@@ -47,7 +47,7 @@ public class MapConfig {
             try {
                 xyz[i] = Integer.parseInt(part);
             } catch (NumberFormatException e) {
-                Bukkit.broadcastMessage(Lang.get("errors.mapConfig.wrongParse2", part, str));
+                Bukkit.broadcastMessage(Lang.get("errors.mapconfig.wrongparse2", part, str));
                 xyz[i] = 0;
             }
         }

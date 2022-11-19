@@ -17,7 +17,7 @@ public class KitCommand implements CommandExecutor {
         if (!(sender instanceof Player)) return false;
         Player p = (Player)sender;
         if (BlockSumo.getInstance().getGameMgr().getGameState() != GameState.WAITING) {
-            p.sendMessage(Lang.get("kit.editUnavailable"));
+            p.sendMessage(Lang.get("kit.editunavailable"));
             return true;
         }
         

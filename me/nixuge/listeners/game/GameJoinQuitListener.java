@@ -16,13 +16,13 @@ public class GameJoinQuitListener implements Listener {
     public void onPlayerLogin(PlayerLoginEvent event) {
         PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         if (!mgr.isPlayerInGameList(event.getPlayer())) {
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Lang.get("joinQuit.game.alreadyStarted"));
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Lang.get("joinquit.game.alreadystarted"));
         }
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        event.setJoinMessage(Lang.get("joinQuit.game.rejoined", event.getPlayer().getName()));
+        event.setJoinMessage(Lang.get("joinquit.game.rejoined", event.getPlayer().getName()));
 
         PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         mgr.setPlayerLogin(event.getPlayer(), true);
@@ -30,7 +30,7 @@ public class GameJoinQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        event.setQuitMessage(Lang.get("joinQuit.game.quit", event.getPlayer().getName()));
+        event.setQuitMessage(Lang.get("joinquit.game.quit", event.getPlayer().getName()));
 
         PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         mgr.setPlayerLogin(event.getPlayer(), false);

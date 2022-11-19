@@ -13,7 +13,7 @@ import me.nixuge.utils.ScoreboardUtils;
 public class LobbyJoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        event.setJoinMessage(Lang.get("joinQuit.lobby.joined", event.getPlayer().getName()));
+        event.setJoinMessage(Lang.get("joinquit.lobby.joined", event.getPlayer().getName()));
         
         ScoreboardUtils.resetScoreboard(event.getPlayer());
 
@@ -23,7 +23,7 @@ public class LobbyJoinQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        event.setQuitMessage(Lang.get("joinQuit.lobby.left", event.getPlayer().getName()));
+        event.setQuitMessage(Lang.get("joinquit.lobby.left", event.getPlayer().getName()));
 
         PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
         mgr.removePlayer(event.getPlayer());

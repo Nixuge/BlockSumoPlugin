@@ -1,20 +1,20 @@
 general:
-  pluginEnabled: "Plugin enabled !"
-  cantDestroyBlock: "Can't destroy that block !"
+  pluginenabled: "Plugin enabled !"
+  cantdestroyblock: "Can't destroy that block !"
   dead: "You're now dead."
 
 game:
   starting:
-    notEnoughPlayers: "Not enough players to start a game !"
-    wrongState: "Wrong state to start a game ! %s"
+    notenoughplayers: "Not enough players to start a game !"
+    wrongstate: "Wrong state to start a game ! %s"
     starting: "Starting game !"
   ending:
-    endingOneMinute: "§4§lGame ending in 1 minute."
-    endingXSeconds: "§4§lGame ending in %ds."
-    gameDoneWinner: "Game ended ! Winner:"
-    gameDoneWinners: "Game ended ! Winners:"
+    endingoneminute: "§4§lGame ending in 1 minute."
+    endingxseconds: "§4§lGame ending in %ds."
+    gamedonewinner: "Game ended ! Winner:"
+    gamedonewinners: "Game ended ! Winners:"
 
-bonusItems:
+bonusitems:
   normal:
     fireball:
       name: "Fireball"
@@ -22,65 +22,65 @@ bonusItems:
     snowballs:
       name: "Snowballs"
       lore: "Some snowballs"
-    smallBat:
+    smallbat:
       name: "Small Bat"
       lore: "§fHits hard but not too much"
     tnt:
       name: "TNT"
       lore: "§4BOOM"
-    bouncyFeather:
+    bouncyfeather:
       name: "Bouncy Feather"
       lore: "Goes wooosh"
   middle:
-    bonusLife:
+    bonuslife:
       name: "Bonus Life"
       lore: "§aRight click to gain a live !"
-    tntRain:
+    tntrain:
       name: "TNT rain"
       lore: "§6Right click to spawn a tnt on everyone !"
-    jumpBoost:
+    jumpboost:
       name: "Jump Boost Potion"
       lore: "To go up fast"
-    megaBat:
+    megabat:
       name: "Mega bat"
       lore: "§f§bHITS HARD"
-    explosionGun:
+    explosiongun:
       name: "Explosion Gun"
       lore: "§6Right click pointing at a block to send someone in the air !"
 
 bonuses:
-  opInTenSeconds: "§7An §6§lOP Bonus§r§7 will be spawning in §a10s§7."
-  opSpawn: "§6§n%s§r§e spawned at mid!"
-  normalSpawn: "§7Everyone got §b§n%s§r§7."
-  tntRain: "§6TNT rain for everyone !"
-  bonusLife: "§aYou gained a life !"
-  explosionGunWait: "§6Please wait a bit before exploding something again"
-  explosionGunBadAim: "§6Aim at a block to made it explode."
-  explosionGun: "§4§l§nB O O M !"
+  opintenseconds: "§7An §6§lOP Bonus§r§7 will be spawning in §a10s§7."
+  opspawn: "§6§n%s§r§e spawned at mid!"
+  normalspawn: "§7Everyone got §b§n%s§r§7."
+  tntrain: "§6TNT rain for everyone !"
+  bonuslife: "§aYou gained a life !"
+  explosiongunwait: "§6Please wait a bit before exploding something again"
+  explosiongunbadaim: "§6Aim at a block to made it explode."
+  explosiongun: "§4§l§nB O O M !"
 
 kit:
   #Note for this one: in the next line the text "Inventory" (or equivalent for the clients language)
   #is displayed and can't be changed, hence why i'm stopping at "your".
-  organiseInventory: "Please organize your"
-  saveKit: "§aSave kit"
-  cancelKit: "§cCancel kit edit"
-  invalidKit: "§cInvalid kit !"
-  savedKit: "§aSaved kit !"
-  cancelledKit: "§cKit edit cancelled !"
-  editUnavailable: "Can't edit kit while in game."
+  organiseinventory: "Please organize your"
+  savekit: "§aSave kit"
+  cancelkit: "§cCancel kit edit"
+  invalidkit: "§cInvalid kit !"
+  savedkit: "§aSaved kit !"
+  cancelledkit: "§cKit edit cancelled !"
+  editunavailable: "Can't edit kit while in game."
 
 scoreboard:
   timer: "§fTimer: %s"
   kills: "§fKills: §c%d"
   ping: "Ping: §c%dms"
-  gotItem: "Got §b§n%s§r !"
-  opSpawnIn: "§6§lOP Bonus§r§f in §a%ds"
-  opSpawnNow: "§6§lOP Bonus§r§f spawned !"
-  gameEnded: "§nGame ended !"
+  gotitem: "Got §b§n%s§r !"
+  opspawnin: "§6§lOP Bonus§r§f in §a%ds"
+  opspawnnow: "§6§lOP Bonus§r§f spawned !"
+  gameended: "§nGame ended !"
 
-joinQuit:
+joinquit:
   game:
-    alreadyStarted: "§b§4Game already started !"
+    alreadystarted: "§b§4Game already started !"
     rejoined: "%s rejoined the game !"
     quit: "%s quit the game !"
   lobby:
@@ -88,12 +88,12 @@ joinQuit:
     left: "%s left the lobby !"
 
 debug:
-  startCommand: "IMPORTANT: dev command, testing only NEEDS TO BE REMOVED IN THE FINAL BUILD."
-  endCommand: "Calling init; DEBUG COMMAND ONLY ! CAUSES ISSUES WITH PARTICLE TIMINGS AND MAYBE OTHER, USE WITH CAUTION!"
+  startcommand: "IMPORTANT: dev command, testing only NEEDS TO BE REMOVED IN THE FINAL BUILD."
+  endcommand: "Calling init; DEBUG COMMAND ONLY ! CAUSES ISSUES WITH PARTICLE TIMINGS AND MAYBE OTHER, USE WITH CAUTION!"
 
 errors:
-  mapConfig:
-    wrongParse1: "§l§4Wrong number of string parts to create an XYZ object (%d instead of 3). @getXYZfromString for string \"%s\"."
-    wrongParse2: "§l§4ERROR IN CONF! @getXYZfromString for value \"%s\" for string \"%s\"."
+  mapconfig:
+    wrongparse1: "§l§4Wrong number of string parts to create an XYZ object (%d instead of 3). @getXYZfromString for string \"%s\"."
+    wrongparse2: "§l§4ERROR IN CONF! @getXYZfromString for value \"%s\" for string \"%s\"."
   kit:
     critical: "§l§4Critical error happened while handling kit files. Please report."

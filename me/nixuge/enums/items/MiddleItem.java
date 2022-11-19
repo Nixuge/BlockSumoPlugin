@@ -11,43 +11,43 @@ import me.nixuge.utils.ItemUtils;
 public enum MiddleItem {
     // honestly, to rework if possible
     // just as if for now to continue development
-    BONUS_LIFE(Lang.get("bonusItems.middle.bonusLife.name"),
+    BONUS_LIFE(Lang.get("bonusitems.middle.bonuslife.name"),
             ItemUtils.getItemStack(
                     Material.NETHER_STAR,
-                    Lang.get("bonusItems.middle.bonusLife.name"),
+                    Lang.get("bonusitems.middle.bonuslife.name"),
                     1,
-                    Lang.get("bonusItems.middle.bonusLife.lore"))),
+                    Lang.get("bonusitems.middle.bonuslife.lore"))),
 
-    TNTRAIN(Lang.get("bonusItems.middle.tntRain.name"),
+    TNTRAIN(Lang.get("bonusitems.middle.tntrain.name"),
             ItemUtils.getItemStack(
                     Material.BLAZE_POWDER,
-                    Lang.get("bonusItems.middle.tntRain.name"),
+                    Lang.get("bonusitems.middle.tntrain.name"),
                     1,
-                    Lang.get("bonusItems.middle.tntRain.lore"))),
+                    Lang.get("bonusitems.middle.tntrain.lore"))),
 
-    JUMPBOOST(Lang.get("bonusItems.middle.jumpBoost.name"),
+    JUMPBOOST(Lang.get("bonusitems.middle.jumpboost.name"),
             ItemUtils.getItemStackPotion(
-                    Lang.get("bonusItems.middle.jumpBoost.name"),
+                    Lang.get("bonusitems.middle.jumpboost.name"),
                     1,
-                    Lang.get("bonusItems.middle.jumpBoost.lore"),
+                    Lang.get("bonusitems.middle.jumpboost.lore"),
                     PotionEffectType.JUMP, 600, 5)),
 
-    MEGA_BAT(Lang.get("bonusItems.middle.megaBat.name"),
+    MEGA_BAT(Lang.get("bonusitems.middle.megabat.name"),
             ItemUtils.getItemStack(
                     Material.IRON_SWORD,
-                    Lang.get("bonusItems.middle.megaBat.name"),
+                    Lang.get("bonusitems.middle.megabat.name"),
                     1,
-                    Lang.get("bonusItems.middle.megaBat.lore"),
+                    Lang.get("bonusitems.middle.megabat.lore"),
                     Enchantment.KNOCKBACK, 10,
                     Enchantment.FIRE_ASPECT, 5,
                     (short) 250)),
 
-    EXPLOSION_GUN(Lang.get("bonusItems.middle.explosionGun.name"),
+    EXPLOSION_GUN(Lang.get("bonusitems.middle.explosiongun.name"),
             ItemUtils.getItemStack(
                     Material.GOLD_HOE,
-                    Lang.get("bonusItems.middle.explosionGun.name"),
+                    Lang.get("bonusitems.middle.explosiongun.name"),
                     1,
-                    Lang.get("bonusItems.middle.explosionGun.lore")));
+                    Lang.get("bonusitems.middle.explosiongun.lore")));
 
     private final String name;
     private final ItemStack itemStack;

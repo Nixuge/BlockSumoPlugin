@@ -14,7 +14,7 @@ public class StartCommand implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) return false;
-        Bukkit.broadcastMessage(Lang.get("debug.startCommand"));
+        Bukkit.broadcastMessage(Lang.get("debug.startcommand"));
         
         BlockSumo plugin = BlockSumo.getInstance();
         plugin.init();

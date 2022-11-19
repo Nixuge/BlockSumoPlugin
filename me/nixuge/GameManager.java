@@ -100,11 +100,11 @@ public class GameManager {
     public void startGame(boolean bypass) {
         // checks
         if (pManager.getPlayers().size() < Config.game.getMinPlayers() && !bypass) {
-            Bukkit.broadcastMessage(Lang.get("game.starting.notEnoughPlayers"));
+            Bukkit.broadcastMessage(Lang.get("game.starting.notenoughplayers"));
             return;
         }
         if (state != GameState.WAITING && !bypass) {
-            Bukkit.broadcastMessage(Lang.get("game.starting.wrongState", state));
+            Bukkit.broadcastMessage(Lang.get("game.starting.wrongstate", state));
             return;
         }
         TextUtils.broadcastGame(Lang.get("game.starting.starting"));
@@ -149,7 +149,7 @@ public class GameManager {
 
         //TODO HERE: better end bc this sucks
         //TODO: gamedonewinner insteaed of gamedonewinners when single winner
-        Bukkit.broadcastMessage(Lang.get("game.ending.gameDoneWinners"));
+        Bukkit.broadcastMessage(Lang.get("game.ending.gamedonewinners"));
         for (BsPlayer p : winners) {
             Bukkit.broadcastMessage(p.getBukkitPlayer().getName());
         }

@@ -20,7 +20,7 @@ public class TntRain {
 
         ItemUtils.removeSingleItemPlayerHand(p);
 
-        TextUtils.broadcastGame(Lang.get("bonuses.tntRain"));
+        TextUtils.broadcastGame(Lang.get("bonuses.tntrain"));
         bsPlayer.addLive();
         
         for (BsPlayer innerBsPlayer : bsPlayers) {

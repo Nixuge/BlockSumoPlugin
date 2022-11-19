@@ -59,7 +59,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         // if bonus spawning, display that
         int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
         if (isEnded) {
-            currentSBValues.put(incr.getNumber(), Lang.get("scoreboard.gameEnded"));
+            currentSBValues.put(incr.getNumber(), Lang.get("scoreboard.gameended"));
             currentSBValues.put(incr.getNumber(), "§r§r§r§r§r§l§r");
 
         } else if (messageTimer > 0 || nextSpawnTime > -3) {// -3 = 3s after the bonus spawn
@@ -68,8 +68,8 @@ public class ScoreboardRunnable extends BukkitRunnable {
                 messageTimer--;
             }
             if (nextSpawnTime > -3) {
-                String s = nextSpawnTime > 0 ? Lang.get("scoreboard.opSpawnIn", nextSpawnTime)
-                        : Lang.get("scoreboard.opSpawnNow");
+                String s = nextSpawnTime > 0 ? Lang.get("scoreboard.opspawnin", nextSpawnTime)
+                        : Lang.get("scoreboard.opspawnnow");
                 currentSBValues.put(incr.getNumber(), s);
             }
             currentSBValues.put(incr.getNumber(), "§r§r§r§r§r§r");

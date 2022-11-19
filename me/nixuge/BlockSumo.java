@@ -20,18 +20,21 @@ import me.nixuge.utils.ScoreboardUtils;
 
 public class BlockSumo extends JavaPlugin {
 
-    //TODO: add in config:
+    // TODO: add in config:
     // blocs to be destroyed & to not be destroyed
     // target system
 
     // TODO: add sounds
-    // TODO: target system
+    // TODO: target system (w config)
     // if a player is a lot on top, add a bounty
     // that make the players that kills him gain a life
 
-    //TODO: proper game end (fireworks & other)
-    //TODO: change death messages
-    //TODO: add javadocs (uh oh)
+    // TODO: proper game end (fireworks & other)
+    // TODO: change death messages
+    // TODO: add javadocs (uh oh)
+    // TODO: proper logging
+
+    //TODO: add outerSpawn or even custom fast break regions
 
     private static BlockSumo main;
 
@@ -54,11 +57,14 @@ public class BlockSumo extends JavaPlugin {
     private LobbyRunnable lobbyRunnable;
 
     public void init() {
-        //set vars & config (order is important)
+        // set vars & config (order is important)
         main = this;
+
         Config.init(this.getConfig());
         Config.enable();
+
         Lang.setLanguage(Config.general.getLanguage());
+
         pluginManager = getServer().getPluginManager();
         gameManager = new GameManager();
 
@@ -79,7 +85,7 @@ public class BlockSumo extends JavaPlugin {
     public void onEnable() {
         init();
 
-        Bukkit.broadcastMessage(Lang.get("general.pluginEnabled"));
+        Bukkit.broadcastMessage(Lang.get("general.pluginenabled"));
 
         getCommand("join_blocksumo").setExecutor(new JoinCommand());
         getCommand("end_blocksumo").setExecutor(new EndCommand());

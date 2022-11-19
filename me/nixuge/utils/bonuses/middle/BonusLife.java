@@ -11,7 +11,7 @@ public class BonusLife {
         Player p = bsPlayer.getBukkitPlayer();
         ItemUtils.removeSingleItemPlayerHand(p);
         
-        p.sendMessage(Lang.get("bonuses.bonusLife"));
+        p.sendMessage(Lang.get("bonuses.bonuslife"));
         bsPlayer.addLive();
     }
 }

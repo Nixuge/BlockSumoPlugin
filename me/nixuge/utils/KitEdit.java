@@ -44,7 +44,7 @@ public class KitEdit {
     }
 
     public void spawnInventory() {
-        Inventory inv = Bukkit.createInventory(p, 0, Lang.get("kit.organiseInventory"));
+        Inventory inv = Bukkit.createInventory(p, 0, Lang.get("kit.organiseinventory"));
         p.openInventory(inv);
 
         Inventory playerInventory = p.getInventory();
@@ -53,8 +53,8 @@ public class KitEdit {
         Kit currentKit = Kit.loadKit(p);
         currentKit.useKit(p, false);
 
-        playerInventory.setItem(17, ItemUtils.getItemStack(Material.DIAMOND_SWORD, Lang.get("kit.saveKit")));
-        playerInventory.setItem(16, ItemUtils.getItemStack(Material.BARRIER, Lang.get("kit.cancelKit")));
+        playerInventory.setItem(17, ItemUtils.getItemStack(Material.DIAMOND_SWORD, Lang.get("kit.savekit")));
+        playerInventory.setItem(16, ItemUtils.getItemStack(Material.BARRIER, Lang.get("kit.cancelkit")));
     }
 
     public void saveKit() {
@@ -70,7 +70,7 @@ public class KitEdit {
             closeInventory();
             new Kit(items).saveKit(p);
         } else {
-            p.sendMessage(Lang.get("kit.invalidKit"));
+            p.sendMessage(Lang.get("kit.invalidkit"));
         }
     }
 
@@ -80,7 +80,7 @@ public class KitEdit {
 
     public void onInventoryClose() {
         // note: to be called only on inventory close
-        String str = success ? Lang.get("kit.savedKit") : Lang.get("kit.cancelledKit");
+        String str = success ? Lang.get("kit.savedkit") : Lang.get("kit.cancelledkit");
         p.sendMessage(str);
         p.getInventory().clear();
         kitEdits.remove(this);

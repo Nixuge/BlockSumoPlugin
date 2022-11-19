@@ -60,7 +60,7 @@ public class BlockPlaceDestroyListener implements Listener {
         if (gameMgr.getGameState() != GameState.PLAYING) return;
 
         if (event.getBlock().getType() != Material.WOOL) {
-            event.getPlayer().sendMessage(Lang.get("general.cantDestroyBlock"));
+            event.getPlayer().sendMessage(Lang.get("general.cantdestroyblock"));
             event.setCancelled(true);
             event.getPlayer().updateInventory(); //in case used w a kb sword in hand
             return;
