@@ -19,7 +19,13 @@ public class BlockExplodeListener implements Listener {
     // add(Material.GOLD_BLOCK);
     // add(Material.QUARTZ_BLOCK);
     // }};
-    //or not? idk will see
+    // or not? idk will see
+
+    GameManager gameMgr;
+
+    public BlockExplodeListener() {
+        gameMgr = BlockSumo.getInstance().getGameMgr();
+    }
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
@@ -32,9 +38,7 @@ public class BlockExplodeListener implements Listener {
     }
 
     private void manageBlockExplode(List<Block> blocks) {
-        GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
-
-        for (Block block : new ArrayList<>(blocks)) { //ConcurrentModificationException
+        for (Block block : new ArrayList<>(blocks)) { // ConcurrentModificationException
             if (block.getType().equals(Material.WOOL)) {
                 gameMgr.getBlockDestroyRunnable().removeBlock(block.getLocation());
             } else {

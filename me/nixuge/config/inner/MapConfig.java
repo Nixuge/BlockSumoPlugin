@@ -1,4 +1,4 @@
-package me.nixuge.config.InnerConfigs;
+package me.nixuge.config.inner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +15,11 @@ import me.nixuge.objects.maths.XYZ;
 public class MapConfig {
     public MapConfig(ConfigurationSection conf) {
         centerArea = new Area(
-                getXYZfromString(conf.getString("centerAreaFirstCorner")),
-                getXYZfromString(conf.getString("centerAreaSecondCorner")));
+                getXYZfromString(conf.getString("centerareafirstcorner")),
+                getXYZfromString(conf.getString("centerareasecondcorner")));
         world = Bukkit.getWorld(conf.getString("world"));
 
-        centerBlock = getXYZfromString(conf.getString("centerBlock")).asLocation(getWorld()).add(.5, 1, .5);
+        centerBlock = getXYZfromString(conf.getString("centerblock")).asLocation(getWorld()).add(.5, 1, .5);
 
         //TODO: add orientation parsing
         spawns = new ArrayList<>();

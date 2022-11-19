@@ -11,6 +11,7 @@ import me.nixuge.config.Lang;
 import me.nixuge.utils.ScoreboardUtils;
 
 public class LobbyJoinQuitListener implements Listener {
+    
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage(Lang.get("joinquit.lobby.joined", event.getPlayer().getName()));

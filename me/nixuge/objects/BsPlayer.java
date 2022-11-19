@@ -8,16 +8,20 @@ public class BsPlayer {
     private final Color color;
     private Kit kit;
     private Player player;
+    private Hit lastHit;
     private boolean isLoggedOn;
     private boolean isTarget;
     private int lastExplosionGunFire = 0;
     private int lives = 5;
     private int kills = 0;
 
+    private String name; //avoid calling getBukkitPlayer everytime
+
     public BsPlayer(Player player, Color color) {
         this.player = player;
         this.isLoggedOn = true;
         this.color = color;
+        this.name = player.getName();
     }
 
     public BsPlayer(Player player) {
@@ -65,6 +69,13 @@ public class BsPlayer {
         return kit;
     }
 
+    public void setLastHit(Hit hit) {
+        this.lastHit = hit;
+    }
+    public Hit getLastHit() {
+        return lastHit;
+    }
+
     public boolean getIsTarget() {
         return isTarget;
     }
@@ -85,5 +96,13 @@ public class BsPlayer {
     }
     public void setLastExplosionGunFire(int lastExplosionGunFire) {
         this.lastExplosionGunFire = lastExplosionGunFire;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public String getColoredName() {
+        return color.getChatColor() + name;
     }
 }

@@ -22,7 +22,7 @@ public enum GlobalItem {
                     8,
                     Lang.get("bonusitems.normal.snowballs.lore"))),
 
-    SMALL_BAT(Lang.get("bonusitems.normal.smallBat.name"),
+    SMALL_BAT(Lang.get("bonusitems.normal.smallbat.name"),
             ItemUtils.getItemStack(
                     Material.WOOD_SWORD,
                     Lang.get("bonusitems.normal.smallbat.name"),

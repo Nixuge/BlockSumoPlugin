@@ -23,30 +23,37 @@ import me.nixuge.utils.bonuses.global.NormalTnt;
 
 public class BlockPlaceDestroyListener implements Listener {
 
+    GameManager gameMgr;
+    BlockManagerRunnable bdr;
+    Area centerArea;
+
+    public BlockPlaceDestroyListener() {
+        gameMgr = BlockSumo.getInstance().getGameMgr();
+        bdr = gameMgr.getBlockDestroyRunnable();
+        centerArea = gameMgr.getMcMap().getCenterArea();
+    }
+
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         Block block = event.getBlockPlaced();
         Player p = event.getPlayer();
-        
+
         if (block.getType().equals(Material.TNT)) {
             NormalTnt.run(block);
             return;
         }
 
-        GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
-        BlockManagerRunnable bdr = gameMgr.getBlockDestroyRunnable();
-        Area centerArea = gameMgr.getMcMap().getCenterArea();
-
         BsPlayer bsPlayer = gameMgr.getPlayerMgr().getExistingBsPlayerFromBukkit(p);
         Color color = bsPlayer.getColor();
 
-        if ( centerArea.containsBlock(block.getLocation()) ) {
-            bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color, Config.expiringBlock.getCenterTickBreakTime(), Config.expiringBlock.getCenterTickBreakStartTime()));
+        if (centerArea.containsBlock(block.getLocation())) {
+            bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color,
+                    Config.expiringBlock.getCenterTickBreakTime(), Config.expiringBlock.getCenterTickBreakStartTime()));
         } else {
             bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color));
         }
 
-        //re-give the wool
+        // re-give the wool
         if (block.getType().equals(Material.WOOL)) {
             ItemStack item = p.getItemInHand();
             item.setAmount(64);
@@ -56,16 +63,16 @@ public class BlockPlaceDestroyListener implements Listener {
 
     @EventHandler
     public void onBlockDestroy(BlockBreakEvent event) {
-        GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
-        if (gameMgr.getGameState() != GameState.PLAYING) return;
+        if (gameMgr.getGameState() != GameState.PLAYING)
+            return;
 
         if (event.getBlock().getType() != Material.WOOL) {
             event.getPlayer().sendMessage(Lang.get("general.cantdestroyblock"));
             event.setCancelled(true);
-            event.getPlayer().updateInventory(); //in case used w a kb sword in hand
+            event.getPlayer().updateInventory(); // in case used w a kb sword in hand
             return;
         }
-        
+
         gameMgr.getBlockDestroyRunnable().removeBlock(event.getBlock().getLocation());
     }
 }

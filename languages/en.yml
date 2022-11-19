@@ -1,7 +1,7 @@
 general:
   pluginenabled: "Plugin enabled !"
   cantdestroyblock: "Can't destroy that block !"
-  dead: "You're now dead."
+  eliminated: "You're now eliminated."
 
 game:
   starting:
@@ -86,6 +86,10 @@ joinquit:
   lobby:
     joined: "%s joined the lobby !"
     left: "%s left the lobby !"
+
+deathmessages:
+  alone: "%s §7died"
+  fromkiller: "%s §7was hit into the void by %s"
 
 debug:
   startcommand: "IMPORTANT: dev command, testing only NEEDS TO BE REMOVED IN THE FINAL BUILD."

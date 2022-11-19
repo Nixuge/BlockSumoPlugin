@@ -13,7 +13,6 @@ import me.nixuge.commands.dev.TestCommand;
 import me.nixuge.config.Config;
 import me.nixuge.config.Lang;
 import me.nixuge.listeners.ItemSpawnDropListener;
-import me.nixuge.listeners.PlayerDamageListener;
 import me.nixuge.listeners.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
 import me.nixuge.utils.ScoreboardUtils;
@@ -21,8 +20,7 @@ import me.nixuge.utils.ScoreboardUtils;
 public class BlockSumo extends JavaPlugin {
 
     // TODO: add in config:
-    // blocs to be destroyed & to not be destroyed
-    // target system
+    // blocks to be destroyed & to not be destroyed
 
     // TODO: add sounds
     // TODO: target system (w config)
@@ -30,11 +28,10 @@ public class BlockSumo extends JavaPlugin {
     // that make the players that kills him gain a life
 
     // TODO: proper game end (fireworks & other)
-    // TODO: change death messages
     // TODO: add javadocs (uh oh)
     // TODO: proper logging
-
-    //TODO: add outerSpawn or even custom fast break regions
+    // TODO: only select spawn if no player around
+    // TODO: add outerSpawn or even custom fast break regions
 
     private static BlockSumo main;
 
@@ -60,8 +57,9 @@ public class BlockSumo extends JavaPlugin {
         // set vars & config (order is important)
         main = this;
 
-        Config.init(this.getConfig());
-        Config.enable();
+        saveDefaultConfig();
+
+        Config.init(getConfig());
 
         Lang.setLanguage(Config.general.getLanguage());
 
@@ -96,6 +94,5 @@ public class BlockSumo extends JavaPlugin {
         // those remaining here because they're always needed
         pluginManager.registerEvents(new RandomChangeListener(), this);
         pluginManager.registerEvents(new ItemSpawnDropListener(), this);
-        pluginManager.registerEvents(new PlayerDamageListener(), this);
     }
 }

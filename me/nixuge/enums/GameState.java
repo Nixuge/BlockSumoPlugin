@@ -9,6 +9,7 @@ import me.nixuge.listeners.game.BlockExplodeListener;
 import me.nixuge.listeners.game.BlockPlaceDestroyListener;
 import me.nixuge.listeners.game.GameInventoryListener;
 import me.nixuge.listeners.game.GameJoinQuitListener;
+import me.nixuge.listeners.game.PlayerDamageListener;
 import me.nixuge.listeners.game.PlayerInteractListener;
 import me.nixuge.listeners.game.PlayerRespawnListener;
 import me.nixuge.listeners.lobby.LobbyInventoryListener;
@@ -25,7 +26,9 @@ public enum GameState {
         BlockExplodeListener.class,
         PlayerRespawnListener.class,
         PlayerInteractListener.class,
+        PlayerDamageListener.class,
         GameInventoryListener.class
+        
     }),
     DONE(new Class<?>[] {
         GameJoinQuitListener.class,

@@ -30,7 +30,7 @@ public class PlayerManager {
     public BsPlayer getExistingBsPlayerFromBukkit(Player player) {
         String playerName = player.getName();
         for (BsPlayer bsPlayer : players) {
-            if (bsPlayer.getBukkitPlayer().getName().equals(playerName)) {
+            if (bsPlayer.getName().equals(playerName)) {
                 return bsPlayer;
             }
         }

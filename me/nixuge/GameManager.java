@@ -109,8 +109,6 @@ public class GameManager {
         }
         TextUtils.broadcastGame(Lang.get("game.starting.starting"));
 
-        setGameState(GameState.PLAYING);
-
         // tp players & init their inventory
         pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
         InventoryUtils.setupInventories(pManager.getPlayers());
@@ -125,6 +123,9 @@ public class GameManager {
         ScoreboardUtils.resetScoreboards();
         scoreboardRunnable = new ScoreboardRunnable();
         scoreboardRunnable.runTaskTimer(blockSumo, 0, 20);
+
+        // Only once everything is set so the listeners constructors can do their job
+        setGameState(GameState.PLAYING);
     }
 
     public void checkGameEnd() {
@@ -147,11 +148,11 @@ public class GameManager {
         setGameState(GameState.DONE);
         gameRunnable.cancel();
 
-        //TODO HERE: better end bc this sucks
-        //TODO: gamedonewinner insteaed of gamedonewinners when single winner
+        // TODO HERE: better end bc this sucks
+        // TODO: gamedonewinner insteaed of gamedonewinners when single winner
         Bukkit.broadcastMessage(Lang.get("game.ending.gamedonewinners"));
         for (BsPlayer p : winners) {
-            Bukkit.broadcastMessage(p.getBukkitPlayer().getName());
+            Bukkit.broadcastMessage(p.getName());
         }
     }
 }

@@ -1,24 +1,26 @@
 game:
-  minPlayerCount: 2
-  maxPlayerCount: 8
+  minplayercount: 2
+  maxplayercount: 8
+  countaskilldelay: 20
 
 map: #NOTE: use block coordinates (ints without ,s)
   world: world
-  centerBlock: 2 1 2
-  centerAreaFirstCorner: 0 1 0
-  centerAreaSecondCorner: 4 1 4
+  centerblock: 2 1 2
+  #TODO: add custom areas w custom timers
+  centerareafirstcorner: 0 1 0
+  centerareasecondcorner: 4 1 4
   spawns:
     - 0 1 0
     - 5 1 5
     - 10 1 10
 
-expiringBlock:
-  tickBreakTime: 1200
-  tickBreakStartTime: 900
-  centerTickBreakTime: 60
-  centerTickBreakStartTime: 0
-  minColorChangeCount: 1
-  maxColorChangeCount: 6
+expiringblock:
+  tickbreaktime: 1200
+  tickbreakstarttime: 900
+  centertickbreaktime: 60
+  centertickbreakstarttime: 0
+  mincolorchangecount: 1
+  maxcolorchangecount: 6
 
 general:
   language: fr

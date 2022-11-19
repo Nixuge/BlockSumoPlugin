@@ -4,11 +4,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.config.InnerConfigs.ExpiringBlockConfig;
-import me.nixuge.config.InnerConfigs.GameConfig;
-import me.nixuge.config.InnerConfigs.GeneralConfig;
-import me.nixuge.config.InnerConfigs.MapConfig;
-import me.nixuge.config.InnerConfigs.TargetConfig;
+import me.nixuge.config.inner.ExpiringBlockConfig;
+import me.nixuge.config.inner.GameConfig;
+import me.nixuge.config.inner.GeneralConfig;
+import me.nixuge.config.inner.MapConfig;
+import me.nixuge.config.inner.TargetConfig;
 
 public class Config {
     // WHY THIS WEIRD FORMAT?
@@ -36,14 +36,14 @@ public class Config {
 
     public static void init(FileConfiguration fileConf) {
         Config.fileConf = fileConf;
-        expiringBlock = new ExpiringBlockConfig(getFileConfigBlock("expiringBlock"));
+        expiringBlock = new ExpiringBlockConfig(getFileConfigBlock("expiringblock"));
         game = new GameConfig(getFileConfigBlock("game"));
         map = new MapConfig(getFileConfigBlock("map"));
         target = new TargetConfig(getFileConfigBlock("target"));
         general = new GeneralConfig(getFileConfigBlock("general"));
     }
 
-    public static void enable() {
+    public static void saveConfig() {
         fileConf.options().copyDefaults(true);
         plugin.saveConfig();
     }

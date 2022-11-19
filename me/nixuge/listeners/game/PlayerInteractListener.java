@@ -19,37 +19,44 @@ import me.nixuge.utils.bonuses.middle.TntRain;
 
 public class PlayerInteractListener implements Listener {
 
+    BlockSumo plugin;
+    GameManager gameMgr;
+    PlayerManager pManager;
+
+    public PlayerInteractListener() {
+        plugin = BlockSumo.getInstance();
+        gameMgr = plugin.getGameMgr();
+        pManager = gameMgr.getPlayerMgr();
+    }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        BlockSumo plugin = BlockSumo.getInstance();
-        GameManager gameMgr = plugin.getGameMgr();
-        PlayerManager pManager = gameMgr.getPlayerMgr();
         // Action action = event.getAction();
         Player p = event.getPlayer();
         BsPlayer bsPlayer = pManager.getExistingBsPlayerFromBukkit(p);
         ItemStack item = event.getItem();
-        if (item == null) return;
+        if (item == null)
+            return;
         Material material = item.getType();
-        
+
         switch (material) {
-            //middle items
+            // middle items
             case NETHER_STAR:
                 BonusLife.run(bsPlayer);
                 break;
             case GOLD_HOE:
                 ExplosionGun.run(gameMgr, bsPlayer, item);
-                event.setCancelled(true); //avoid hoeing dirt/grass
+                event.setCancelled(true); // avoid hoeing dirt/grass
                 break;
             case BLAZE_POWDER:
                 TntRain.run(bsPlayer, pManager.getPlayers());
                 break;
 
-            //global items
-            //TNT in "BlockPlaceListener"
+            // global items
+            // TNT in "BlockPlaceListener"
             case FIREBALL:
                 MovingFireball.run(p);
-                event.setCancelled(true); //avoid placing fire
+                event.setCancelled(true); // avoid placing fire
                 break;
             case FEATHER:
                 BounceFeather.run(p);

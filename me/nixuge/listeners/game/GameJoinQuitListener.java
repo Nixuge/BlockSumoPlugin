@@ -11,11 +11,16 @@ import me.nixuge.PlayerManager;
 import me.nixuge.config.Lang;
 
 public class GameJoinQuitListener implements Listener {
-    
+
+    PlayerManager playerMgr;
+
+    public GameJoinQuitListener() {
+        playerMgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
+    }
+
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {
-        PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
-        if (!mgr.isPlayerInGameList(event.getPlayer())) {
+        if (!playerMgr.isPlayerInGameList(event.getPlayer())) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Lang.get("joinquit.game.alreadystarted"));
         }
     }
@@ -23,16 +28,12 @@ public class GameJoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.setJoinMessage(Lang.get("joinquit.game.rejoined", event.getPlayer().getName()));
-
-        PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
-        mgr.setPlayerLogin(event.getPlayer(), true);
+        playerMgr.setPlayerLogin(event.getPlayer(), true);
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
         event.setQuitMessage(Lang.get("joinquit.game.quit", event.getPlayer().getName()));
-
-        PlayerManager mgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
-        mgr.setPlayerLogin(event.getPlayer(), false);
+        playerMgr.setPlayerLogin(event.getPlayer(), false);
     }
 }

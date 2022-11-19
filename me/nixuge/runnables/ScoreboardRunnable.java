@@ -86,7 +86,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(isLoggedOn ? player.getColor().getChatColor() : "§7§m§o");
-            stringBuilder.append(player.getBukkitPlayer().getName());
+            stringBuilder.append(player.getName());
             stringBuilder.append(": ");
             stringBuilder.append(isLoggedOn ? colorFromLives(lives) : "§7§m§o");
             stringBuilder.append(lives);

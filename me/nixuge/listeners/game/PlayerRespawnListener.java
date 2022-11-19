@@ -13,30 +13,46 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
+import me.nixuge.config.Config;
 import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
+import me.nixuge.objects.Hit;
+import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.particle.PlayerRespawnParticle;
 
 public class PlayerRespawnListener implements Listener {
 
+    BlockSumo plugin;
+    GameManager gameMgr;
+    PlayerManager playerMgr;
+    GameRunnable gameRunnable;
+
+    public PlayerRespawnListener() {
+        plugin = BlockSumo.getInstance();
+        gameMgr = plugin.getGameMgr();
+        playerMgr = gameMgr.getPlayerMgr();
+        gameRunnable = gameMgr.getGameRunnable();
+    }
+
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
-        BlockSumo plugin = BlockSumo.getInstance();
-        PlayerManager playerMgr = plugin.getGameMgr().getPlayerMgr();
         Player p = event.getEntity();
         BsPlayer player = playerMgr.getExistingBsPlayerFromBukkit(p);
 
         player.removeLive();
 
-        Player killer = event.getEntity().getKiller();
-        if (killer != null)
-            playerMgr.getExistingBsPlayerFromBukkit(killer).addKill();
+        Hit lastHit = player.getLastHit();
+        if (lastHit != null && lastHit.getHitTime() + Config.game.getCountAsKillDelay() > gameRunnable.getTime()) {
+            BsPlayer killer = playerMgr.getExistingBsPlayerFromBukkit(lastHit.getHitter());
+            killer.addKill();
+            event.setDeathMessage(Lang.get("deathmessages.fromkiller", player.getColoredName(), killer.getColoredName()));
+        } else {
+            event.setDeathMessage(Lang.get("deathmessages.alone", player.getColoredName()));
+        }
 
         if (player.isDead()) {
             plugin.getGameMgr().checkGameEnd();
         }
-
-        // Bukkit.broadcastMessage("hello there " + event.getDeathMessage());
 
         new BukkitRunnable() {
             @Override
@@ -45,21 +61,20 @@ public class PlayerRespawnListener implements Listener {
             }
         }.runTaskLater(plugin, 10);
 
-        //note: need to call the respawn event manually
-        //since spigot().respawn() doesn't
+        // note: need to call the respawn event manually
+        // since spigot().respawn() doesn't
         onRespawn(new PlayerRespawnEvent(p, null, false));
     }
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
-        GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
         Player p = event.getPlayer();
 
         if (gameMgr.getPlayerMgr().getExistingBsPlayerFromBukkit(p).isDead()) {
             p.setGameMode(GameMode.SPECTATOR);
             Location spawn = gameMgr.getMcMap().getCenter();
             event.setRespawnLocation(spawn);
-            p.sendMessage(Lang.get("general.dead"));
+            p.sendMessage(Lang.get("general.eliminated"));
             return;
         }
 
@@ -67,7 +82,6 @@ public class PlayerRespawnListener implements Listener {
         event.setRespawnLocation(spawn);
 
         if (!p.isDead()) {
-            BlockSumo plugin = BlockSumo.getInstance();
             PlayerRespawnParticle packet = new PlayerRespawnParticle(60, p);
             packet.runTaskTimer(plugin, 1, 1);
         }
