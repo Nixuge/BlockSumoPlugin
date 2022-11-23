@@ -59,7 +59,7 @@ public class GameRunnable extends BukkitRunnable {
             TextUtils.broadcastGame(Lang.get("bonuses.opintenseconds"));
 
         } else if (lastMiddleBonusSpawn == 0) {
-            spawnMiddleBonus();
+            spawnMiddleBonus1_8();
 
         } else if (lastMiddleBonusSpawn > 0 && willBonusSpawn(lastMiddleBonusSpawn)) {
             lastMiddleBonusSpawn = -15;
@@ -79,7 +79,7 @@ public class GameRunnable extends BukkitRunnable {
         return neededPercent > randomPercent;
     }
 
-    private void spawnMiddleBonus() {
+    private void spawnMiddleBonus1_8() {
         PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(EnumParticle.FIREWORKS_SPARK,
                 plugin.getGameMgr().getMcMap().getCenter(), .7, .5, .7, 50);
 

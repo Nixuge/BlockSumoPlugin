@@ -11,7 +11,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class TextUtils {
     // NOTE: 1.8 ONLY, TO BE REMADE FOR OTHER VERSIONS W THE GENERIC
-    public static void sendActionTextLegacy(Player player, String message) {
+    public static void sendActionText1_8(Player player, String message) {
         PacketPlayOutChat packet = new PacketPlayOutChat(new ChatComponentText(message), (byte) 2);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }

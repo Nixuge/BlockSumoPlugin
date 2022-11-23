@@ -23,7 +23,7 @@ public class PlayerRespawnParticle extends BukkitRunnable {
 
     @Override
     public void run() {
-        summonParticle();
+        summonParticle1_8();
 
         if (tick >= maxTick) {
             cancel();
@@ -32,7 +32,7 @@ public class PlayerRespawnParticle extends BukkitRunnable {
         tick++;
     }
 
-    private void summonParticle() {
+    private void summonParticle1_8() {
         Location pLoc = player.getLocation();
 
         PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(

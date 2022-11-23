@@ -65,10 +65,10 @@ public class BlockManagerRunnable extends BukkitRunnable {
         for (int i = 0; i < states.length; i++) {
             if (states[i] == tick_time) {
                 if (i < 10) {
-                    sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
+                    sendBreakBlockPacket1_8(block.asLocation(), i, block.getBreakerId());
                 } else {
-                    breakBlockParticles(block.asLocation());
-                    sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId()); // reset state
+                    breakBlockParticles1_8(block.asLocation());
+                    sendBreakBlockPacket1_8(block.asLocation(), i, block.getBreakerId()); // reset state
                     toRemove.add(block);
                 }
                 break;
@@ -77,7 +77,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
     }
 
     @SuppressWarnings("deprecation")
-    private void breakBlockParticles(Location loc) {
+    private void breakBlockParticles1_8(Location loc) {
         Block block = loc.getBlock();
         int id = block.getTypeId(); //=Material.WOOL.getId() in normal circumstances
         byte data = block.getData();
@@ -100,7 +100,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
         PacketUtils.sendPacketAllPlayers(packet);
     }
 
-    private void sendBreakBlockPacket(Location loc, int stage, int breakerId) {
+    private void sendBreakBlockPacket1_8(Location loc, int stage, int breakerId) {
         // -> see https://www.spigotmc.org/threads/block-break-state.266966/
         int x = loc.getBlockX();
         int y = loc.getBlockY();
@@ -139,7 +139,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
     public void removeBlock(Location location) {
         for (ExpiringBlock b : blocks) {
             if (location.equals(b.asLocation())) {
-                sendBreakBlockPacket(b.asLocation(), 10, b.getBreakerId()); // reset state
+                sendBreakBlockPacket1_8(b.asLocation(), 10, b.getBreakerId()); // reset state
                 blocks.remove(b);
                 break; // should only ever be 1 at the same place so breaking is fine
             }

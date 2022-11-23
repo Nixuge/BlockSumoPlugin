@@ -33,8 +33,8 @@ public class MiddleParticleRunnable extends BukkitRunnable {
             y = yOffset;
             particleLoc = originalParticleLoc.clone().add(0, -y, 0);
         }
-        summonCurrentParticle(0);
-        summonCurrentParticle(2f);
+        summonCurrentParticle1_8(0);
+        summonCurrentParticle1_8(2f);
         y += 0.05f;
 
         if (tick >= maxTick) {
@@ -44,7 +44,7 @@ public class MiddleParticleRunnable extends BukkitRunnable {
         tick++;
     }
 
-    private void summonCurrentParticle(float yAdd) {
+    private void summonCurrentParticle1_8(float yAdd) {
         float radius = 0.75f;
         double x = radius * Math.cos((y + yAdd) * 5);
         double z = radius * Math.sin((y + yAdd) * 5);

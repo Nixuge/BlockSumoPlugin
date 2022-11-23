@@ -9,6 +9,10 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
+//everything in here in 1_8 1.8
+//Will rewrite this with reflections so everything that relies on this
+//doesn't have to be rewritten for 1.9+
+
 public class PacketUtils {
     public static PacketPlayOutWorldParticles getParticlePacket(EnumParticle particle, double x, double y, double z,
             double xPlus, double yPlus, double zPlus, int number) {

@@ -12,6 +12,8 @@ import me.nixuge.utils.PacketUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
+//1.8 1_8 only
+
 public class ExplosionGun {
     public static void run(GameManager gameMgr, BsPlayer bsPlayer, ItemStack item) {
         Player p = bsPlayer.getBukkitPlayer();
