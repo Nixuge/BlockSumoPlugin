@@ -19,10 +19,10 @@ public class MapConfig {
 
         centerBlock = getXYZfromString(conf.getString("centerblock")).asLocation(getWorld()).add(.5, 1, .5);
 
-        // TODO: add orientation parsing
+        
         spawns = new ArrayList<>();
         for (String str : conf.getStringList("spawns")) {
-            spawns.add(getXYZfromString(str).asLocation(getWorld()).add(.5, 1, .5));
+            spawns.add(getLocationFromString(str, world).add(.5, 1, .5));
         }
 
         // inner areas
@@ -45,10 +45,40 @@ public class MapConfig {
     private final World world;
     private final List<Location> spawns;
 
+    private static Location getLocationFromString(String str, World world) {
+        String[] xyz_yp = str.split(", ");
+        if (xyz_yp.length != 2) {
+            Bukkit.broadcastMessage(Lang.get("errors.mapconfig.wrongparselocation1", xyz_yp.length, str));
+            return new Location(world, 0, 0, 0);
+        } 
+        XYZ coords = getXYZfromString(xyz_yp[0]);
+
+
+        //raw_yp[0] = yaw, raw_yp[1] = pitch
+        String[] raw_yp = xyz_yp[1].split(" ");
+
+        int[] yp = new int[2];
+
+        for (int i = 0; i < 2; i++) {
+            String part = raw_yp[i];
+            try {
+                yp[i] = Integer.parseInt(part);
+            } catch (NumberFormatException e) {
+                Bukkit.broadcastMessage(Lang.get("errors.mapconfig.wrongparselocation2", part, str));
+                yp[i] = 0;
+            }
+        }
+
+        Location finalLoc = coords.asLocation(world);
+        finalLoc.setYaw(yp[0]);
+        finalLoc.setPitch(yp[1]);
+        return finalLoc;
+    }
+
     private static XYZ getXYZfromString(String str) {
         String[] parts = str.split(" ");
-        if (parts.length != 3) {
-            Bukkit.broadcastMessage(Lang.get("errors.mapconfig.wrongparse1", parts.length, str));
+        if (parts.length < 3) {
+            Bukkit.broadcastMessage(Lang.get("errors.mapconfig.wrongparseXYZ1", parts.length, str));
             return new XYZ(0, 0, 0);
         }
 
@@ -59,7 +89,7 @@ public class MapConfig {
             try {
                 xyz[i] = Integer.parseInt(part);
             } catch (NumberFormatException e) {
-                Bukkit.broadcastMessage(Lang.get("errors.mapconfig.wrongparse2", part, str));
+                Bukkit.broadcastMessage(Lang.get("errors.mapconfig.wrongparseXYZ2", part, str));
                 xyz[i] = 0;
             }
         }

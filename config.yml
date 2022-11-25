@@ -19,9 +19,9 @@ map: #use block coordinates (ints without ,s)
       tickbreakstarttime: 40
 
   spawns:
-    - 0 1 0
-    - 5 1 5
-    - 10 1 10
+    - 0 1 0, 90 6
+    - 5 1 5, 90 6
+    - 10 1 10, 90 6
 
 expiringblock:
   defaulttickbreaktime: 1200

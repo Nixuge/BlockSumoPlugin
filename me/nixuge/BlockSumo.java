@@ -31,7 +31,6 @@ public class BlockSumo extends JavaPlugin {
     // TODO: add javadocs (uh oh)
     // TODO: proper logging
     // TODO: only select spawn if no player around
-    // TODO: add outerSpawn or even custom fast break regions
 
     private static BlockSumo main;
 

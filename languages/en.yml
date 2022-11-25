@@ -97,7 +97,9 @@ debug:
 
 errors:
   mapconfig:
-    wrongparse1: "§l§4Wrong number of string parts to create an XYZ object (%d instead of 3). @getXYZfromString for string \"%s\"."
-    wrongparse2: "§l§4ERROR IN CONF! @getXYZfromString for value \"%s\" for string \"%s\"."
+    wrongparseXYZ1: "§l§4Wrong number of string parts to create an XYZ object (%d instead of 3). @getXYZfromString for string \"%s\"."
+    wrongparseXYZ2: "§l§4ERROR IN CONF! @getXYZfromString for value \"%s\" for string \"%s\"."
+    wrongparselocation1: "§l§4Failed to separate XYZ and YP (%d parts instead of 5). @getLocationfromString for string \"%s\". Please use the format: <x> <y> <z>, <yaw> <pitch>."
+    wrongparselocation2: "§l§4ERROR IN CONF! @getLocationFromString for value \"%s\" for string \"%s\"."
   kit:
     critical: "§l§4Critical error happened while handling kit files. Please report."
