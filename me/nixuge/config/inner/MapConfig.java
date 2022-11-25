@@ -9,26 +9,38 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
 import me.nixuge.config.Lang;
+import me.nixuge.objects.ExpiringArea;
 import me.nixuge.objects.maths.Area;
 import me.nixuge.objects.maths.XYZ;
 
 public class MapConfig {
     public MapConfig(ConfigurationSection conf) {
-        centerArea = new Area(
-                getXYZfromString(conf.getString("centerareafirstcorner")),
-                getXYZfromString(conf.getString("centerareasecondcorner")));
         world = Bukkit.getWorld(conf.getString("world"));
 
         centerBlock = getXYZfromString(conf.getString("centerblock")).asLocation(getWorld()).add(.5, 1, .5);
 
-        //TODO: add orientation parsing
+        // TODO: add orientation parsing
         spawns = new ArrayList<>();
         for (String str : conf.getStringList("spawns")) {
             spawns.add(getXYZfromString(str).asLocation(getWorld()).add(.5, 1, .5));
         }
+
+        // inner areas
+        ConfigurationSection areaConf = conf.getConfigurationSection("areas");
+        innerAreas = new ArrayList<>();
+
+        for (String str : areaConf.getKeys(false)) {
+            ConfigurationSection innerAreaConf = areaConf.getConfigurationSection(str);
+
+            innerAreas.add(new ExpiringArea(
+                    new Area(getXYZfromString(innerAreaConf.getString("corner1")),
+                            getXYZfromString(innerAreaConf.getString("corner2"))),
+                    innerAreaConf.getInt("tickbreaktime"),
+                    innerAreaConf.getInt("tickbreakstarttime")));
+        }
     }
 
-    private final Area centerArea;
+    private final List<ExpiringArea> innerAreas;
     private final Location centerBlock;
     private final World world;
     private final List<Location> spawns;
@@ -59,15 +71,15 @@ public class MapConfig {
         return world;
     }
 
-    public Area getCenterArea() {
-        return centerArea;
-    }
-
     public Location getCenterBlock() {
         return centerBlock;
     }
 
     public List<Location> getSpawns() {
         return spawns;
+    }
+
+    public List<ExpiringArea> getInnerAreas() {
+        return innerAreas;
     }
 }

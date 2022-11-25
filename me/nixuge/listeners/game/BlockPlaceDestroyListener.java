@@ -1,5 +1,7 @@
 package me.nixuge.listeners.game;
 
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -11,13 +13,12 @@ import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
-import me.nixuge.config.Config;
 import me.nixuge.config.Lang;
 import me.nixuge.enums.Color;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
+import me.nixuge.objects.ExpiringArea;
 import me.nixuge.objects.ExpiringBlock;
-import me.nixuge.objects.maths.Area;
 import me.nixuge.runnables.BlockManagerRunnable;
 import me.nixuge.utils.bonuses.global.NormalTnt;
 
@@ -25,12 +26,12 @@ public class BlockPlaceDestroyListener implements Listener {
 
     GameManager gameMgr;
     BlockManagerRunnable bdr;
-    Area centerArea;
+    List<ExpiringArea> innerAreas;
 
     public BlockPlaceDestroyListener() {
         gameMgr = BlockSumo.getInstance().getGameMgr();
         bdr = gameMgr.getBlockDestroyRunnable();
-        centerArea = gameMgr.getMcMap().getCenterArea();
+        innerAreas = gameMgr.getMcMap().getInnerAreas();
     }
 
     @EventHandler
@@ -46,10 +47,20 @@ public class BlockPlaceDestroyListener implements Listener {
         BsPlayer bsPlayer = gameMgr.getPlayerMgr().getExistingBsPlayerFromBukkit(p);
         Color color = bsPlayer.getColor();
 
-        if (centerArea.containsBlock(block.getLocation())) {
-            bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color,
-                    Config.expiringBlock.getCenterTickBreakTime(), Config.expiringBlock.getCenterTickBreakStartTime()));
-        } else {
+        //check for inner areas
+        boolean isInArea = false;
+        for (ExpiringArea area : innerAreas) {
+            if (area.getArea().containsBlock(block.getLocation())) {
+                isInArea = true;
+                int breakTime = area.getBreakTime();
+                int breakStartTime = area.getBreakStartTime();
+                bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(),
+                        color, breakTime, breakStartTime));
+                
+                break; //avoid adding to multiple areas
+            }
+        }
+        if (!isInArea) {
             bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(), color));
         }
 

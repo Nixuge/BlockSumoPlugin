@@ -3,22 +3,29 @@ game:
   maxplayercount: 8
   countaskilldelay: 20
 
-map: #NOTE: use block coordinates (ints without ,s)
+map: #use block coordinates (ints without ,s)
   world: world
   centerblock: 2 1 2
-  #TODO: add custom areas w custom timers
-  centerareafirstcorner: 0 1 0
-  centerareasecondcorner: 4 1 4
+  areas: #can add custom areas (priority from top to bottom, higher on top)
+    closemid:
+      corner1: 0 0 0
+      corner2: 4 4 4
+      tickbreaktime: 60
+      tickbreakstarttime: 0
+    largemid:
+      corner1: -2 0 -2
+      corner2: 6 5 6
+      tickbreaktime: 200
+      tickbreakstarttime: 40
+
   spawns:
     - 0 1 0
     - 5 1 5
     - 10 1 10
 
 expiringblock:
-  tickbreaktime: 1200
-  tickbreakstarttime: 900
-  centertickbreaktime: 60
-  centertickbreakstarttime: 0
+  defaulttickbreaktime: 1200
+  defaulttickbreakstarttime: 900
   mincolorchangecount: 1
   maxcolorchangecount: 6
 

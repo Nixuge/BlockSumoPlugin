@@ -27,8 +27,8 @@ public class GameManager {
         map = new McMap(
                 Config.map.getSpawns(),
                 Config.map.getCenterBlock(),
-                Config.map.getCenterArea(),
-                Config.map.getWorld());
+                Config.map.getWorld(),
+                Config.map.getInnerAreas());
 
         blockSumo = BlockSumo.getInstance();
         setGameState(GameState.WAITING);

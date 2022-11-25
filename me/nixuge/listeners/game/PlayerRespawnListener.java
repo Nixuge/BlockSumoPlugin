@@ -1,6 +1,5 @@
 package me.nixuge.listeners.game;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
