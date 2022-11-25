@@ -5,7 +5,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
@@ -33,19 +32,24 @@ public class PlayerDamageListener implements Listener {
         if (!(event.getEntity() instanceof Player))
             return;
 
-        if (event.getCause().equals(DamageCause.VOID)) {
-            event.setDamage(200);
-        } else {
-            event.setDamage(0);
+        switch (event.getCause()) {
+            case VOID:
+                event.setDamage(200);
+                break;
+            case FALL:
+                event.setCancelled(true); // cancels the fall damage damage animation
+                break;
+            default:
+                event.setDamage(0);
+                break;
         }
-        // event.setCancelled(true); <- cancels kb too
     }
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player && event.getDamager() instanceof Player))
             return;
-        
+
         Player hitPlayer = (Player) event.getEntity();
         Player damager = (Player) event.getDamager();
 
