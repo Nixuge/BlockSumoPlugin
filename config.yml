@@ -3,10 +3,10 @@ game:
   maxplayercount: 8
   countaskilldelay: 20
 
-map: #use block coordinates (ints without ,s)
+map: #use "<x> <y> <z>" only unless stated otherwise
   world: world
   centerblock: 2 1 2
-  areas: #can add custom areas (priority from top to bottom, higher on top)
+  areas: #can add custom fastbreak areas (priority from top to bottom, higher on top)
     closemid:
       corner1: 0 0 0
       corner2: 4 4 4
@@ -18,7 +18,7 @@ map: #use block coordinates (ints without ,s)
       tickbreaktime: 200
       tickbreakstarttime: 40
 
-  spawns:
+  spawns: #use "<x> <y> <z>, <yaw> <pitch>"
     - 0 1 0, 90 6
     - 5 1 5, 90 6
     - 10 1 10, 90 6
@@ -28,6 +28,13 @@ expiringblock:
   defaulttickbreakstarttime: 900
   mincolorchangecount: 1
   maxcolorchangecount: 6
+
+targetter:
+  capturedelaytick: 100
+  minimumvaluesneeded: 7
+  maximumvaluespossible: 9 #100 -> 5s * 9 = 45s, captures the last 45 seconds
+  #maximumtargets: 1
+  minyaveragefortarget: 15
 
 general:
   language: fr

@@ -28,8 +28,8 @@ public class ScoreboardRunnable extends BukkitRunnable {
     // pretty dirty class
     // but it's technically made of a bunch of string building
     // with conditions, so yeah excepted
-    private final GameManager gameManager = BlockSumo.getInstance().getGameMgr();
-    private final PlayerManager pManager = gameManager.getPlayerMgr();
+    private final GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
+    private final PlayerManager pManager = gameMgr.getPlayerMgr();
     private List<BsPlayer> orderedPlayerList = new ArrayList<BsPlayer>();
     private boolean isEnded = false;
 
@@ -57,7 +57,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
     private void _buildFooter() {
         // if bonus spawning, display that
-        int nextSpawnTime = gameManager.getGameRunnable().getNextSpawnTime();
+        int nextSpawnTime = gameMgr.getGameRunnable().getNextSpawnTime();
         if (isEnded) {
             currentSBValues.put(incr.getNumber(), Lang.get("scoreboard.gameended"));
             currentSBValues.put(incr.getNumber(), "§r§r§r§r§r§l§r");
@@ -83,9 +83,11 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
             int lives = player.getLives();
             boolean isLoggedOn = player.isLoggedOn();
+            boolean isTarget = player.getName() == gameMgr.getTargetterRunnable().getTarget();
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(isLoggedOn ? player.getColor().getChatColor() : "§7§m§o");
+            stringBuilder.append(isTarget ? "§l" : "");
             stringBuilder.append(player.getName());
             stringBuilder.append(": ");
             stringBuilder.append(isLoggedOn ? colorFromLives(lives) : "§7§m§o");
@@ -113,7 +115,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         pingIndex = incr.getNumber();
         killsIndex = incr.getNumber(); // "kills" line
         currentSBValues.put(incr.getNumber(),
-                Lang.get("scoreboard.timer", TextUtils.secondsToMMSS(gameManager.getGameRunnable().getTime())));
+                Lang.get("scoreboard.timer", TextUtils.secondsToMMSS(gameMgr.getGameRunnable().getTime())));
     }
 
     @Override
@@ -122,7 +124,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         orderedPlayerList = new ArrayList<>(pManager.getPlayers());
         orderedPlayerList.sort(Comparator.comparing(BsPlayer::getLives));
 
-        isEnded = gameManager.getGameState().equals(GameState.DONE);
+        isEnded = gameMgr.getGameState().equals(GameState.DONE);
 
         buildValuesMap();
 

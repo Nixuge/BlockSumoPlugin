@@ -87,6 +87,11 @@ joinquit:
     joined: "%s joined the lobby !"
     left: "%s left the lobby !"
 
+targetter:
+  newtarget: "%s became a target ! Kill this player to receive a free life !"
+  targetkilled: "%s killed the target %s and got a free life !"
+  targetdied: "The target %s died"
+
 deathmessages:
   alone: "%s §7died"
   fromkiller: "%s §7was hit into the void by %s"

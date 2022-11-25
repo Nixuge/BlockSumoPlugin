@@ -18,6 +18,7 @@ import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.Hit;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.particle.PlayerRespawnParticle;
+import me.nixuge.utils.TextUtils;
 
 public class PlayerRespawnListener implements Listener {
 
@@ -40,19 +41,32 @@ public class PlayerRespawnListener implements Listener {
 
         player.removeLive();
 
+        String target = gameMgr.getTargetterRunnable().getTarget();
         Hit lastHit = player.getLastHit();
+
         if (lastHit != null && lastHit.getHitTime() + Config.game.getCountAsKillDelay() > gameRunnable.getTime()) {
             BsPlayer killer = playerMgr.getExistingBsPlayerFromBukkit(lastHit.getHitter());
             killer.addKill();
-            event.setDeathMessage(Lang.get("deathmessages.fromkiller", player.getColoredName(), killer.getColoredName()));
+            event.setDeathMessage(
+                    Lang.get("deathmessages.fromkiller", player.getColoredName(), killer.getColoredName()));
+
+            if (target != null && target == p.getName()) {
+                TextUtils.broadcastGame(
+                        Lang.get("targetter.targetkilled", killer.getColoredName(), player.getColoredName()));
+                killer.addLive();
+            }
+
         } else {
             event.setDeathMessage(Lang.get("deathmessages.alone", player.getColoredName()));
+            if (target != null && target == p.getName())
+                TextUtils.broadcastGame(Lang.get("targetter.targetdied", player.getColoredName()));
         }
 
         if (player.isDead()) {
             plugin.getGameMgr().checkGameEnd();
         }
 
+        // auto respawn the player w a delay of .5s
         new BukkitRunnable() {
             @Override
             public void run() {

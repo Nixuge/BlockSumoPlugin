@@ -39,7 +39,7 @@ public class Config {
         expiringBlock = new ExpiringBlockConfig(getFileConfigBlock("expiringblock"));
         game = new GameConfig(getFileConfigBlock("game"));
         map = new MapConfig(getFileConfigBlock("map"));
-        target = new TargetConfig(getFileConfigBlock("target"));
+        target = new TargetConfig(getFileConfigBlock("targetter"));
         general = new GeneralConfig(getFileConfigBlock("general"));
     }
 

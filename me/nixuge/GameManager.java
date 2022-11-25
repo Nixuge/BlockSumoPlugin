@@ -17,6 +17,7 @@ import me.nixuge.objects.McMap;
 import me.nixuge.runnables.BlockManagerRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
+import me.nixuge.runnables.TargetterRunnable;
 import me.nixuge.utils.InventoryUtils;
 import me.nixuge.utils.ScoreboardUtils;
 import me.nixuge.utils.TextUtils;
@@ -37,6 +38,7 @@ public class GameManager {
     private GameRunnable gameRunnable;
     private BlockManagerRunnable blockDestroyRunnable;
     private ScoreboardRunnable scoreboardRunnable;
+    private TargetterRunnable targetterRunnable;
 
     public GameRunnable getGameRunnable() {
         return gameRunnable;
@@ -48,6 +50,10 @@ public class GameManager {
 
     public ScoreboardRunnable getScoreboardRunnable() {
         return scoreboardRunnable;
+    }
+
+    public TargetterRunnable getTargetterRunnable() {
+        return targetterRunnable;
     }
 
     private McMap map;
@@ -123,6 +129,9 @@ public class GameManager {
         ScoreboardUtils.resetScoreboards();
         scoreboardRunnable = new ScoreboardRunnable();
         scoreboardRunnable.runTaskTimer(blockSumo, 0, 20);
+
+        targetterRunnable = new TargetterRunnable();
+        targetterRunnable.runTaskTimer(blockSumo, 100, 100); // TODO: use values from config
 
         // Only once everything is set so the listeners constructors can do their job
         setGameState(GameState.PLAYING);
