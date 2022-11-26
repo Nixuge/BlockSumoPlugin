@@ -23,15 +23,15 @@ public class PlayerManager {
     }
 
     public boolean isPlayerInGameList(Player player) {
-        return getBsPlayerFromBukkit(player) != null;
+        return getBsPlayer(player) != null;
         // if non null; player present.
     }
 
-    public BsPlayer getBsPlayerFromBukkit(Player player) {
-        return getBsPlayerFromName(player.getName());
+    public BsPlayer getBsPlayer(Player player) {
+        return getBsPlayer(player.getName());
     }
 
-    public BsPlayer getBsPlayerFromName(String playerName) {
+    public BsPlayer getBsPlayer(String playerName) {
         for (BsPlayer bsPlayer : players) {
             if (bsPlayer.getName().equals(playerName)) {
                 return bsPlayer;
@@ -59,14 +59,14 @@ public class PlayerManager {
     }
 
     public void removePlayer(Player player) {
-        BsPlayer bsPlayer = getBsPlayerFromBukkit(player);
+        BsPlayer bsPlayer = getBsPlayer(player);
         if (bsPlayer == null)
             return;
         players.remove(bsPlayer);
     }
 
     public void setPlayerLogin(Player player, boolean isLoggedOn) {
-        BsPlayer bsPlayer = getBsPlayerFromBukkit(player);
+        BsPlayer bsPlayer = getBsPlayer(player);
         if (bsPlayer == null)
             return;
 

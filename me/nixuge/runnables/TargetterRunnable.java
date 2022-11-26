@@ -77,7 +77,7 @@ public class TargetterRunnable extends BukkitRunnable {
         Double avrhigh = averages.get(highest);
         if (avrhigh != null && avrhigh >= Config.target.getMinYAverage()) {
             String coloredName = highest;
-            BsPlayer bsP = playerMgr.getBsPlayerFromName(highest);
+            BsPlayer bsP = playerMgr.getBsPlayer(highest);
             if (bsP != null)
                 coloredName = bsP.getColoredName();
 

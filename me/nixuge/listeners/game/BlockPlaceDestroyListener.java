@@ -44,7 +44,7 @@ public class BlockPlaceDestroyListener implements Listener {
             return;
         }
 
-        BsPlayer bsPlayer = gameMgr.getPlayerMgr().getBsPlayerFromBukkit(p);
+        BsPlayer bsPlayer = gameMgr.getPlayerMgr().getBsPlayer(p);
         Color color = bsPlayer.getColor();
 
         //check for inner areas

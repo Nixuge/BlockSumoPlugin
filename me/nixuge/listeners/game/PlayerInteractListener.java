@@ -33,7 +33,7 @@ public class PlayerInteractListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         // Action action = event.getAction();
         Player p = event.getPlayer();
-        BsPlayer bsPlayer = pManager.getBsPlayerFromBukkit(p);
+        BsPlayer bsPlayer = pManager.getBsPlayer(p);
         ItemStack item = event.getItem();
         if (item == null)
             return;
