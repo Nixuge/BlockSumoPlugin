@@ -45,8 +45,8 @@ bonusitems:
       name: "Mazza gigante"
       lore: "§f§bCOLPISCE FORTE"
     explosiongun:
-      name: "Arma ad esplosioni"
-      lore: "§6Clicca con il destro mentre guardi un blocco per mandare chiunque in aria !"
+      name: "Arma esplosiva"
+      lore: "§6Clicca con il destro su un blocco per mandare chiunque in aria !"
 
 bonuses:
   opintenseconds: "§7Un §6§Bonus 10P§r§7 verrà generato in §a10s§7."
@@ -98,7 +98,7 @@ deathmessages:
 
 debug:
   startcommand: "IMPORTANTE: comando dev, solo test DA RIMUOVERE NELLA VERSIONE FINALE."
-  endcommand: "Chiamata iniziale; COMANDO DI DEBUG ! CAUSA PROBLEMI CON IL TIMING DELLE PARTICELLE E FORSE ALTRO, USA CON CAUTELA!"
+  endcommand: "init() call; COMANDO DI DEBUG ! CAUSA PROBLEMI CON IL TIMING DELLE PARTICELLE E FORSE ALTRO, USA CON CAUTELA!"
 
 errors:
   mapconfig:
