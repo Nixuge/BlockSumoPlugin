@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
+import me.nixuge.config.Config;
 
 public class BlockExplodeListener implements Listener {
     // could be good to convert normal arrays[] to Sets<>
@@ -39,10 +40,11 @@ public class BlockExplodeListener implements Listener {
 
     private void manageBlockExplode(List<Block> blocks) {
         for (Block block : new ArrayList<>(blocks)) { // ConcurrentModificationException
-            if (block.getType().equals(Material.WOOL)) {
+            Material type = block.getType();
+            if (type.equals(Material.WOOL)) {
                 gameMgr.getBlockDestroyRunnable().removeBlock(block.getLocation());
-            } else {
-                blocks.remove(block); // avoid destroying the block if not wool
+            } else if (!Config.map.isMaterialDestroyable(type)) {
+                blocks.remove(block); // remove to be called if block isn't destroyable
             }
         }
     }

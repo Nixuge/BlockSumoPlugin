@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -19,6 +20,11 @@ public class MapConfig {
 
         centerBlock = getXYZfromString(conf.getString("centerblock")).asLocation(getWorld()).add(.5, 1, .5);
 
+        destroyableBlocks = new ArrayList<>();
+        List<String> destroyableBlocksStr = conf.getStringList("destroyableblocks");
+        for (String str : destroyableBlocksStr) {
+            destroyableBlocks.add(Material.getMaterial(str));
+        }
         
         spawns = new ArrayList<>();
         for (String str : conf.getStringList("spawns")) {
@@ -40,10 +46,11 @@ public class MapConfig {
         }
     }
 
-    private final List<ExpiringArea> innerAreas;
-    private final Location centerBlock;
     private final World world;
+    private final Location centerBlock;
+    private final List<Material> destroyableBlocks;
     private final List<Location> spawns;
+    private final List<ExpiringArea> innerAreas;
 
     private static Location getLocationFromString(String str, World world) {
         String[] xyz_yp = str.split(", ");
@@ -111,5 +118,12 @@ public class MapConfig {
 
     public List<ExpiringArea> getInnerAreas() {
         return innerAreas;
+    }
+
+    public List<Material> getDestroyableMaterials() {
+        return destroyableBlocks;
+    }
+    public boolean isMaterialDestroyable(Material material) {
+        return destroyableBlocks.contains(material);
     }
 }

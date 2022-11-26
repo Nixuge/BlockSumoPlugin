@@ -22,6 +22,10 @@ map: #use "<x> <y> <z>" only unless stated otherwise
     - 0 1 0, 90 6
     - 5 1 5, 90 6
     - 10 1 10, 90 6
+  
+  destroyableblocks:
+    - WOOL
+    - STONE
 
 expiringblock:
   defaulttickbreaktime: 1200
