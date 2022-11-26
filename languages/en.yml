@@ -88,7 +88,7 @@ joinquit:
     left: "%s left the lobby !"
 
 targetter:
-  newtarget: "§e§l%s §ebecame a target ! Kill this player to receive a free life !"
+  newtarget: "%s §ebecame a target ! Kill this player to receive a free life !"
   targetkilled: "§e%s §ekilled the target %s §eand got a free life !"
   targetdied: "§eThe target %s §edied"
 

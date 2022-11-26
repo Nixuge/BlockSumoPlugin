@@ -40,7 +40,7 @@ public class PlayerRespawnListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         Player p = event.getEntity();
-        BsPlayer player = playerMgr.getExistingBsPlayerFromBukkit(p);
+        BsPlayer player = playerMgr.getBsPlayerFromBukkit(p);
 
         player.removeLive();
 
@@ -48,7 +48,7 @@ public class PlayerRespawnListener implements Listener {
         Hit lastHit = player.getLastHit();
 
         if (lastHit != null && lastHit.getHitTime() + Config.game.getCountAsKillDelay() > gameRunnable.getTime()) {
-            BsPlayer killer = playerMgr.getExistingBsPlayerFromBukkit(lastHit.getHitter());
+            BsPlayer killer = playerMgr.getBsPlayerFromBukkit(lastHit.getHitter());
             killer.addKill();
             event.setDeathMessage(
                     Lang.get("deathmessages.fromkiller", player.getColoredName(), killer.getColoredName()));
@@ -93,7 +93,7 @@ public class PlayerRespawnListener implements Listener {
     public void onRespawn(PlayerRespawnEvent event) {
         Player p = event.getPlayer();
 
-        if (gameMgr.getPlayerMgr().getExistingBsPlayerFromBukkit(p).isDead()) {
+        if (gameMgr.getPlayerMgr().getBsPlayerFromBukkit(p).isDead()) {
             p.setGameMode(GameMode.SPECTATOR);
             Location spawn = gameMgr.getMcMap().getCenter();
             event.setRespawnLocation(spawn);

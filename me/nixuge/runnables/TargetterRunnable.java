@@ -76,7 +76,12 @@ public class TargetterRunnable extends BukkitRunnable {
 
         Double avrhigh = averages.get(highest);
         if (avrhigh != null && avrhigh >= Config.target.getMinYAverage()) {
-            TextUtils.broadcastGame(Lang.get("targetter.newtarget", highest));
+            String coloredName = highest;
+            BsPlayer bsP = playerMgr.getBsPlayerFromName(highest);
+            if (bsP != null)
+                coloredName = bsP.getColoredName();
+
+            TextUtils.broadcastGame(Lang.get("targetter.newtarget", coloredName));
             lastTargetTime = gameRunnable.getTime();
             currentTarget = highest;
         }

@@ -105,4 +105,7 @@ public class BsPlayer {
     public String getColoredName() {
         return color.getChatColor() + name;
     }
+    public String getColoredBoldName() {
+        return color.getChatColor() + "§l" + name;
+    }
 }

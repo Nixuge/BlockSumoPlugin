@@ -53,7 +53,7 @@ public class PlayerDamageListener implements Listener {
         Player hitPlayer = (Player) event.getEntity();
         Player damager = (Player) event.getDamager();
 
-        BsPlayer bsp = playerMgr.getExistingBsPlayerFromBukkit(hitPlayer);
+        BsPlayer bsp = playerMgr.getBsPlayerFromBukkit(hitPlayer);
         bsp.setLastHit(new Hit(gameRunnable.getTime(), damager));
     }
 }
