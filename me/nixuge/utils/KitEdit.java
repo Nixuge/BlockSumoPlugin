@@ -85,4 +85,7 @@ public class KitEdit {
         p.getInventory().clear();
         kitEdits.remove(this);
     }
+    public void removeKitEdit() {
+        kitEdits.remove(this);
+    }
 }
