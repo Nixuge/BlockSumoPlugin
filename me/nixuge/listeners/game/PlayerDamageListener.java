@@ -33,14 +33,14 @@ public class PlayerDamageListener implements Listener {
             return;
 
         switch (event.getCause()) {
-            case VOID:
-                event.setDamage(200);
+            case VOID: // Kill instantly
+                event.setDamage(200); 
                 break;
-            case FALL:
-                event.setCancelled(true); // cancels the fall damage damage animation
+            case FALL: // Cancels the fall damage damage animation
+                event.setCancelled(true); 
                 break;
-            default:
-                event.setDamage(0);
+            default: // Cancel the damage without cancelling the animation
+                event.setDamage(0); 
                 break;
         }
     }
