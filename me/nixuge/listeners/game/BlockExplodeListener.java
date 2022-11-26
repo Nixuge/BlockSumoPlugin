@@ -15,13 +15,6 @@ import me.nixuge.GameManager;
 import me.nixuge.config.Config;
 
 public class BlockExplodeListener implements Listener {
-    // could be good to convert normal arrays[] to Sets<>
-    // private Set<Material> protectedMaterials = new HashSet<Material>(){{
-    // add(Material.GOLD_BLOCK);
-    // add(Material.QUARTZ_BLOCK);
-    // }};
-    // or not? idk will see
-
     GameManager gameMgr;
 
     public BlockExplodeListener() {

@@ -16,6 +16,7 @@ import me.nixuge.config.Config;
 import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.Hit;
+import me.nixuge.objects.McMap;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.TargetterRunnable;
 import me.nixuge.runnables.particle.PlayerRespawnParticle;
@@ -28,6 +29,7 @@ public class PlayerRespawnListener implements Listener {
     PlayerManager playerMgr;
     GameRunnable gameRunnable;
     TargetterRunnable targetterRunnable;
+    McMap mcMap;
 
     public PlayerRespawnListener() {
         plugin = BlockSumo.getInstance();
@@ -35,6 +37,7 @@ public class PlayerRespawnListener implements Listener {
         playerMgr = gameMgr.getPlayerMgr();
         gameRunnable = gameMgr.getGameRunnable();
         targetterRunnable = gameMgr.getTargetterRunnable();
+        mcMap = gameMgr.getMcMap();
     }
 
     @EventHandler
@@ -73,6 +76,7 @@ public class PlayerRespawnListener implements Listener {
         targetterRunnable.resetPlayer(player.getName());
 
         if (player.isDead()) {
+            player.getBukkitPlayer().getInventory().clear();
             plugin.getGameMgr().checkGameEnd();
         }
 
@@ -86,28 +90,29 @@ public class PlayerRespawnListener implements Listener {
 
         // note: need to call the respawn event manually
         // since spigot().respawn() doesn't
-        onRespawn(new PlayerRespawnEvent(p, null, false));
+        // edit: apparently it does?
+        // onRespawn(new PlayerRespawnEvent(p, null, false));
     }
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         Player p = event.getPlayer();
+        BsPlayer bsPlayer = playerMgr.getBsPlayer(p);
 
-        if (gameMgr.getPlayerMgr().getBsPlayer(p).isDead()) {
+        if (bsPlayer.isDead()) {
             p.setGameMode(GameMode.SPECTATOR);
-            Location spawn = gameMgr.getMcMap().getCenter();
+            Location spawn = mcMap.getCenter();
             event.setRespawnLocation(spawn);
             p.sendMessage(Lang.get("general.eliminated"));
             return;
         }
 
-        Location spawn = gameMgr.getMcMap().getRandomSpawn();
+        Location spawn = mcMap.getRandomSpawn();
         event.setRespawnLocation(spawn);
 
-        if (!p.isDead()) {
+        if (!bsPlayer.isDead()) {
             PlayerRespawnParticle packet = new PlayerRespawnParticle(60, p);
             packet.runTaskTimer(plugin, 1, 1);
         }
-
     }
 }

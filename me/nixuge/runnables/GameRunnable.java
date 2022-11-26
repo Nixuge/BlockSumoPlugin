@@ -14,6 +14,8 @@ import me.nixuge.objects.McMap;
 import me.nixuge.runnables.particle.MiddleParticleRunnable;
 import me.nixuge.utils.PacketUtils;
 import me.nixuge.utils.TextUtils;
+import me.nixuge.utils.logger.LogLevel;
+import me.nixuge.utils.logger.Logger;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
@@ -49,6 +51,7 @@ public class GameRunnable extends BukkitRunnable {
     private void manageGlobalBonus() {
         // if (willBonusSpawn(lastGlobalBonusSpawn, .00125))
         if (willBonusSpawn(lastGlobalBonusSpawn)) {
+            Logger.log(LogLevel.DEBUG, String.format("Global bonus spawn (time %ds)", time));
             lastGlobalBonusSpawn = 0;
             spawnGlobalBonus();
         }
@@ -62,6 +65,7 @@ public class GameRunnable extends BukkitRunnable {
             spawnMiddleBonus1_8();
 
         } else if (lastMiddleBonusSpawn > 0 && willBonusSpawn(lastMiddleBonusSpawn)) {
+            Logger.log(LogLevel.DEBUG, String.format("Middle bonus spawn (time %ds)", time));
             lastMiddleBonusSpawn = -15;
             MiddleParticleRunnable run = new MiddleParticleRunnable(300);
             run.runTaskTimer(plugin, 1, 1);

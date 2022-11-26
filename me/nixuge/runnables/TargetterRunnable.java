@@ -14,6 +14,8 @@ import me.nixuge.config.Config;
 import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.utils.TextUtils;
+import me.nixuge.utils.logger.LogLevel;
+import me.nixuge.utils.logger.Logger;
 
 public class TargetterRunnable extends BukkitRunnable {
 
@@ -81,6 +83,7 @@ public class TargetterRunnable extends BukkitRunnable {
             if (bsP != null)
                 coloredName = bsP.getColoredName();
 
+            Logger.log(LogLevel.DEBUG, String.format("Set %s as the target (average of y=%f)", highest, avrhigh));
             TextUtils.broadcastGame(Lang.get("targetter.newtarget", coloredName));
             lastTargetTime = gameRunnable.getTime();
             currentTarget = highest;

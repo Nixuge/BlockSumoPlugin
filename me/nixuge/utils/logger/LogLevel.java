@@ -6,7 +6,7 @@ public enum LogLevel {
     DEBUG(Level.INFO, "§7", "\u001B[90m", false), // See if will change or not
     INFO(Level.INFO, "§b", "\u001B[36m"),
     WARNING(Level.WARNING, "§e", "\u001B[33m"),
-    ERROR(Level.SEVERE, "§c", "\u001B[31m");
+    ERROR(Level.SEVERE, "§c", "\u001B[31m", false);
 
     public static final String ANSI_RESET = "\u001B[0m";
     private final Level level;

@@ -9,6 +9,8 @@ import me.nixuge.config.inner.GameConfig;
 import me.nixuge.config.inner.GeneralConfig;
 import me.nixuge.config.inner.MapConfig;
 import me.nixuge.config.inner.TargetConfig;
+import me.nixuge.utils.logger.LogLevel;
+import me.nixuge.utils.logger.Logger;
 
 public class Config {
     // WHY THIS WEIRD FORMAT?
@@ -41,6 +43,7 @@ public class Config {
         map = new MapConfig(getFileConfigBlock("map"));
         target = new TargetConfig(getFileConfigBlock("targetter"));
         general = new GeneralConfig(getFileConfigBlock("general"));
+        Logger.log(LogLevel.DEBUG, "Successfully loaded the config !");
     }
 
     public static void saveConfig() {
