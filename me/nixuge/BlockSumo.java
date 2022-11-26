@@ -16,6 +16,8 @@ import me.nixuge.listeners.ItemSpawnDropListener;
 import me.nixuge.listeners.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
 import me.nixuge.utils.ScoreboardUtils;
+import me.nixuge.utils.logger.LogLevel;
+import me.nixuge.utils.logger.Logger;
 
 public class BlockSumo extends JavaPlugin {
 
@@ -52,7 +54,7 @@ public class BlockSumo extends JavaPlugin {
     public void init() {
         // set vars & config (order is important)
         main = this;
-
+        
         saveDefaultConfig();
 
         Config.init(getConfig());
@@ -73,13 +75,13 @@ public class BlockSumo extends JavaPlugin {
 
         // reset scoreboard
         ScoreboardUtils.resetScoreboards();
+
+        Logger.log(LogLevel.DEBUG, "Done calling init()");
     }
 
     @Override
     public void onEnable() {
         init();
-
-        Bukkit.broadcastMessage(Lang.get("general.pluginenabled"));
 
         getCommand("join_blocksumo").setExecutor(new JoinCommand());
         getCommand("end_blocksumo").setExecutor(new EndCommand());
@@ -90,5 +92,7 @@ public class BlockSumo extends JavaPlugin {
         // those remaining here because they're always needed
         pluginManager.registerEvents(new RandomChangeListener(), this);
         pluginManager.registerEvents(new ItemSpawnDropListener(), this);
+
+        Logger.log("Done loading plugin !");
     }
 }

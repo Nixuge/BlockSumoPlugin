@@ -20,7 +20,8 @@ import me.nixuge.runnables.ScoreboardRunnable;
 import me.nixuge.runnables.TargetterRunnable;
 import me.nixuge.utils.InventoryUtils;
 import me.nixuge.utils.ScoreboardUtils;
-import me.nixuge.utils.TextUtils;
+import me.nixuge.utils.logger.LogLevel;
+import me.nixuge.utils.logger.Logger;
 
 public class GameManager {
 
@@ -74,6 +75,7 @@ public class GameManager {
     }
 
     private void setGameState(GameState gameState) {
+        Logger.log(LogLevel.DEBUG, "Setting gamestate to " + gameState.toString());
         // unregister previous ones
         for (Listener listener : state.getInstances()) {
             HandlerList.unregisterAll(listener);
@@ -91,12 +93,15 @@ public class GameManager {
                 Listener listener = (Listener) cons.newInstance();
                 state.addInstance(listener);
                 blockSumo.getPluginManager().registerEvents(listener, blockSumo);
+                Logger.log(LogLevel.DEBUG, "Registered listener: " + c.getSimpleName());
             }
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
             // ignore all errors because why should we look at those
+            Logger.log(LogLevel.ERROR, "Exception happened while registering listener !");
             e.printStackTrace();
         }
+        Logger.log(LogLevel.DEBUG, "Done setting gamestate");
     }
 
     public void startGame() {
@@ -104,34 +109,43 @@ public class GameManager {
     }
 
     public void startGame(boolean bypass) {
+        if (bypass) {
+            Logger.log(LogLevel.WARNING, "Bypassing the startgame checks !");
+        }
         // checks
         if (pManager.getPlayers().size() < Config.game.getMinPlayers() && !bypass) {
-            Bukkit.broadcastMessage(Lang.get("game.starting.notenoughplayers"));
+            Logger.logBC(LogLevel.WARNING, Lang.get("game.starting.notenoughplayers"));
             return;
         }
         if (state != GameState.WAITING && !bypass) {
-            Bukkit.broadcastMessage(Lang.get("game.starting.wrongstate", state));
+            Logger.logBC(LogLevel.WARNING, Lang.get("game.starting.wrongstate", state));
             return;
         }
-        TextUtils.broadcastGame(Lang.get("game.starting.starting"));
+        Logger.logIG(Lang.get("game.starting.starting"));
 
         // tp players & init their inventory
         pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
         InventoryUtils.setupInventories(pManager.getPlayers());
+        Logger.log(LogLevel.DEBUG, "Set player invs");
 
         // set runnables
         blockDestroyRunnable = new BlockManagerRunnable();
         blockDestroyRunnable.runTaskTimer(blockSumo, 1, 1);
+        Logger.log(LogLevel.DEBUG, "Ran blockDestroyRunnable");
 
         gameRunnable = new GameRunnable();
         gameRunnable.runTaskTimer(blockSumo, 20, 20);
+        Logger.log(LogLevel.DEBUG, "Ran gameRunnable");
 
         ScoreboardUtils.resetScoreboards();
         scoreboardRunnable = new ScoreboardRunnable();
         scoreboardRunnable.runTaskTimer(blockSumo, 0, 20);
+        Logger.log(LogLevel.DEBUG, "Ran scoreboardRunnable");
 
+        int captureDelayTick = Config.target.getCaptureDelayTick();
         targetterRunnable = new TargetterRunnable();
-        targetterRunnable.runTaskTimer(blockSumo, 100, 100); // TODO: use values from config
+        targetterRunnable.runTaskTimer(blockSumo, captureDelayTick, captureDelayTick);
+        Logger.log(LogLevel.DEBUG, "Ran targetterRunnable");
 
         // Only once everything is set so the listeners constructors can do their job
         setGameState(GameState.PLAYING);
