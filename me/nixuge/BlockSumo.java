@@ -23,9 +23,6 @@ public class BlockSumo extends JavaPlugin {
     // blocks to be destroyed & to not be destroyed
 
     // TODO: add sounds
-    // TODO: target system (w config)
-    // if a player is a lot on top, add a bounty
-    // that make the players that kills him gain a life
 
     // TODO: proper game end (fireworks & other)
     // TODO: add javadocs (uh oh)

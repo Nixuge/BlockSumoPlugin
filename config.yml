@@ -32,9 +32,11 @@ expiringblock:
 targetter:
   capturedelaytick: 100
   minimumvaluesneeded: 7
-  maximumvaluespossible: 9 #100 -> 5s * 9 = 45s, captures the last 45 seconds
+  maximumvaluesstored: 9 #100 -> 5s * 9 = 45s, captures the last 45 seconds
   #maximumtargets: 1
   minyaveragefortarget: 15
+  allowsametargetmultipletimes: true
+  minimumtimebetweentargets: 60
 
 general:
   language: fr

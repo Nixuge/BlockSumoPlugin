@@ -8,6 +8,7 @@ import java.util.Map;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
 import me.nixuge.config.Config;
 import me.nixuge.config.Lang;
@@ -17,7 +18,9 @@ import me.nixuge.utils.TextUtils;
 public class TargetterRunnable extends BukkitRunnable {
 
     private BlockSumo plugin = BlockSumo.getInstance();
-    private PlayerManager playerMgr = plugin.getGameMgr().getPlayerMgr();
+    private GameManager gameMgr = plugin.getGameMgr();
+    private PlayerManager playerMgr = gameMgr.getPlayerMgr();
+    private GameRunnable gameRunnable = gameMgr.getGameRunnable();
 
     // probably a better way to do that
     private Map<String, List<Integer>> lastPlayerYs = new HashMap<>();
@@ -25,6 +28,8 @@ public class TargetterRunnable extends BukkitRunnable {
     private String highest;
 
     private String currentTarget;
+    private String lastTarget;
+    private int lastTargetTime = -500;
 
     @Override
     public void run() {
@@ -40,14 +45,14 @@ public class TargetterRunnable extends BukkitRunnable {
             if (playerYs == null)
                 playerYs = new ArrayList<>(); // LinkedList?
 
-            boolean isLarger = playerYs.size() >= Config.target.getMaxValuesPossible();
-            if (isLarger)
+            if (playerYs.size() >= Config.target.getMaxValuesStored())
                 playerYs.remove(0);
 
             if (player.isLoggedOn()) {
                 playerYs.add(player.getBukkitPlayer().getLocation().getBlockY());
             }
-            if (player.isLoggedOn() && isLarger) {
+
+            if (player.isLoggedOn() && playerYs.size() >= Config.target.getMinValuesNeeded()) {
                 averages.put(player.getName(),
                         playerYs.stream().mapToInt(i -> i).average().orElse(0));
             }
@@ -57,19 +62,22 @@ public class TargetterRunnable extends BukkitRunnable {
     }
 
     public void playerBecomesTarget() {
-        if (currentTarget != null)
+        if (currentTarget != null ||
+                gameRunnable.getTime() < lastTargetTime + Config.target.getMinTimeBetweenTargets())
             return;
 
         highest = null;
         for (String p : averages.keySet()) {
-            if (highest == null || averages.get(p) > averages.get(highest)) {
+            if ((highest == null || averages.get(p) > averages.get(highest)) &&
+                    (Config.target.allowSameTargetMultipleTimes() || p != lastTarget)) {
                 highest = p;
-                break;
             }
         }
+
         Double avrhigh = averages.get(highest);
         if (avrhigh != null && avrhigh >= Config.target.getMinYAverage()) {
             TextUtils.broadcastGame(Lang.get("targetter.newtarget", highest));
+            lastTargetTime = gameRunnable.getTime();
             currentTarget = highest;
         }
     }
@@ -77,7 +85,13 @@ public class TargetterRunnable extends BukkitRunnable {
     public String getTarget() {
         return currentTarget;
     }
+
     public void resetTarget() {
+        lastTarget = currentTarget;
         currentTarget = null;
+    }
+
+    public void resetPlayer(String playerName) {
+        lastPlayerYs.put(playerName, null);
     }
 }

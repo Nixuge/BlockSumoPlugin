@@ -17,6 +17,7 @@ import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.Hit;
 import me.nixuge.runnables.GameRunnable;
+import me.nixuge.runnables.TargetterRunnable;
 import me.nixuge.runnables.particle.PlayerRespawnParticle;
 import me.nixuge.utils.TextUtils;
 
@@ -26,12 +27,14 @@ public class PlayerRespawnListener implements Listener {
     GameManager gameMgr;
     PlayerManager playerMgr;
     GameRunnable gameRunnable;
+    TargetterRunnable targetterRunnable;
 
     public PlayerRespawnListener() {
         plugin = BlockSumo.getInstance();
         gameMgr = plugin.getGameMgr();
         playerMgr = gameMgr.getPlayerMgr();
         gameRunnable = gameMgr.getGameRunnable();
+        targetterRunnable = gameMgr.getTargetterRunnable();
     }
 
     @EventHandler
@@ -54,13 +57,20 @@ public class PlayerRespawnListener implements Listener {
                 TextUtils.broadcastGame(
                         Lang.get("targetter.targetkilled", killer.getColoredName(), player.getColoredName()));
                 killer.addLive();
+                targetterRunnable.resetTarget();
             }
 
         } else {
             event.setDeathMessage(Lang.get("deathmessages.alone", player.getColoredName()));
-            if (target != null && target == p.getName())
+
+            if (target != null && target == p.getName()) {
                 TextUtils.broadcastGame(Lang.get("targetter.targetdied", player.getColoredName()));
+                targetterRunnable.resetTarget();
+            }
         }
+
+        // Always reset the player average Y anyways
+        targetterRunnable.resetPlayer(player.getName());
 
         if (player.isDead()) {
             plugin.getGameMgr().checkGameEnd();
