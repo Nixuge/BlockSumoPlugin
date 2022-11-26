@@ -53,7 +53,7 @@ public class Kit {
 
     // thanks to https://bukkit.org/threads/saving-individual-players-kits.375693/
     // for the inspiration
-    private static String folderPath = plugin.getDataFolder() + File.separator + "BlockSumo" + File.separator + "Kits";
+    private static String folderPath = plugin.getDataFolder() + File.separator + "Kits";
 
     public static Kit loadDefaultKit() {
         ItemStack[] content = new ItemStack[36];
