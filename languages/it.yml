@@ -1,0 +1,110 @@
+general:
+  pluginenabled: "Plugin abilitato !"
+  cantdestroyblock: "Non puoi distruggere quel blocco !"
+  eliminated: "Sei stato eliminato."
+
+game:
+  starting:
+    notenoughplayers: "Non ci sono abbastanza giocatori per iniziare !"
+    wrongstate: "Stato sbagliato per iniziare il gioco ! %s"
+    starting: "Iniziando il gioco !"
+  ending:
+    endingoneminute: "§4§lIl gioco finisce tra un minuto."
+    endingxseconds: "§4§lIl gioco finisce tra %ds."
+    gamedonewinner: "Gioco finito ! Vincitore:"
+    gamedonewinners: "Gioco finito ! Vincitori:"
+
+bonusitems:
+  normal:
+    fireball:
+      name: "Palla di fuoco"
+      lore: "Esplosione"
+    snowballs:
+      name: "Palle di neve"
+      lore: "Alcune palle di neve"
+    smallbat:
+      name: "Piccola mazza"
+      lore: "§fColpisce forte ma non troppo"
+    tnt:
+      name: "TNT"
+      lore: "§4BOOM"
+    bouncyfeather:
+      name: "Piuma balzosa"
+      lore: "Fa zoom"
+  middle:
+    bonuslife:
+      name: "Vita extra"
+      lore: "§aClicca con il destro per ottenere una vita !"
+    tntrain:
+      name: "Pioggia di TNT"
+      lore: "§6Clicca con il destro per far piovere TNT su tutti !"
+    jumpboost:
+      name: "Pozione di Salto"
+      lore: "Per andare verso il cielo"
+    megabat:
+      name: "Mazza gigante"
+      lore: "§f§bCOLPISCE FORTE"
+    explosiongun:
+      name: "Arma ad esplosioni"
+      lore: "§6Clicca con il destro mentre guardi un blocco per mandare chiunque in aria !"
+
+bonuses:
+  opintenseconds: "§7Un §6§Bonus 10P§r§7 verrà generato in §a10s§7."
+  opspawn: "§6§n%s§r§e generato al centro!"
+  normalspawn: "§7Tutti hanno ottenuto §b§n%s§r§7."
+  tntrain: "§6Pioggia di TNT per tutti !"
+  bonuslife: "§aHai ottenuto una vita !"
+  explosiongunwait: "§6Aspetta ancora un pò prima di far esplodere qualcosa"
+  explosiongunbadaim: "§6Guarda un blocco per farlo esplodere"
+  explosiongun: "§4§l§nB O O M !"
+
+kit:
+  #Note for this one: in the next line the text "Inventory" (or equivalent for the clients language)
+  #is displayed and can't be changed, hence why i'm stopping at "your".
+  organiseinventory: "Organizza il tuo"
+  savekit: "§aSalva kit"
+  cancelkit: "§cAnnulla modifiche al kit"
+  invalidkit: "§cKit non valido !"
+  savedkit: "§aKit salvato !"
+  cancelledkit: "§cModifiche al kit annullate !"
+  editunavailable: "Non puoi modificare il kit durante un gioco."
+
+scoreboard:
+  timer: "§fTimer: %s"
+  kills: "§fUccisioni: §c%d"
+  ping: "Ping: §c%dms"
+  gotitem: "Ottenuto §b§n%s§r !"
+  opspawnin: "§6§Bonus 10P§r§f in §a%ds"
+  opspawnnow: "§6§Bonus 10P§r§f generato !"
+  gameended: "§nGioco finito !"
+
+joinquit:
+  game:
+    alreadystarted: "§b§4Gioco già cominciato !"
+    rejoined: "%s si è riconnesso al gioco!"
+    quit: "%s ha lasciato il gioco !"
+  lobby:
+    joined: "%s si è unito alla lobby !"
+    left: "%s ha lasciato la lobby !"
+
+targetter:
+  newtarget: "%s §eè diventato un bersaglio ! Uccidilo per ottenere una vita !"
+  targetkilled: "§e%s §eha ucciso il bersaglio %s §ee ha ottenuto una vita !"
+  targetdied: "§L'obiettivo %s §eè morto"
+
+deathmessages:
+  alone: "%s §7è morto"
+  fromkiller: "%s §7è stato lanciato nel void da %s"
+
+debug:
+  startcommand: "IMPORTANTE: comando dev, solo test DA RIMUOVERE NELLA VERSIONE FINALE."
+  endcommand: "Chiamata iniziale; COMANDO DI DEBUG ! CAUSA PROBLEMI CON IL TIMING DELLE PARTICELLE E FORSE ALTRO, USA CON CAUTELA!"
+
+errors:
+  mapconfig:
+    wrongparseXYZ1: "§l§4Numero errato di stringhe per creare un oggetto XYZ (%d invece di 3). @getXYZfromString per stringa \"%s\"."
+    wrongparseXYZ2: "§l§4ERRORE NEL CONFING! @getXYZfromString per valore \"%s\" per stringa \"%s\"."
+    wrongparselocation1: "§l§4Impossibile separare XYZ e YP (%d parti invece di 5). @getLocationfromString per stringa \"%s\". Usa il formato: <x> <y> <z>, <yaw> <pitch>."
+    wrongparselocation2: "§l§4ERRORE NEL CONFIG! @getLocationFromString per valore \"%s\" per stringa \"%s\"."
+  kit:
+    critical: "§l§4Errore critico nella gestione del file dei kit. Segnala l'errore."
