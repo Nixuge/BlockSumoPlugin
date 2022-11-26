@@ -2,6 +2,7 @@ package me.nixuge.listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -14,7 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 
-public class PreventiveListener {
+public class PreventiveListener implements Listener {
     BlockSumo plugin;
     GameManager gameMgr;
 

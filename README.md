@@ -22,6 +22,8 @@ Compile using Java 8 only for Minecraft 1.8.8 only.
 
 # Questionnable decisions
 Game-Wise, this plugin was made to be one I could enjoy however i wanted (hence the extended config). However, some coding decisions may seem a bit weird:   
+## Using names instead of UUIDs
+This plugin should be able to work with cracked accounts (untested but it should), which isn't possible with UUIDs
 ## The config
 The config has a really weird system, but all of that's explained in the "me/nixuge/config/Config.java" file
 ## The libraries
