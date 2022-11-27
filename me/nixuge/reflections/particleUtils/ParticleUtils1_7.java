@@ -4,13 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
 
-import me.nixuge.reflections.ReflectionInterface;
 import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
 
 
-public class ParticleUtils1_7 extends ReflectionInterface {
+public class ParticleUtils1_7 {
     public static PacketPlayOutWorldParticles getParticlePacket(String particle, double x, double y, double z,
     me.nixuge.enums.Color color) {
 

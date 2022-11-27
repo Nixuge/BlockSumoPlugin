@@ -1,7 +1,7 @@
 package me.nixuge.reflections.particleUtils;
 
-import me.nixuge.reflections.ReflectionInterface;
+// import me.nixuge.reflections.ReflectionUtils;
 
-public class ParticleUtils1_13plus extends ReflectionInterface {
+public class ParticleUtils1_13plus {
     //TODO
 }

@@ -4,20 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.block.Block;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-// import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-// import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 
-// import net.minecraft.server.v1_8_R3.BlockPosition;
-// import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import me.nixuge.BlockSumo;
+import me.nixuge.GameManager;
 import me.nixuge.enums.Color;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.ExpiringBlock;
+import me.nixuge.reflections.HandleUtils;
 import me.nixuge.reflections.ParticleUtils;
 import me.nixuge.reflections.particleUtils.ParticleEnum;
 
@@ -26,10 +28,21 @@ public class BlockManagerRunnable extends BukkitRunnable {
     private List<ExpiringBlock> blocks = new ArrayList<>();
     private List<ExpiringBlock> toRemove;
 
+    private BlockSumo plugin;
+    private GameManager gameMgr;
     private boolean is1_7;
 
+    private int dimension;
+    private Object serverHandle;
+
     public BlockManagerRunnable() {
-        is1_7 = BlockSumo.getInstance().is1_7();
+        this.plugin = BlockSumo.getInstance();
+        this.gameMgr = plugin.getGameMgr();
+        this.is1_7 = plugin.is1_7();
+
+        World world = gameMgr.getMcMap().getWorld();
+        dimension = (int) HandleUtils.getHandleField(world, "dimension");
+        serverHandle = HandleUtils.getHandle(Bukkit.getServer());
     }
 
     @Override
@@ -94,9 +107,9 @@ public class BlockManagerRunnable extends BukkitRunnable {
         // so sticking with no checks here for now
         block.setType(Material.AIR);
 
-        // See the "PacketUtils" class for more info about fields
-        // not sure if I add .5f to the Y too, looks good rn
-
+        // Important info:
+        // As of now, this doesn't work on 1.7 (the version using colors bukkit objects)
+        // Need to find a fix on here
         Color color = null;
         if (is1_7) {
             color = Color.getFromWoolData(data);
@@ -119,11 +132,11 @@ public class BlockManagerRunnable extends BukkitRunnable {
         int z = loc.getBlockZ();
         // int = id of player who is hitting
         // set it to a random one, everytime the same tho so that it doesn't look weird
-        // PacketPlayOutBlockBreakAnimation packet = new
-        // PacketPlayOutBlockBreakAnimation(
-        // breakerId, new BlockPosition(x, y, z), stage);
+        
 
-        int dimension;
+        //TODO: use reflections for taht
+        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
+                breakerId, new BlockPosition(x, y, z), stage);
 
         List<BsPlayer> gamePlayers = BlockSumo.getInstance().getGameMgr()
                 .getPlayerMgr().getPlayers();
@@ -132,10 +145,12 @@ public class BlockManagerRunnable extends BukkitRunnable {
             if (!bsPlayer.isLoggedOn())
                 return;
 
-            Player player = bsPlayer.getBukkitPlayer();
+            // TODO: use the other sendPacketNearby form
+            // that starts w a human
+            // Uncomment the original without reflections for intellisense
+            HandleUtils.sendPacketNearby(serverHandle, x, y, z, 120, dimension, packet);
 
-            // dimension = ((CraftWorld) player.getWorld()).getHandle().dimension;
-
+            // Original without reflections:
             // ((CraftServer) player.getServer()).getHandle().sendPacketNearby(
             // x, y, z, 120, dimension, packet);
         }

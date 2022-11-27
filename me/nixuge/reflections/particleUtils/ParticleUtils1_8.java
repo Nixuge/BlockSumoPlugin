@@ -3,14 +3,12 @@ package me.nixuge.reflections.particleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import me.nixuge.reflections.ReflectionInterface;
-
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
-public class ParticleUtils1_8 extends ReflectionInterface {
+public class ParticleUtils1_8 {
     public static PacketPlayOutWorldParticles getParticlePacket(EnumParticle particle, double x, double y, double z,
             double xPlus, double yPlus, double zPlus, int count, int[] data) {
         // PacketPlayOutWorldParticles:

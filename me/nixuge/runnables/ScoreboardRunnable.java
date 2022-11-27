@@ -20,7 +20,7 @@ import me.nixuge.enums.Color;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.maths.IncreasingNumber;
-import me.nixuge.reflections.ReflectionInterface;
+import me.nixuge.reflections.HandleUtils;
 import me.nixuge.utils.TextUtils;
 
 public class ScoreboardRunnable extends BukkitRunnable {
@@ -156,7 +156,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
             });
 
             // build the missing ping key (different for every player)
-            objective.getScore(Lang.get("scoreboard.ping", ReflectionInterface.getPing(p))).setScore(pingIndex);
+            objective.getScore(Lang.get("scoreboard.ping", HandleUtils.getHandleField(p, "ping"))).setScore(pingIndex);
 
             // same for kills
             objective.getScore(Lang.get("scoreboard.kills", bsPlayer.getKills())).setScore(killsIndex);

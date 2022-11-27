@@ -2,7 +2,8 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "/home/nix/coding/plugins/1.8_serv/cache/patched_1.8.8.jar",
-        "/home/nix/coding/plugins/1.7_serv/paperspigot-1.7.10-R0.1-SNAPSHOT.jar"
+        "/home/nix/coding/plugins/1.7_serv/paperspigot-1.7.10-R0.1-SNAPSHOT.jar",
+        "/home/nix/coding/plugins/1.12_serv/cache/patched_1.12.2.jar"
     ],
     "java.project.exportJar.targetPath": "/home/nix/coding/plugins/1.8_serv/plugins/${workspaceFolderBasename}.jar",
     "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx8G -Xms100m",

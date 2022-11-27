@@ -8,11 +8,11 @@ import me.nixuge.reflections.particleUtils.ParticleUtils1_8;
 import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
 
-public class ParticleUtils extends ReflectionInterface {
+public class ParticleUtils extends ReflectionUtils {
 
     private static BlockSumo main = BlockSumo.getInstance();
     private static String mcVersion = main.getMcVersion();
-    private static Float mcVersionF = main.getMcVersionFloat();
+    // private static Float mcVersionF = main.getMcVersionFloat();
 
     public static void sendParticlePacket(ParticleEnum particle, double x, double y, double z,
             double xPlus, double yPlus, double zPlus, int count) {
