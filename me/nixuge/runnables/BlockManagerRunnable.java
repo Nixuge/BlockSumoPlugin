@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.minecraft.server.v1_8_R3.BlockPosition;
@@ -85,7 +84,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
                 if (i < 10) {
                     sendBreakBlockPacket1_8(block.asLocation(), i, block.getBreakerId());
                 } else {
-                    breakBlockParticles1_8(block.asLocation());
+                    breakBlockParticles(block.asLocation());
                     sendBreakBlockPacket1_8(block.asLocation(), i, block.getBreakerId()); // reset state
                     toRemove.add(block);
                 }
@@ -95,7 +94,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
     }
 
     @SuppressWarnings("deprecation")
-    private void breakBlockParticles1_8(Location loc) {
+    private void breakBlockParticles(Location loc) {
         Block block = loc.getBlock();
         int id = block.getTypeId(); // =Material.WOOL.getId() in normal circumstances
         byte data = block.getData();

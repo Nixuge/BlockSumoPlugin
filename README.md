@@ -33,13 +33,4 @@ If/When this project gets serious, I'll **maybe** (maybe) switch to existing lib
 PM me if you want to teach me Graddle or Maven, for now i'm litterally just exporting jar/hot reloading to use the plugin, and you may want to do the same.
 
 # Additional note (1.8 only):
-Due to the use of NMS, some methods are only defined for usage with NMS 1.8. As of now, there are 6:
-- `BlockManagerRunnable.java` > `breakBlockParticles1_8`
-- `BlockManagerRunnable.java` > `sendBreakBlockPacket1_8`
-- `GameRunnable.java` > `spawnMiddleBonus1_8`
-- `MiddleParticleRunnable.java` > `summonCurrentParticle1_8`
-- `PlayerRespawnParticle.java` > `summonParticle1_8`
-- `TextUtils.java` > `sendActionText1_8`
-
-This will (eventually) be fixed when the base features are all completed, which means i'll start optimizing and fixing glitches, including adding reflections to support other versions.  
-Note that, while I'd love to add it, 1.7 support isn't sure yet.
+I'm currently adding other version support, for now focusing on 1.7. Will eventually add support for at least 1.12 & 1.16.
