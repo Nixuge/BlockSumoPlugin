@@ -9,23 +9,28 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
+// import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+// import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
 
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+// import net.minecraft.server.v1_8_R3.BlockPosition;
+// import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
 import me.nixuge.BlockSumo;
 import me.nixuge.enums.Color;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.ExpiringBlock;
-import me.nixuge.utils.PacketUtils;
+import me.nixuge.reflections.ParticleUtils;
+import me.nixuge.reflections.particleUtils.ParticleEnum;
 
 public class BlockManagerRunnable extends BukkitRunnable {
     private int tick_time = 0;
     private List<ExpiringBlock> blocks = new ArrayList<>();
-    List<ExpiringBlock> toRemove;
+    private List<ExpiringBlock> toRemove;
+
+    private boolean is1_7;
+
+    public BlockManagerRunnable() {
+        is1_7 = BlockSumo.getInstance().is1_7();
+    }
 
     @Override
     public void run() {
@@ -48,10 +53,10 @@ public class BlockManagerRunnable extends BukkitRunnable {
         for (int i = 0; i < length; i++) {
             if (colors[i] == tick_time) {
                 Location loc = block.asLocation();
-                if (i+1 == length) { //if last element
-                    //NOTE: will see if I keep it like that
-                    //or just remove the lastColor altogether and do it just
-                    //like bwpractice rn. For now keeping it.
+                if (i + 1 == length) { // if last element
+                    // NOTE: will see if I keep it like that
+                    // or just remove the lastColor altogether and do it just
+                    // like bwpractice rn. For now keeping it.
                     loc.getBlock().setData(block.getLastColor().getWoolByteColor());
                 } else {
                     loc.getBlock().setData(Color.getRandomColor().getWoolByteColor());
@@ -79,25 +84,32 @@ public class BlockManagerRunnable extends BukkitRunnable {
     @SuppressWarnings("deprecation")
     private void breakBlockParticles1_8(Location loc) {
         Block block = loc.getBlock();
-        int id = block.getTypeId(); //=Material.WOOL.getId() in normal circumstances
+        int id = block.getTypeId(); // =Material.WOOL.getId() in normal circumstances
         byte data = block.getData();
 
-        //NOTE: to be more safe, could get the material here and if it's air
-        //just not send any particles
-        //but that means if i have an issue somewhere else in my code
-        //with destroyed blocks not registering properly I won't see it
-        //so sticking with no checks here for now
+        // NOTE: to be more safe, could get the material here and if it's air
+        // just not send any particles
+        // but that means if i have an issue somewhere else in my code
+        // with destroyed blocks not registering properly I won't see it
+        // so sticking with no checks here for now
         block.setType(Material.AIR);
 
-        //See the "PacketUtils" class for more info about fields
-        //not sure if I add .5f to the Y too, looks good rn
-        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
-            EnumParticle.BLOCK_CRACK, true, 
-            (float)loc.getX() + .5f, (float)loc.getY(), (float)loc.getZ() + .5f,
-            0, 0, 0, 1, 10, 
-            new int[] { id | (data << 12) });
+        // See the "PacketUtils" class for more info about fields
+        // not sure if I add .5f to the Y too, looks good rn
 
-        PacketUtils.sendPacketAllPlayers(packet);
+        Color color = null;
+        if (is1_7) {
+            color = Color.getFromWoolData(data);
+        }
+
+        ParticleUtils.sendParticlePacket(ParticleEnum.BLOCK_CRACK,
+                (float) loc.getX() + .5f,
+                (float) loc.getY(),
+                (float) loc.getZ() + .5f,
+                0, 0, 0, 10,
+                new int[] { id | (data << 12) },
+                color);
+
     }
 
     private void sendBreakBlockPacket1_8(Location loc, int stage, int breakerId) {
@@ -107,8 +119,9 @@ public class BlockManagerRunnable extends BukkitRunnable {
         int z = loc.getBlockZ();
         // int = id of player who is hitting
         // set it to a random one, everytime the same tho so that it doesn't look weird
-        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
-                breakerId, new BlockPosition(x, y, z), stage);
+        // PacketPlayOutBlockBreakAnimation packet = new
+        // PacketPlayOutBlockBreakAnimation(
+        // breakerId, new BlockPosition(x, y, z), stage);
 
         int dimension;
 
@@ -118,13 +131,13 @@ public class BlockManagerRunnable extends BukkitRunnable {
         for (BsPlayer bsPlayer : gamePlayers) {
             if (!bsPlayer.isLoggedOn())
                 return;
-            
+
             Player player = bsPlayer.getBukkitPlayer();
 
-            dimension = ((CraftWorld) player.getWorld()).getHandle().dimension;
+            // dimension = ((CraftWorld) player.getWorld()).getHandle().dimension;
 
-            ((CraftServer) player.getServer()).getHandle().sendPacketNearby(
-                    x, y, z, 120, dimension, packet);
+            // ((CraftServer) player.getServer()).getHandle().sendPacketNearby(
+            // x, y, z, 120, dimension, packet);
         }
     }
 

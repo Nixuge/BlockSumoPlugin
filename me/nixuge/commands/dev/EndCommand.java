@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import me.nixuge.BlockSumo;
 import me.nixuge.config.Lang;
 
-public class EndCommand implements CommandExecutor{
+public class EndCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {

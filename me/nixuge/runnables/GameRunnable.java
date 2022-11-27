@@ -2,6 +2,7 @@ package me.nixuge.runnables;
 
 import java.util.Random;
 
+import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -11,13 +12,12 @@ import me.nixuge.enums.items.GlobalItem;
 import me.nixuge.enums.items.MiddleItem;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.McMap;
+import me.nixuge.reflections.ParticleUtils;
+import me.nixuge.reflections.particleUtils.ParticleEnum;
 import me.nixuge.runnables.particle.MiddleParticleRunnable;
-import me.nixuge.utils.PacketUtils;
 import me.nixuge.utils.TextUtils;
 import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class GameRunnable extends BukkitRunnable {
 
@@ -84,10 +84,9 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void spawnMiddleBonus1_8() {
-        PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(EnumParticle.FIREWORKS_SPARK,
-                plugin.getGameMgr().getMcMap().getCenter(), .7, .5, .7, 50);
-
-        PacketUtils.sendPacketAllPlayers(packet);
+        Location center = plugin.getGameMgr().getMcMap().getCenter();
+        ParticleUtils.sendParticlePacket(ParticleEnum.FIREWORKS_SPARK,
+                center.getX(), center.getY(), center.getZ(), .7, .5, .7, 50);
 
         MiddleItem item = MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
         ItemStack stack = item.getItemStack();
@@ -100,7 +99,7 @@ public class GameRunnable extends BukkitRunnable {
     private void spawnGlobalBonus() {
         GlobalItem item = GlobalItem.values()[rand.nextInt(GlobalItem.values().length)];
         ItemStack stack = item.getItemStack();
-        
+
         for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {
             plugin.getGameMgr().getScoreboardRunnable().addMessage(Lang.get("scoreboard.gotitem", item.getName()));
             TextUtils.broadcastGame(Lang.get("bonuses.normalspawn", item.getName()));

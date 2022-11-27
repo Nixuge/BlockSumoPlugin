@@ -6,9 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
-import me.nixuge.utils.PacketUtils;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import me.nixuge.reflections.ParticleUtils;
+import me.nixuge.reflections.particleUtils.ParticleEnum;
 
 public class MiddleParticleRunnable extends BukkitRunnable {
 
@@ -49,9 +48,8 @@ public class MiddleParticleRunnable extends BukkitRunnable {
         double x = radius * Math.cos((y + yAdd) * 5);
         double z = radius * Math.sin((y + yAdd) * 5);
 
-        PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(EnumParticle.FLAME,
-                particleLoc.getX() + x, particleLoc.getY() + y, particleLoc.getZ() + z);
-            
-        PacketUtils.sendPacketAllPlayers(packet);
+        ParticleUtils.sendParticlePacket(ParticleEnum.FLAME,
+                particleLoc.getX() + x, particleLoc.getY() + y, particleLoc.getZ() + z,
+                0, 0, 0, 1);
     }
 }

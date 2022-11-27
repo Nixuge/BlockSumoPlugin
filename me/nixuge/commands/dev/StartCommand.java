@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import me.nixuge.BlockSumo;
 import me.nixuge.config.Lang;
 
-public class StartCommand implements CommandExecutor{
+public class StartCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {

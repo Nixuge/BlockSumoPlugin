@@ -12,8 +12,6 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
@@ -22,13 +20,15 @@ import me.nixuge.enums.Color;
 import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.maths.IncreasingNumber;
+import me.nixuge.reflections.ReflectionInterface;
 import me.nixuge.utils.TextUtils;
 
 public class ScoreboardRunnable extends BukkitRunnable {
     // pretty dirty class
     // but it's technically made of a bunch of string building
     // with conditions, so yeah excepted
-    private final GameManager gameMgr = BlockSumo.getInstance().getGameMgr();
+    private final BlockSumo main = BlockSumo.getInstance();
+    private final GameManager gameMgr = main.getGameMgr();
     private final PlayerManager pManager = gameMgr.getPlayerMgr();
     private List<BsPlayer> orderedPlayerList = new ArrayList<BsPlayer>();
     private boolean isEnded = false;
@@ -38,15 +38,23 @@ public class ScoreboardRunnable extends BukkitRunnable {
     private int killsIndex;
     private int pingIndex;
 
+    private int time;
+
     private int messageTimer;
     private String message;
+
+    public boolean is1_7;
+
+    public ScoreboardRunnable() {
+        is1_7 = main.getMcVersion().equals("1.7");
+    }
 
     private void buildValuesMap() {
         currentSBValues = new HashMap<Integer, String>();
         incr = new IncreasingNumber();
         pingIndex = -1;
 
-        currentSBValues.put(incr.getNumber(), "§8§m--------------------");
+        currentSBValues.put(incr.getNumber(), "§a§8§m--------------------");
 
         _buildFooter();
         _buildPlayerLives();
@@ -115,7 +123,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
         pingIndex = incr.getNumber();
         killsIndex = incr.getNumber(); // "kills" line
         currentSBValues.put(incr.getNumber(),
-                Lang.get("scoreboard.timer", TextUtils.secondsToMMSS(gameMgr.getGameRunnable().getTime())));
+                Lang.get("scoreboard.timer", TextUtils.secondsToMMSS(time)));
     }
 
     @Override
@@ -128,26 +136,35 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
         buildValuesMap();
 
+        time = gameMgr.getGameRunnable().getTime();
+
         for (BsPlayer bsPlayer : orderedPlayerList) {
             Player p = bsPlayer.getBukkitPlayer();
             Scoreboard scoreboard = p.getScoreboard();
 
-            // reset the objective
-            Objective tmp = scoreboard.getObjective("BlockSumo");
-            if (tmp != null)
-                tmp.unregister();
-
-            // init it again
-            Objective objective = scoreboard.registerNewObjective("BlockSumo", "main");
+            // init a new objective
+            Objective objective = scoreboard.registerNewObjective("BlockSumo" + time, "main");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName("§b§6BlockSumo");
 
             // build scoreboard from the map
-            currentSBValues.forEach((index, string) -> objective.getScore(string).setScore(index));
+            currentSBValues.forEach((index, string) -> {
+                if (string.length() > 16 && is1_7) {
+                    string = string.substring(0, 16);
+                }
+                objective.getScore(string).setScore(index);
+            });
+
             // build the missing ping key (different for every player)
-            objective.getScore(Lang.get("scoreboard.ping", ((CraftPlayer) p).getHandle().ping)).setScore(pingIndex);
+            objective.getScore(Lang.get("scoreboard.ping", ReflectionInterface.getPing(p))).setScore(pingIndex);
+
             // same for kills
             objective.getScore(Lang.get("scoreboard.kills", bsPlayer.getKills())).setScore(killsIndex);
+
+            // unregister the old objective AFTER (from testing, removes flickers on 1.7)
+            Objective tmp = scoreboard.getObjective("BlockSumo" + (time - 1));
+            if (tmp != null)
+                tmp.unregister();
 
             if (bsPlayer.isLoggedOn())
                 p.setScoreboard(scoreboard);

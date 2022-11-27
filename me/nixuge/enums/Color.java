@@ -42,4 +42,14 @@ public enum Color {
     public static Color getRandomColor() {
         return Color.values()[rand.nextInt(Color.values().length)];
     }
+
+    @SuppressWarnings("deprecation")
+    public static Color getFromWoolData(byte woolData) {
+        for (Color color : Color.values()) {
+            if (color.getDyeColor().getWoolData() == woolData) {
+                return color;
+            }
+        }
+        return null;
+    }
 }

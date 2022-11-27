@@ -2,9 +2,8 @@ package me.nixuge.runnables.particle;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import me.nixuge.utils.PacketUtils;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import me.nixuge.reflections.ParticleUtils;
+import me.nixuge.reflections.particleUtils.ParticleEnum;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,7 +22,7 @@ public class PlayerRespawnParticle extends BukkitRunnable {
 
     @Override
     public void run() {
-        summonParticle1_8();
+        summonParticle();
 
         if (tick >= maxTick) {
             cancel();
@@ -32,13 +31,12 @@ public class PlayerRespawnParticle extends BukkitRunnable {
         tick++;
     }
 
-    private void summonParticle1_8() {
+    private void summonParticle() {
         Location pLoc = player.getLocation();
 
-        PacketPlayOutWorldParticles packet = PacketUtils.getParticlePacket(
-                EnumParticle.ENCHANTMENT_TABLE, pLoc.getX(), pLoc.getY() + 1, pLoc.getZ(),
-                0.2, 0.5, 0.2, 8);
 
-        PacketUtils.sendPacketAllPlayers(packet);
+        ParticleUtils.sendParticlePacket(
+                ParticleEnum.ENCHANTMENT_TABLE, pLoc.getX(), pLoc.getY() + 1, pLoc.getZ(),
+                0.2, 0.5, 0.2, 8);
     }
 }
