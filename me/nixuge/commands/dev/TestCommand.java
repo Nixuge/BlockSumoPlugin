@@ -7,8 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import me.nixuge.config.Lang;
-import me.nixuge.reflections.particleUtils.ParticleUtils1_7;
-import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
+// import me.nixuge.reflections.particleUtils.ParticleUtils1_7;
+// import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 
 public class TestCommand implements CommandExecutor {
 
@@ -27,16 +27,16 @@ public class TestCommand implements CommandExecutor {
 
         Color c = Color.RED;
 
-        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
-                name,
-                x,
-                y,
-                z,
-                c.getRed(), c.getGreen(), c.getBlue(),
-                Float.parseFloat(args[4]),
-                Integer.parseInt(args[5]));
+        // PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
+        //         name,
+        //         x,
+        //         y,
+        //         z,
+        //         c.getRed(), c.getGreen(), c.getBlue(),
+        //         Float.parseFloat(args[4]),
+        //         Integer.parseInt(args[5]));
 
-        ParticleUtils1_7.sendPacketAllPlayers(packet);
+        // ParticleUtils1_7.sendPacketAllPlayers(packet);
 
         return true;
     }

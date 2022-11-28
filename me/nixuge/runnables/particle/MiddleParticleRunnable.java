@@ -6,8 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.reflections.ParticleEnum;
 import me.nixuge.reflections.ParticleUtils;
-import me.nixuge.reflections.particleUtils.ParticleEnum;
 
 public class MiddleParticleRunnable extends BukkitRunnable {
 
@@ -49,7 +49,6 @@ public class MiddleParticleRunnable extends BukkitRunnable {
         double z = radius * Math.sin((y + yAdd) * 5);
 
         ParticleUtils.sendParticlePacket(ParticleEnum.FLAME,
-                particleLoc.getX() + x, particleLoc.getY() + y, particleLoc.getZ() + z,
-                0, 0, 0, 1);
+                particleLoc.getX() + x, particleLoc.getY() + y, particleLoc.getZ() + z, null);
     }
 }

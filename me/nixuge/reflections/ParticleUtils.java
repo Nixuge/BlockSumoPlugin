@@ -1,48 +1,48 @@
 package me.nixuge.reflections;
 
-import me.nixuge.BlockSumo;
-import me.nixuge.enums.Color;
-import me.nixuge.reflections.particleUtils.ParticleEnum;
-import me.nixuge.reflections.particleUtils.ParticleUtils1_7;
-import me.nixuge.reflections.particleUtils.ParticleUtils1_8;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.entity.Player;
+
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+
 import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
 
 public class ParticleUtils extends ReflectionUtils {
-    // Note for this one:
-    // currently not using reflections for these classes
-    // this means however that you need to import both
-    // spigot 1.7 & 1.8 to build w/o errors
-    // idk if i'm gonna change that, since those 2 versions are the only ones
-    // to work their way anyways
-
-    private static BlockSumo main = BlockSumo.getInstance();
-    private static String mcVersion = main.getMcVersion();
-    // private static Float mcVersionF = main.getMcVersionFloat();
 
     public static void sendParticlePacket(ParticleEnum particle, double x, double y, double z,
-            double xPlus, double yPlus, double zPlus, int count) {
-        sendParticlePacket(particle, x, y, z, xPlus, yPlus, zPlus, count, null, null);
+            me.nixuge.enums.Color color) {
+        sendPacketAllPlayers(
+                getParticlePacket(particle.toString(), x, y, z, color));
     }
 
-    public static void sendParticlePacket(ParticleEnum particle, double x, double y, double z,
-            double xPlus, double yPlus, double zPlus, int count, int[] data, Color color) {
-        switch (mcVersion) {
-            case "1.8":
-                ParticleUtils1_8.sendPacketAllPlayers(
-                        ParticleUtils1_8.getParticlePacket(particle, x, y, z, xPlus, yPlus, zPlus, count, data));
-                break;
+    public static Object getParticlePacket(String particle, double x, double y, double z,
+            me.nixuge.enums.Color color) {
+        // format:
+        // particlename
+        // x, y, z
+        // R, G, B
+        // speed, count?
+        // TODO (maybe): use the count and not hardcode 0
+        // TODO: make block break particles work like in 1.8
+        if (color == null)
+            color = me.nixuge.enums.Color.AQUA;
 
-            case "1.7":
-                ParticleUtils1_7.sendPacketAllPlayers(
-                        ParticleUtils1_7.getParticlePacket(particle, x, y, z, color, count));
-                break;
+        Color bukkitColor = color.getDyeColor().getColor();
 
-            default:
-                // TODO: check for other versions
-                Logger.logBC(LogLevel.ERROR, "UNKNOWN MC VERSION: " + mcVersion);
-                break;
+        Object packet = new HandlePacketPlayOutWorldParticles(
+                particle, (float) x, (float) y, (float) z,
+                bukkitColor.getRed(), bukkitColor.getGreen(), bukkitColor.getBlue()).getPacket();
+
+        return packet;
+    }
+
+    public static void sendPacketAllPlayers(Object packet) {
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            HandleSendPacket.send(HandleUtils.getHandle(online), packet);
+            // .playerConnection.sendPacket(packet);
+            // ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
         }
-
     }
 }

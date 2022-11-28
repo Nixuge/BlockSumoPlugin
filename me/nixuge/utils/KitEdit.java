@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import me.nixuge.BlockSumo;
 import me.nixuge.config.Lang;
 import me.nixuge.objects.Kit;
 
@@ -55,9 +54,8 @@ public class KitEdit {
         currentKit.useKit(p, false);
 
         playerInventory.setItem(17, ItemUtils.getItemStack(Material.DIAMOND_SWORD, Lang.get("kit.savekit")));
-        ItemStack cancelItem = (BlockSumo.getInstance().is1_7())
-                ? ItemUtils.getItemStack(Material.REDSTONE_BLOCK, Lang.get("kit.cancelkit"))
-                : ItemUtils.getItemStack(Material.BARRIER, Lang.get("kit.cancelkit"));
+        ItemStack cancelItem = ItemUtils.getItemStack(Material.REDSTONE_BLOCK, Lang.get("kit.cancelkit"));
+
         playerInventory.setItem(16, cancelItem);
 
     }

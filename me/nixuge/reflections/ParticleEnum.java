@@ -1,4 +1,4 @@
-package me.nixuge.reflections.particleUtils;
+package me.nixuge.reflections;
 
 public enum ParticleEnum {
     // All particles available as of 1.7

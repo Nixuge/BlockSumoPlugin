@@ -1,5 +1,6 @@
 package me.nixuge.reflections;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import org.bukkit.Bukkit;
@@ -41,6 +42,29 @@ public abstract class ReflectionUtils {
         }
         return null;
     }
+
+    protected static Object instanciateObject(Class<?> clazz, Object... args) {
+        try {
+            return getConstructor(clazz, args).newInstance(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    protected static Constructor<?> getConstructor(Class<?> clazz, Object... args) {
+        Class<?>[] classes = new Class<?>[args.length];
+        for (int i = 0; i < args.length; i++) {
+            classes[i] = args[i].getClass();
+        }
+        try {
+            return clazz.getConstructor(classes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     protected static Method getMethodFromNameArgcount(Class<?> clazz, String methodName, int argCount) {
         Method[] methods = clazz.getMethods();

@@ -1,8 +1,5 @@
 package me.nixuge;
 
-import java.util.Arrays;
-import java.util.regex.Pattern;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -52,43 +49,7 @@ public class BlockSumo extends JavaPlugin {
         return pluginManager;
     }
 
-    private String mcRawVersion;
-
-    public String getMcRawVersion() {
-        return mcRawVersion;
-    }
-
-    private String mcVersion;
-
-    public String getMcVersion() {
-        return mcVersion;
-    }
-    public Float getMcVersionFloat() {
-        return Float.parseFloat(mcVersion);
-    }
-
-    public boolean is1_7() {
-        return mcVersion.equals("1.7");
-    }
-
     private LobbyRunnable lobbyRunnable;
-
-    private void versionCheck() {
-        mcRawVersion = getServer().getBukkitVersion().split("-")[0];
-        Logger.log(LogLevel.DEBUG, "Detected raw MC version: " + mcRawVersion);
-
-        String[] arr = mcRawVersion.split(Pattern.quote("."));
-        arr = Arrays.copyOfRange(arr, 0, 2);
-        mcVersion = String.join(".", arr);
-        Logger.log(LogLevel.DEBUG, "Detected main MC version: " + mcVersion);
-
-        String[] testedMcVersions = { "1.8", "1.9" };
-        if (Arrays.stream(testedMcVersions).anyMatch(v -> v == mcVersion)) {
-            Logger.log(LogLevel.WARNING, "Your MC version (" + mcVersion + ") hasn't been tested officially. " +
-                    "The plugin will be using either default NMS calls or methods based on a wide version range. " +
-                    "Some things may (and will probably) break. Use at your own risk.");
-        }
-    }
 
     public void init() {
         // set vars & config (order is important)
@@ -120,7 +81,6 @@ public class BlockSumo extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        versionCheck();
         init();
 
         getCommand("end_blocksumo").setExecutor(new EndCommand());

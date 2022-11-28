@@ -2,8 +2,8 @@ package me.nixuge.runnables.particle;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
+import me.nixuge.reflections.ParticleEnum;
 import me.nixuge.reflections.ParticleUtils;
-import me.nixuge.reflections.particleUtils.ParticleEnum;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -37,6 +37,6 @@ public class PlayerRespawnParticle extends BukkitRunnable {
 
         ParticleUtils.sendParticlePacket(
                 ParticleEnum.ENCHANTMENT_TABLE, pLoc.getX(), pLoc.getY() + 1, pLoc.getZ(),
-                0.2, 0.5, 0.2, 8);
+                null);
     }
 }

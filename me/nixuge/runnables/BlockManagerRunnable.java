@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,9 +20,8 @@ import me.nixuge.objects.ExpiringBlock;
 import me.nixuge.reflections.HandlePacketPlayOutBlockBreakAnimation;
 import me.nixuge.reflections.HandleSendPacketNearby;
 import me.nixuge.reflections.HandleUtils;
+import me.nixuge.reflections.ParticleEnum;
 import me.nixuge.reflections.ParticleUtils;
-import me.nixuge.reflections.particleUtils.ParticleEnum;
-import net.minecraft.server.v1_8_R3.Packet;
 
 public class BlockManagerRunnable extends BukkitRunnable {
     private int tick_time = 0;
@@ -32,18 +30,19 @@ public class BlockManagerRunnable extends BukkitRunnable {
 
     private BlockSumo plugin;
     private GameManager gameMgr;
-    private boolean is1_7;
 
-    private int dimension;
+    private Object dimension;
     private Object serverHandle;
+
+    World world;
 
     public BlockManagerRunnable() {
         this.plugin = BlockSumo.getInstance();
         this.gameMgr = plugin.getGameMgr();
-        this.is1_7 = plugin.is1_7();
 
-        World world = gameMgr.getMcMap().getWorld();
-        dimension = (int) HandleUtils.getHandleField(world, "dimension");
+        world = gameMgr.getMcMap().getWorld();
+
+        dimension = HandleUtils.getHandleField(world, "dimension");
         serverHandle = HandleUtils.getHandle(Bukkit.getServer());
         // Object thing = ((CraftServer) Bukkit.getServer()).getHandle();
     }
@@ -111,19 +110,14 @@ public class BlockManagerRunnable extends BukkitRunnable {
         block.setType(Material.AIR);
 
         // Important info:
-        // As of now, this doesn't work on 1.7 (the version using colors bukkit objects)
+        // As of now, this doesn't work on 1.7
         // Need to find a fix on here
-        Color color = null;
-        if (is1_7) {
-            color = Color.getFromWoolData(data);
-        }
+        Color color = Color.getFromWoolData(data);
 
         ParticleUtils.sendParticlePacket(ParticleEnum.BLOCK_CRACK,
                 (float) loc.getX() + .5f,
                 (float) loc.getY(),
                 (float) loc.getZ() + .5f,
-                0, 0, 0, 10,
-                new int[] { id | (data << 12) },
                 color);
 
     }
@@ -135,7 +129,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
         int z = loc.getBlockZ();
         // int = id of player who is hitting
         // set it to a random one, everytime the same tho so that it doesn't look weird
-        
+
         Object packet = new HandlePacketPlayOutBlockBreakAnimation(breakerId, x, y, z, stage).getPacket();
 
         List<BsPlayer> gamePlayers = BlockSumo.getInstance().getGameMgr()
@@ -152,6 +146,8 @@ public class BlockManagerRunnable extends BukkitRunnable {
             // Original without reflections:
             // ((CraftServer) p.getServer()).getHandle().sendPacketNearby(
             // x, y, z, 120, dimension, (Packet<?>)packet);
+
+            // WorldServer worldServer = (WorldServer) world;
         }
     }
 

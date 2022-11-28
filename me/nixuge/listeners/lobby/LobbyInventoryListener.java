@@ -35,7 +35,6 @@ public class LobbyInventoryListener implements Listener {
                 kitEdit.saveKit();
                 event.setCancelled(true);
                 break;
-            case BARRIER:
             case REDSTONE_BLOCK:
                 kitEdit.closeInventory();
                 event.setCancelled(true);

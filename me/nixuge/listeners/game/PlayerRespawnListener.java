@@ -1,6 +1,5 @@
 package me.nixuge.listeners.game;
 
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -100,10 +99,7 @@ public class PlayerRespawnListener implements Listener {
         BsPlayer bsPlayer = playerMgr.getBsPlayer(p);
 
         if (bsPlayer.isDead()) {
-            p.setGameMode(GameMode.SPECTATOR);
-            Location spawn = mcMap.getCenter();
-            event.setRespawnLocation(spawn);
-            p.sendMessage(Lang.get("general.eliminated"));
+            p.kickPlayer(Lang.get("general.eliminated"));
             return;
         }
 
