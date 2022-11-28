@@ -8,7 +8,16 @@ import me.nixuge.utils.logger.Logger;
 public class HandlePacketPlayOutWorldParticles {
     private static Class<?> packetClass = ReflectionUtils.getNMSClass("PacketPlayOutWorldParticles");
 
-    private static Constructor<?> packetConstructor = ReflectionUtils.getConstructor(packetClass, "", 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0);
+    private static Constructor<?> packetConstructor = getPacketConstructor();
+
+    private static Constructor<?> getPacketConstructor() {
+        try {
+            return packetClass.getConstructor(String.class, float.class, float.class, float.class, float.class, float.class, float.class, float.class, int.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     private String particleName;
     private float x, y, z;
@@ -31,7 +40,7 @@ public class HandlePacketPlayOutWorldParticles {
             // breakerId, x, y, z, stage
             return packetConstructor.newInstance(particleName, x, y, z, r, g, b, 1, 0);
         } catch (Exception e) {
-            Logger.log(LogLevel.ERROR, "Failed to create new PacketPlayOutBlockBreakAnimation");
+            Logger.log(LogLevel.ERROR, "Failed to create new HandlePacketPlayOutWorldParticles");
             e.printStackTrace();
         }
         return null;

@@ -40,7 +40,9 @@ public class ParticleUtils extends ReflectionUtils {
 
     public static void sendPacketAllPlayers(Object packet) {
         for (Player online : Bukkit.getOnlinePlayers()) {
-            HandleSendPacket.send(HandleUtils.getHandle(online), packet);
+            Object handle = HandleUtils.getHandle(((CraftPlayer)online).getHandle());
+            Bukkit.broadcastMessage(handle.getClass() + "");
+            HandleSendPacket.send(handle, packet);
             // .playerConnection.sendPacket(packet);
             // ((CraftPlayer) online).getHandle().playerConnection.sendPacket(packet);
         }
