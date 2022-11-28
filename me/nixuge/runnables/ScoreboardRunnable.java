@@ -43,12 +43,6 @@ public class ScoreboardRunnable extends BukkitRunnable {
     private int messageTimer;
     private String message;
 
-    public boolean is1_7;
-
-    public ScoreboardRunnable() {
-        is1_7 = main.getMcVersion().equals("1.7");
-    }
-
     private void buildValuesMap() {
         currentSBValues = new HashMap<Integer, String>();
         incr = new IncreasingNumber();
@@ -148,12 +142,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
             objective.setDisplayName("§b§6BlockSumo");
 
             // build scoreboard from the map
-            currentSBValues.forEach((index, string) -> {
-                if (is1_7 && string.length() > 16) {
-                    string = string.substring(0, 16);
-                }
-                objective.getScore(string).setScore(index);
-            });
+            currentSBValues.forEach((index, string) -> objective.getScore(string).setScore(index));
 
             // build the missing ping key (different for every player)
             objective.getScore(Lang.get("scoreboard.ping", HandleUtils.getHandleField(p, "ping"))).setScore(pingIndex);

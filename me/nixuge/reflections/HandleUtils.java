@@ -13,8 +13,7 @@ public class HandleUtils {
             Method getHandle = object.getClass().getMethod("getHandle");
             return getHandle.invoke(object);
 
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-                | SecurityException e) {
+        } catch (Exception e) {
             Logger.log(LogLevel.ERROR, "Failed to get handle!");
             e.printStackTrace();
         }

@@ -67,10 +67,6 @@ public class BlockSumo extends JavaPlugin {
         return Float.parseFloat(mcVersion);
     }
 
-    public boolean is1_7() {
-        return mcVersion.equals("1.7");
-    }
-
     private LobbyRunnable lobbyRunnable;
 
     private void versionCheck() {
