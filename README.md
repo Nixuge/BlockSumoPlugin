@@ -32,5 +32,7 @@ If/When this project gets serious, I'll **maybe** (maybe) switch to existing lib
 ## No build tools?
 PM me if you want to teach me Graddle or Maven, for now i'm litterally just exporting jar/hot reloading to use the plugin, and you may want to do the same.
 
-# Additional note (1.8 only):
-I'm currently adding other version support, for now focusing on 1.7. Will eventually add support for at least 1.12 & 1.16.
+# Additional note, version support:
+1.7 support is pretty much fully done. There are a few limitations & glitches (scoreboard) but can't do much about that and looks good.  
+Will eventually add support for at least 1.12 & 1.16.  
+& if I have the motivation to, go down to 1.6/1.5?

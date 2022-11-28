@@ -42,18 +42,15 @@ public abstract class ReflectionUtils {
         return null;
     }
 
-    protected static void invokeMethod(Object obj, Class<?> clazz,
-            String methodName, Object... args) {
+    protected static Method getMethodFromName(Class<?> clazz, String methodName, int argCount) {
         Method[] methods = clazz.getMethods();
-        try {
-            for (Method method : methods) {
-                if (method.getName().equals(methodName)) {
-                    method.invoke(obj, args);
-                    break;
-                }
+
+        for (Method method : methods) {
+            if (method.getName().equals(methodName) && method.getParameterCount() == argCount ) {
+                return method;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+        return null;
     }
 }

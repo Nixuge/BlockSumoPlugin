@@ -3,9 +3,6 @@ package me.nixuge.reflections;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-
-import org.bukkit.Bukkit;
 
 import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
@@ -46,25 +43,6 @@ public class HandleUtils {
 
         } catch (IllegalAccessException | IllegalArgumentException | SecurityException | InvocationTargetException
                 | NoSuchMethodException e) {
-            Logger.log(LogLevel.ERROR, "Failed to call handle method");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    // Predefined methods
-    public static Object sendPacketNearby(Object handle, Object... parameters) {
-        try {
-            //TODO:
-            //remove the hardcoded types
-            //Figure out how to actually invoke the method
-            Method method = handle.getClass().getMethod("sendPacketNearby", double.class, double.class, double.class,
-                    double.class, int.class, net.minecraft.server.v1_8_R3.Packet.class);
-            Object result = method.invoke(handle, parameters);
-            return result;
-
-        } catch (IllegalArgumentException | SecurityException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             Logger.log(LogLevel.ERROR, "Failed to call handle method");
             e.printStackTrace();
         }

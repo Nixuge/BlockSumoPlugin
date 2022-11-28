@@ -12,10 +12,11 @@ import me.nixuge.commands.KitCommand;
 import me.nixuge.commands.dev.EndCommand;
 import me.nixuge.commands.dev.StartCommand;
 import me.nixuge.commands.dev.TestCommand;
+import me.nixuge.commands.dev.TestCommand2;
 import me.nixuge.config.Config;
 import me.nixuge.config.Lang;
-import me.nixuge.listeners.ItemSpawnDropListener;
-import me.nixuge.listeners.RandomChangeListener;
+import me.nixuge.listeners.global.ItemSpawnDropListener;
+import me.nixuge.listeners.global.RandomChangeListener;
 import me.nixuge.runnables.LobbyRunnable;
 import me.nixuge.utils.ScoreboardUtils;
 import me.nixuge.utils.logger.LogLevel;
@@ -126,6 +127,7 @@ public class BlockSumo extends JavaPlugin {
         getCommand("start_blocksumo").setExecutor(new StartCommand());
         getCommand("kit").setExecutor(new KitCommand());
         getCommand("testcommand").setExecutor(new TestCommand());
+        getCommand("test2").setExecutor(new TestCommand2());
 
         // those remaining here because they're always needed
         pluginManager.registerEvents(new RandomChangeListener(), this);

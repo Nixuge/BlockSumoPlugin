@@ -10,14 +10,15 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
+import org.bukkit.entity.Player;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.enums.Color;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.ExpiringBlock;
+import me.nixuge.reflections.HandlePacketPlayOutBlockBreakAnimation;
+import me.nixuge.reflections.HandleSendPacketNearby;
 import me.nixuge.reflections.HandleUtils;
 import me.nixuge.reflections.ParticleUtils;
 import me.nixuge.reflections.particleUtils.ParticleEnum;
@@ -132,10 +133,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
         // int = id of player who is hitting
         // set it to a random one, everytime the same tho so that it doesn't look weird
         
-
-        //TODO: use reflections for taht
-        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(
-                breakerId, new BlockPosition(x, y, z), stage);
+        Object packet = HandlePacketPlayOutBlockBreakAnimation.getNew(breakerId, x, y, z, stage);
 
         List<BsPlayer> gamePlayers = BlockSumo.getInstance().getGameMgr()
                 .getPlayerMgr().getPlayers();
@@ -144,14 +142,13 @@ public class BlockManagerRunnable extends BukkitRunnable {
             if (!bsPlayer.isLoggedOn())
                 return;
 
-            // TODO: use the other sendPacketNearby form
-            // that starts w a human
-            // Uncomment the original without reflections for intellisense
-            HandleUtils.sendPacketNearby(serverHandle, x, y, z, 120, dimension, packet);
+            Player p = bsPlayer.getBukkitPlayer();
+
+            HandleSendPacketNearby.send(serverHandle, p, x, y, z, 120, dimension, packet);
 
             // Original without reflections:
-            // ((CraftServer) player.getServer()).getHandle().sendPacketNearby(
-            // x, y, z, 120, dimension, packet);
+            // ((CraftServer) p.getServer()).getHandle().sendPacketNearby(
+            // x, y, z, 120, dimension, (Packet<?>)packet);
         }
     }
 

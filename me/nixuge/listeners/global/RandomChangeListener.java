@@ -1,4 +1,4 @@
-package me.nixuge.listeners;
+package me.nixuge.listeners.global;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

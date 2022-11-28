@@ -1,4 +1,4 @@
-package me.nixuge.utils.bonuses.middle;
+package me.nixuge.objects.bonuses.middle;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -9,6 +9,12 @@ import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
 
 public class ParticleUtils extends ReflectionUtils {
+    // Note for this one:
+    // currently not using reflections for these classes
+    // this means however that you need to import both
+    // spigot 1.7 & 1.8 to build w/o errors
+    // idk if i'm gonna change that, since those 2 versions are the only ones
+    // to work their way anyways
 
     private static BlockSumo main = BlockSumo.getInstance();
     private static String mcVersion = main.getMcVersion();

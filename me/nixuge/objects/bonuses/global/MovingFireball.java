@@ -1,4 +1,4 @@
-package me.nixuge.utils.bonuses.global;
+package me.nixuge.objects.bonuses.global;
 
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;

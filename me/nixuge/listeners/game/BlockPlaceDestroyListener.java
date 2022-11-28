@@ -20,8 +20,8 @@ import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.ExpiringArea;
 import me.nixuge.objects.ExpiringBlock;
+import me.nixuge.objects.bonuses.global.NormalTnt;
 import me.nixuge.runnables.BlockManagerRunnable;
-import me.nixuge.utils.bonuses.global.NormalTnt;
 
 public class BlockPlaceDestroyListener implements Listener {
 

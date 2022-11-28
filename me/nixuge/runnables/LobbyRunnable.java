@@ -6,7 +6,9 @@ import me.nixuge.config.Config;
 
 public class LobbyRunnable extends BukkitRunnable {
 
+    @SuppressWarnings("unused")
     private final int minPlayerCount;
+    @SuppressWarnings("unused")
     private final int maxPlayerCount;
     private int remainingTime = 0;
 

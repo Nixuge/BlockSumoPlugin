@@ -11,11 +11,11 @@ import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
 import me.nixuge.objects.BsPlayer;
-import me.nixuge.utils.bonuses.global.BounceFeather;
-import me.nixuge.utils.bonuses.global.MovingFireball;
-import me.nixuge.utils.bonuses.middle.BonusLife;
-import me.nixuge.utils.bonuses.middle.ExplosionGun;
-import me.nixuge.utils.bonuses.middle.TntRain;
+import me.nixuge.objects.bonuses.global.BounceFeather;
+import me.nixuge.objects.bonuses.global.MovingFireball;
+import me.nixuge.objects.bonuses.middle.BonusLife;
+import me.nixuge.objects.bonuses.middle.ExplosionGun;
+import me.nixuge.objects.bonuses.middle.TntRain;
 
 public class PlayerInteractListener implements Listener {
 
