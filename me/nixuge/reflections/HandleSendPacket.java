@@ -5,8 +5,6 @@ import java.lang.reflect.Method;
 import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
 
-import net.minecraft.server.v1_7_R4.Packet;
-
 public class HandleSendPacket {
     public static Class<?> serverHandleClass = ReflectionUtils.getNMSClass("PlayerConnection");
     public static Method method = ReflectionUtils.getMethodFromNameArgcount(serverHandleClass, "sendPacket", 1);
