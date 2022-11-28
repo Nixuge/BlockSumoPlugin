@@ -25,8 +25,7 @@ public class Lang {
             stream = plugin.getResource("languages/en.yml");
         }
 
-        Reader reader = new InputStreamReader(stream);
-        langCfg = YamlConfiguration.loadConfiguration(reader);
+        langCfg = YamlConfiguration.loadConfiguration(stream);
     }
 
     public static String get(String key, Object... formats) {
