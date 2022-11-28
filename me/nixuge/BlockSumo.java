@@ -96,3 +96,9 @@ public class BlockSumo extends JavaPlugin {
         Logger.log("Done loading plugin !");
     }
 }
+
+//TODO for 1.5 support:
+// scoreboard: The method getScore(OfflinePlayer) in the type Objective is not applicable for the arguments (String)
+// setunbreakable: The method spigot() is undefined for the type ItemMeta
+// respawnlistener: The method respawn() is undefined for the type Player.Spigot
+// oninventoryclick: The method getClickedInventory() is undefined for the type InventoryClickEvent

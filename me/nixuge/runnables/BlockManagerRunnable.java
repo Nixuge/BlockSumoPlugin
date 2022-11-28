@@ -146,8 +146,6 @@ public class BlockManagerRunnable extends BukkitRunnable {
             // Original without reflections:
             // ((CraftServer) p.getServer()).getHandle().sendPacketNearby(
             // x, y, z, 120, dimension, (Packet<?>)packet);
-
-            // WorldServer worldServer = (WorldServer) world;
         }
     }
 
