@@ -42,13 +42,47 @@ public abstract class ReflectionUtils {
         return null;
     }
 
-    protected static Method getMethodFromName(Class<?> clazz, String methodName, int argCount) {
+    protected static Method getMethodFromNameArgcount(Class<?> clazz, String methodName, int argCount) {
         Method[] methods = clazz.getMethods();
 
         for (Method method : methods) {
-            if (method.getName().equals(methodName) && method.getParameterCount() == argCount ) {
+            if (method.getName().equals(methodName) && method.getParameterCount() == argCount) {
                 return method;
             }
+        }
+
+        return null;
+    }
+
+    protected static Method getMethodFromNameArgs(Class<?> clazz, String methodName, Class<?>... args) {
+        Method[] methods = clazz.getMethods();
+
+        for (Method method : methods) {
+            if (!method.getName().equals(methodName))
+                continue;
+
+            Class<?>[] paramTypes = method.getParameterTypes();
+            int argLength = paramTypes.length;
+
+            if (argLength != args.length)
+                continue;
+
+            boolean isMatching = true;
+
+            for (int i = 0; i < argLength; i++) {
+                Class<?> currentArg = args[i];
+                Class<?> currentParam = paramTypes[i];
+
+                if (args[i] == null) // Just skip if null
+                    continue;
+
+                if (currentArg != currentParam) {
+                    isMatching = false;
+                    break;
+                }
+            }
+            if (isMatching)
+                return method;
         }
 
         return null;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_12_R1.CraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,6 +23,7 @@ import me.nixuge.reflections.HandleSendPacketNearby;
 import me.nixuge.reflections.HandleUtils;
 import me.nixuge.reflections.ParticleUtils;
 import me.nixuge.reflections.particleUtils.ParticleEnum;
+import net.minecraft.server.v1_8_R3.Packet;
 
 public class BlockManagerRunnable extends BukkitRunnable {
     private int tick_time = 0;
@@ -43,6 +45,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
         World world = gameMgr.getMcMap().getWorld();
         dimension = (int) HandleUtils.getHandleField(world, "dimension");
         serverHandle = HandleUtils.getHandle(Bukkit.getServer());
+        // Object thing = ((CraftServer) Bukkit.getServer()).getHandle();
     }
 
     @Override
@@ -83,10 +86,10 @@ public class BlockManagerRunnable extends BukkitRunnable {
         for (int i = 0; i < states.length; i++) {
             if (states[i] == tick_time) {
                 if (i < 10) {
-                    sendBreakBlockPacket1_8(block.asLocation(), i, block.getBreakerId());
+                    sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId());
                 } else {
                     breakBlockParticles(block.asLocation());
-                    sendBreakBlockPacket1_8(block.asLocation(), i, block.getBreakerId()); // reset state
+                    sendBreakBlockPacket(block.asLocation(), i, block.getBreakerId()); // reset state
                     toRemove.add(block);
                 }
                 break;
@@ -125,7 +128,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
 
     }
 
-    private void sendBreakBlockPacket1_8(Location loc, int stage, int breakerId) {
+    private void sendBreakBlockPacket(Location loc, int stage, int breakerId) {
         // -> see https://www.spigotmc.org/threads/block-break-state.266966/
         int x = loc.getBlockX();
         int y = loc.getBlockY();
@@ -133,7 +136,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
         // int = id of player who is hitting
         // set it to a random one, everytime the same tho so that it doesn't look weird
         
-        Object packet = HandlePacketPlayOutBlockBreakAnimation.getNew(breakerId, x, y, z, stage);
+        Object packet = new HandlePacketPlayOutBlockBreakAnimation(breakerId, x, y, z, stage).getPacket();
 
         List<BsPlayer> gamePlayers = BlockSumo.getInstance().getGameMgr()
                 .getPlayerMgr().getPlayers();
@@ -163,7 +166,7 @@ public class BlockManagerRunnable extends BukkitRunnable {
     public void removeBlock(Location location) {
         for (ExpiringBlock b : blocks) {
             if (location.equals(b.asLocation())) {
-                sendBreakBlockPacket1_8(b.asLocation(), 10, b.getBreakerId()); // reset state
+                sendBreakBlockPacket(b.asLocation(), 10, b.getBreakerId()); // reset state
                 blocks.remove(b);
                 break; // should only ever be 1 at the same place so breaking is fine
             }

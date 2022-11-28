@@ -149,7 +149,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
             // build scoreboard from the map
             currentSBValues.forEach((index, string) -> {
-                if (string.length() > 16 && is1_7) {
+                if (is1_7 && string.length() > 16) {
                     string = string.substring(0, 16);
                 }
                 objective.getScore(string).setScore(index);

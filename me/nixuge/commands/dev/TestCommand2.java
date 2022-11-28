@@ -25,7 +25,7 @@ public class TestCommand2 implements CommandExecutor {
         int y = Integer.parseInt(args[1]);
         int z = Integer.parseInt(args[2]);
         
-        Object packet = HandlePacketPlayOutBlockBreakAnimation.getNew(12, x, y, z, Integer.parseInt(args[3]));
+        Object packet = new HandlePacketPlayOutBlockBreakAnimation(12, x, y, z, Integer.parseInt(args[3])).getPacket();
 
         List<BsPlayer> gamePlayers = BlockSumo.getInstance().getGameMgr()
                 .getPlayerMgr().getPlayers();
