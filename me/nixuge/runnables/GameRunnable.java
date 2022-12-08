@@ -37,7 +37,7 @@ public class GameRunnable extends BukkitRunnable {
         if (time == 1140) {
             TextUtils.broadcastGame(Lang.get("game.ending.endingoneminute"));
         } else if (time >= 1200) {
-            plugin.getGameMgr().forceEndGame();
+            plugin.getGameMgr().endGame();
         } else if (time > 1190) {
             TextUtils.broadcastGame(Lang.get("game.ending.endingxseconds", (1200 - time)));
         }

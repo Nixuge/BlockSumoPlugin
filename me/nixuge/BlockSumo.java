@@ -27,7 +27,6 @@ public class BlockSumo extends JavaPlugin {
     // TODO: add sounds
 
     // TODO: proper game end (fireworks & other)
-    // TODO: only select spawn if no player around
 
     // NOT WORKING IN 1.7:
     // Logging

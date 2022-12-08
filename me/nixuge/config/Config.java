@@ -28,6 +28,10 @@ public class Config {
 
     // would've liked to use inheritance, but unneeded & overcomplicated for this.
 
+    // TODO:
+    // See if i can load missing values from the default config if they fail from the user conf
+    // and if some do, print warnings in the console.
+
     private static BlockSumo plugin = BlockSumo.getInstance();
     private static FileConfiguration fileConf;
     public static ExpiringBlockConfig expiringBlock;

@@ -8,6 +8,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import me.nixuge.config.Config;
 import me.nixuge.config.Lang;
@@ -15,6 +16,7 @@ import me.nixuge.enums.GameState;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.McMap;
 import me.nixuge.runnables.BlockManagerRunnable;
+import me.nixuge.runnables.FireworkRunnable;
 import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
 import me.nixuge.runnables.TargetterRunnable;
@@ -158,10 +160,19 @@ public class GameManager {
                 alivePlayerCount++;
         }
         if (alivePlayerCount < 2)
-            forceEndGame();
+            endGameDelayed();
     }
 
-    public void forceEndGame() {
+    public void endGameDelayed() { // made to avoid having a "x died" after the game end message
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                endGame();
+            }
+        }.runTaskLater(blockSumo, 1);
+    }
+
+    public void endGame() {
         List<BsPlayer> winners = new ArrayList<BsPlayer>();
         for (BsPlayer p : pManager.getPlayers()) {
             if (!p.isDead())
@@ -171,11 +182,12 @@ public class GameManager {
         setGameState(GameState.DONE);
         gameRunnable.cancel();
 
-        // TODO HERE: better end bc this sucks
-        // TODO: gamedonewinner insteaed of gamedonewinners when single winner
-        Bukkit.broadcastMessage(Lang.get("game.ending.gamedonewinners"));
+        Bukkit.broadcastMessage(
+                winners.size() > 1 ? Lang.get("game.ending.gamedonewinners") : Lang.get("game.ending.gamedonewinner"));
+
         for (BsPlayer p : winners) {
-            Bukkit.broadcastMessage(p.getName());
+            Bukkit.broadcastMessage("- " + p.getColoredName());
         }
+        new FireworkRunnable(winners, Config.game.getFireworkMaxTickTime()).runTaskTimer(blockSumo, 1, 1);
     }
 }
