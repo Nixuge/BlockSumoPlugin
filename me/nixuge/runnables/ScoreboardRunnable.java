@@ -136,8 +136,13 @@ public class ScoreboardRunnable extends BukkitRunnable {
             Player p = bsPlayer.getBukkitPlayer();
             Scoreboard scoreboard = p.getScoreboard();
 
+            //unregister the objective
+            Objective tmp = scoreboard.getObjective("BlockSumo");
+            if (tmp != null)
+                tmp.unregister();
+            
             // init a new objective
-            Objective objective = scoreboard.registerNewObjective("BlockSumo" + time, "main");
+            Objective objective = scoreboard.registerNewObjective("BlockSumo", "main");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
             objective.setDisplayName("§b§6BlockSumo");
 
@@ -149,11 +154,6 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
             // same for kills
             objective.getScore(Lang.get("scoreboard.kills", bsPlayer.getKills())).setScore(killsIndex);
-
-            // unregister the old objective AFTER (from testing, removes flickers on 1.7)
-            Objective tmp = scoreboard.getObjective("BlockSumo" + (time - 1));
-            if (tmp != null)
-                tmp.unregister();
 
             if (bsPlayer.isLoggedOn())
                 p.setScoreboard(scoreboard);
