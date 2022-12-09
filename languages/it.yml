@@ -69,6 +69,7 @@ kit:
   cancelledkit: "§cModifiche al kit annullate !"
   editunavailable: "Non puoi modificare il kit durante un gioco."
 
+#TODO: reduce length to <16
 scoreboard:
   timer: "§fTimer: %s"
   kills: "§fUccisioni: §c%d"

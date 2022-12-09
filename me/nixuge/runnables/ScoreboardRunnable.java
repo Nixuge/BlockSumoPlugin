@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -31,6 +32,7 @@ public class ScoreboardRunnable extends BukkitRunnable {
     private final GameManager gameMgr = main.getGameMgr();
     private final PlayerManager pManager = gameMgr.getPlayerMgr();
     private List<BsPlayer> orderedPlayerList = new ArrayList<BsPlayer>();
+    private List<String> sentPlayers = new ArrayList<String>();
     private boolean isEnded = false;
 
     private Map<Integer, String> currentSBValues;
@@ -120,11 +122,50 @@ public class ScoreboardRunnable extends BukkitRunnable {
                 Lang.get("scoreboard.timer", TextUtils.secondsToMMSS(time)));
     }
 
+    public void setScoreboardToPlayer(BsPlayer bsPlayer) {
+        if (bsPlayer.isLoggedOn())
+            setScoreboardToPlayer(bsPlayer.getBukkitPlayer(), bsPlayer.getKills());
+    }
+
+    public void setScoreboardToPlayer(Player p, int kills) {
+        Scoreboard scoreboard = p.getScoreboard();
+
+        // init a new objective
+        Objective objective = scoreboard.registerNewObjective("BlockSumo" + time, "main");
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        objective.setDisplayName("§b§6BlockSumo");
+
+        // build scoreboard from the map
+        currentSBValues.forEach((index, string) -> {
+            if (string.length() > 16) {
+                string = string.substring(0, 16);
+            }
+            objective.getScore(string).setScore(index);
+        });
+
+        // build the missing ping key (different for every player)
+        objective.getScore(Lang.get("scoreboard.ping", HandleUtils.getHandleField(p, "ping"))).setScore(pingIndex);
+
+        // same for kills
+        objective.getScore(Lang.get("scoreboard.kills", kills)).setScore(killsIndex);
+
+        // unregister the old objective AFTER (from testing, removes flickers on 1.7)
+        Objective tmp = scoreboard.getObjective("BlockSumo" + (time - 1));
+        if (tmp != null)
+            tmp.unregister();
+
+        if (isEnded)
+            cancel();
+    }
+
+    @SuppressWarnings("deprecation") // Bukkit.getOnlinePlayers()
     @Override
     public void run() {
         // copy the arraylist to order it w/o concurrency errors
         orderedPlayerList = new ArrayList<>(pManager.getPlayers());
         orderedPlayerList.sort(Comparator.comparing(BsPlayer::getLives));
+
+        sentPlayers.clear();
 
         isEnded = gameMgr.getGameState().equals(GameState.DONE);
 
@@ -133,38 +174,13 @@ public class ScoreboardRunnable extends BukkitRunnable {
         time = gameMgr.getGameRunnable().getTime();
 
         for (BsPlayer bsPlayer : orderedPlayerList) {
-            Player p = bsPlayer.getBukkitPlayer();
-            Scoreboard scoreboard = p.getScoreboard();
-
-            // init a new objective
-            Objective objective = scoreboard.registerNewObjective("BlockSumo" + time, "main");
-            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-            objective.setDisplayName("§b§6BlockSumo");
-
-            // build scoreboard from the map
-            currentSBValues.forEach((index, string) -> {
-                if (string.length() > 16) {
-                    string = string.substring(0, 16);
-                }
-                objective.getScore(string).setScore(index);
-            });
-
-            // build the missing ping key (different for every player)
-            objective.getScore(Lang.get("scoreboard.ping", HandleUtils.getHandleField(p, "ping"))).setScore(pingIndex);
-
-            // same for kills
-            objective.getScore(Lang.get("scoreboard.kills", bsPlayer.getKills())).setScore(killsIndex);
-
-            // unregister the old objective AFTER (from testing, removes flickers on 1.7)
-            Objective tmp = scoreboard.getObjective("BlockSumo" + (time - 1));
-            if (tmp != null)
-                tmp.unregister();
-
-            if (bsPlayer.isLoggedOn())
-                p.setScoreboard(scoreboard);
-
-            if (isEnded)
-                cancel();
+            sentPlayers.add(bsPlayer.getName());
+            setScoreboardToPlayer(bsPlayer);
+        }
+        // send the scoreboard to specs too
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!sentPlayers.contains(p.getName()))
+                setScoreboardToPlayer(p, 0);
         }
     }
 

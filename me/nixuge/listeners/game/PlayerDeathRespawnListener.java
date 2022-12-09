@@ -47,6 +47,8 @@ public class PlayerDeathRespawnListener implements Listener {
         Player p = event.getEntity();
         BsPlayer player = playerMgr.getBsPlayer(p);
 
+        event.setDeathMessage(null);
+
         baseDeathLogic(player);
 
         if (player.isDead()) {

@@ -30,7 +30,7 @@ public class GameJoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player p = event.getPlayer();
-        
+
         if (!playerMgr.isPlayerInGameList(p)) {
             p.sendMessage(Lang.get("joinquit.game.alreadystarted"));
         }
@@ -39,6 +39,7 @@ public class GameJoinQuitListener implements Listener {
         if (bsPlayer == null || (bsPlayer != null && bsPlayer.isDead())) {
             PlayerUtils.hidePlayer(p);
             event.setJoinMessage(null);
+            p.teleport(gameMgr.getMcMap().getCenter());
             return;
         }
 

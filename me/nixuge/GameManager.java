@@ -23,6 +23,7 @@ import me.nixuge.runnables.GameRunnable;
 import me.nixuge.runnables.ScoreboardRunnable;
 import me.nixuge.runnables.TargetterRunnable;
 import me.nixuge.utils.InventoryUtils;
+import me.nixuge.utils.PlayerUtils;
 import me.nixuge.utils.ScoreboardUtils;
 import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
@@ -133,6 +134,9 @@ public class GameManager {
                 mob.remove();
             }
         }
+        
+        // clear all of the possible hidden players
+        PlayerUtils.showEveryone();
 
         // tp players & init their inventory
         pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));
@@ -190,6 +194,8 @@ public class GameManager {
 
         setGameState(GameState.DONE);
         gameRunnable.cancel();
+
+        PlayerUtils.showEveryone();
 
         Bukkit.broadcastMessage(
                 winners.size() > 1 ? Lang.get("game.ending.gamedonewinners") : Lang.get("game.ending.gamedonewinner"));   
