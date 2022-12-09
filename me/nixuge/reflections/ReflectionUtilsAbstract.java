@@ -7,28 +7,11 @@ import org.bukkit.Bukkit;
 import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
 
-public abstract class ReflectionUtils {
+public abstract class ReflectionUtilsAbstract {
     private static String versionBase = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",")
             .split(",")[3];
     private static String version = versionBase + ".";
-
-    public static String getNMSVersion() {
-        return versionBase;
-    }
-
-    protected static Class<?> getCraftbukkitClass(String craftbukkitClassString) {
-        String name = "org.bukkit.craftbukkit." + version + craftbukkitClassString;
-        Class<?> craftbukkitClass;
-        try {
-            craftbukkitClass = Class.forName(name);
-            return craftbukkitClass;
-        } catch (ClassNotFoundException e) {
-            Logger.log(LogLevel.ERROR, "Error getting craftbukkit class using reflections!");
-            e.printStackTrace();
-        }
-        return null;
-    }
-
+    
     protected static Class<?> getNMSClass(String nmsClassString) {
         String name = "net.minecraft.server." + version + nmsClassString;
         Class<?> nmsClass;

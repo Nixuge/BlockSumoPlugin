@@ -8,8 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import me.nixuge.GameManager;
 import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
-import me.nixuge.reflections.ParticleUtils;
-import me.nixuge.reflections.particleUtils.ParticleEnum;
+import me.nixuge.reflections.packet.HandleParticleSend;
+import me.nixuge.reflections.packet.ParticleEnum;
 
 public class ExplosionGun {
     public static void run(GameManager gameMgr, BsPlayer bsPlayer, ItemStack item) {
@@ -33,8 +33,8 @@ public class ExplosionGun {
             z += Math.cos(Math.toRadians(yaw));
             y -= Math.sin(Math.toRadians(pitch));
 
-            ParticleUtils.sendParticlePacket(ParticleEnum.FIREWORKS_SPARK,
-                    x, y, z, 0, 0, 0, 10);
+            new HandleParticleSend(ParticleEnum.FIREWORKS_SPARK, x, y, z, 0, 0, 0, 10, null)
+                    .sendPacketAllPlayers();
 
             loc = new Location(gameMgr.getMcMap().getWorld(), x, y, z);
             if (loc.getBlock().getType() != Material.AIR) {

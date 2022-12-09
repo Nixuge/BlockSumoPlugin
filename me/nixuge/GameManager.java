@@ -1,7 +1,6 @@
 package me.nixuge;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,8 +100,7 @@ public class GameManager {
                 blockSumo.getPluginManager().registerEvents(listener, blockSumo);
                 Logger.log(LogLevel.DEBUG, "Registered listener: " + c.getSimpleName());
             }
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-                | IllegalArgumentException | InvocationTargetException e) {
+        } catch (Exception e) {
             // ignore all errors because why should we look at those
             Logger.log(LogLevel.ERROR, "Exception happened while registering listener !");
             e.printStackTrace();

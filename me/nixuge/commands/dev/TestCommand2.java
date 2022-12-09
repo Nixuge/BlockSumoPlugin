@@ -11,10 +11,10 @@ import org.bukkit.command.CommandSender;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.objects.BsPlayer;
-import me.nixuge.reflections.HandlePacketPlayOutBlockBreakAnimation;
-import me.nixuge.reflections.HandleSendPacketNearby;
 import me.nixuge.reflections.HandleUtils;
+import me.nixuge.reflections.packet.HandleBlockBreakAnimation;
 // import net.minecraft.server.v1_8_R3.PacketPlayOutBlockBreakAnimation;
+import me.nixuge.reflections.send.HandleSendPacketNearby;
 
 public class TestCommand2 implements CommandExecutor {
 
@@ -25,7 +25,7 @@ public class TestCommand2 implements CommandExecutor {
         int y = Integer.parseInt(args[1]);
         int z = Integer.parseInt(args[2]);
         
-        Object packet = new HandlePacketPlayOutBlockBreakAnimation(12, x, y, z, Integer.parseInt(args[3])).getPacket();
+        Object packet = new HandleBlockBreakAnimation(12, x, y, z, Integer.parseInt(args[3])).getPacket();
 
         List<BsPlayer> gamePlayers = BlockSumo.getInstance().getGameMgr()
                 .getPlayerMgr().getPlayers();
@@ -34,7 +34,6 @@ public class TestCommand2 implements CommandExecutor {
             if (!bsPlayer.isLoggedOn())
                 return true;
 
-            // TODO: use the other sendPacketNearby form
             // that starts w a human
             // Uncomment the original without reflections for intellisense
             Object serverHandle = HandleUtils.getHandle(Bukkit.getServer());

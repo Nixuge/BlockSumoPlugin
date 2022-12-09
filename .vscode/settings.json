@@ -2,14 +2,13 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "/home/nix/coding/plugins/1.8_serv/cache/patched_1.8.8.jar",
-        "/home/nix/coding/plugins/1.7_serv/paperspigot-1.7.10-R0.1-SNAPSHOT.jar",
-        "/home/nix/coding/plugins/1.12_serv/cache/patched_1.12.2.jar",
-        "/home/nix/coding/plugins/1.16_serv/cache/patched_1.16.5.jar",
-        "/home/nix/coding/plugins/1.13_serv/cache/patched_1.13.2.jar",
-        "/home/nix/coding/plugins/1.14_serv/cache/patched_1.14.4.jar",
-        "/home/nix/coding/plugins/1.15_serv/cache/patched_1.15.2.jar"
+        // "/home/nix/coding/plugins/1.12_serv/cache/patched_1.12.2.jar",
+        // "/home/nix/coding/plugins/1.16_serv/cache/patched_1.16.5.jar",
+        // "/home/nix/coding/plugins/1.13_serv/cache/patched_1.13.2.jar",
+        // "/home/nix/coding/plugins/1.14_serv/cache/patched_1.14.4.jar",
+        // "/home/nix/coding/plugins/1.15_serv/cache/patched_1.15.2.jar"
     ],
-    "java.project.exportJar.targetPath": "/home/nix/coding/plugins/1.8_serv/plugins/${workspaceFolderBasename}.jar",
+    "java.project.exportJar.targetPath": "/home/nix/coding/plugins/1.12_serv/plugins/${workspaceFolderBasename}.jar",
     "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx8G -Xms100m",
     // "java.inlayHints.parameterNames.enabled": "none", //<-temp key for when I have some hard to read smth lined up
 }

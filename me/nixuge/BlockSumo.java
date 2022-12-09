@@ -70,11 +70,13 @@ public class BlockSumo extends JavaPlugin {
         mcVersion = String.join(".", arr);
         Logger.log(LogLevel.DEBUG, "Detected main MC version: " + mcVersion);
 
-        String[] testedMcVersions = { "1.8", "1.9" };
-        if (Arrays.stream(testedMcVersions).anyMatch(v -> v == mcVersion)) {
-            Logger.log(LogLevel.WARNING, "Your MC version (" + mcVersion + ") hasn't been tested officially. " +
-                    "The plugin will be using either default NMS calls or methods based on a wide version range. " +
-                    "Some things may (and will probably) break. Use at your own risk.");
+        String[] testedMcVersions = { "1.8", "1.9", "1.12" };
+        if (!Arrays.asList(testedMcVersions).contains(mcVersion)) {
+            Logger.log(LogLevel.WARNING, "Your MC version (" + mcVersion + ") hasn't been tested officially. ");
+            Logger.log(LogLevel.WARNING, "The plugin you have is made only for 1.8 to 1.12. Any version between those should work, even if you get this warning.");
+            Logger.log(LogLevel.WARNING, "Any other version tho will break, so if you're on one of those,");
+            Logger.log(LogLevel.WARNING, "please use either the 1.7- build or the 1.13+ build");
+
         }
     }
 

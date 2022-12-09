@@ -12,8 +12,8 @@ import me.nixuge.enums.items.GlobalItem;
 import me.nixuge.enums.items.MiddleItem;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.McMap;
-import me.nixuge.reflections.ParticleUtils;
-import me.nixuge.reflections.particleUtils.ParticleEnum;
+import me.nixuge.reflections.packet.HandleParticleSend;
+import me.nixuge.reflections.packet.ParticleEnum;
 import me.nixuge.runnables.particle.MiddleParticleRunnable;
 import me.nixuge.utils.TextUtils;
 import me.nixuge.utils.logger.LogLevel;
@@ -85,8 +85,11 @@ public class GameRunnable extends BukkitRunnable {
 
     private void spawnMiddleBonus() {
         Location center = plugin.getGameMgr().getMcMap().getCenter();
-        ParticleUtils.sendParticlePacket(ParticleEnum.FIREWORKS_SPARK,
-                center.getX(), center.getY(), center.getZ(), .7, .5, .7, 50);
+
+        new HandleParticleSend(ParticleEnum.FIREWORKS_SPARK,
+                center.getX(), center.getY(), center.getZ(),
+                .7, .5, .7, 50, null)
+                .sendPacketAllPlayers();
 
         MiddleItem item = MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
         ItemStack stack = item.getItemStack();

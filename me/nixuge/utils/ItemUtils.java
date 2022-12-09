@@ -13,11 +13,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class ItemUtils {
-    //method overloading at its finest
+    // method overloading at its finest
 
     public static ItemStack getItemStack(Material material, String itemName, int count, String lore,
-            Enchantment enchantment1, int enchantLevel1, Enchantment enchantment2, int enchantLevel2, short durability) {
-        
+            Enchantment enchantment1, int enchantLevel1, Enchantment enchantment2, int enchantLevel2,
+            short durability) {
+
         List<String> loreArr = new ArrayList<>();
         loreArr.add(lore);
 
@@ -26,7 +27,7 @@ public class ItemUtils {
 
         meta.setDisplayName("§r" + itemName);
         meta.setLore(loreArr);
-        
+
         if (enchantment1 != null) {
             meta.addEnchant(enchantment1, enchantLevel1, true);
         }
@@ -42,13 +43,12 @@ public class ItemUtils {
     }
 
     public static ItemStack getItemStack(Material material, String itemName, int count, String lore) {
-        return getItemStack(material, itemName, count, lore, null, 0, null, 0, (short)0);
+        return getItemStack(material, itemName, count, lore, null, 0, null, 0, (short) 0);
     }
 
     public static ItemStack getItemStack(Material material, String itemName) {
         return getItemStack(material, itemName, 1, "");
     }
-
 
     public static ItemStack getItemStackPotion(String itemName, int count, List<String> lore,
             PotionEffectType effectType, int durationTicks, int effectLevel) {
@@ -77,6 +77,18 @@ public class ItemUtils {
         if (amount > 1) {
             p.getItemInHand().setAmount(amount - 1);
         } else {
+            /*
+             * weird note:
+             * for some reason on 1.12 (& especially 1.11+ apparently) this causes a
+             * java.util.concurrent.ExecutionException: java.lang.AssertionError: TRAP
+             * when setting an empty item in hand (sometimes it does, sometimes no)
+             * not fatal & runs just fine but still, to fix if possible
+             * see
+             * https://www.spigotmc.org/threads/error-executing-task-java-util-concurrent-
+             * executionexception-trap.282031/
+             * and
+             * https://hub.spigotmc.org/jira/browse/SPIGOT-2977
+             */
             p.setItemInHand(null);
         }
     }

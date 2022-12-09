@@ -33,6 +33,8 @@ If/When this project gets serious, I'll **maybe** (maybe) switch to existing lib
 PM me if you want to teach me Graddle or Maven, for now i'm litterally just exporting jar/hot reloading to use the plugin, and you may want to do the same.
 
 # Additional note, version support:
-1.7 support is pretty much fully done. There are a few limitations & glitches (scoreboard) but can't do much about that and looks good.  
-Will eventually add support for at least 1.12 & 1.16.  
-& if I have the motivation to, go down to 1.6/1.5?
+This is the 1.8 -> 1.12 (inclusive) branch.
+Support for those versions is now finished, they work exactly the same way.
+
+1.13+ still doesn't have it's own branch, as i'd need to actually play on those versions
+and rewrite quite a lot of things, which i'm not really hyped to do. For this minigame, please use 1.8 or 1.7 anyways.

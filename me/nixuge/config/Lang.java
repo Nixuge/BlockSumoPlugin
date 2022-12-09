@@ -1,6 +1,9 @@
 package me.nixuge.config;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,19 +15,15 @@ public class Lang {
     private static BlockSumo plugin = BlockSumo.getInstance();
     private static FileConfiguration langCfg;
 
-    @SuppressWarnings("deprecation")
     public static void setLanguage(String language) {
-        // Why make something hard and complicated when you can just use
-        // good ol deprecated methods?
-        // TBH tho, should find a way to loadConfig from smth else
-        // than an InputStream which is deprecated
         InputStream stream = plugin.getResource("languages/" + language.toLowerCase() + ".yml");
         if (stream == null) {
             Bukkit.broadcastMessage("WARNING! Language set incorrectly! Defaulting to \"en\"");
             stream = plugin.getResource("languages/en.yml");
         }
 
-        langCfg = YamlConfiguration.loadConfiguration(stream);
+        Reader reader = new BufferedReader(new InputStreamReader(stream));
+        langCfg = YamlConfiguration.loadConfiguration(reader);
     }
 
     public static String get(String key, Object... formats) {

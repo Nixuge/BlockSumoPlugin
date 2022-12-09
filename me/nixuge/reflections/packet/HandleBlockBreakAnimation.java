@@ -1,13 +1,14 @@
-package me.nixuge.reflections;
+package me.nixuge.reflections.packet;
 
 import java.lang.reflect.Constructor;
 
+import me.nixuge.reflections.ReflectionUtilsAbstract;
 import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
 
-public class HandlePacketPlayOutBlockBreakAnimation {
-    private static Class<?> packetClass = ReflectionUtils.getNMSClass("PacketPlayOutBlockBreakAnimation");
-    private static Class<?> bpClass = ReflectionUtils.getNMSClass("BlockPosition");
+public class HandleBlockBreakAnimation extends ReflectionUtilsAbstract {
+    private static Class<?> packetClass = getNMSClass("PacketPlayOutBlockBreakAnimation");
+    private static Class<?> bpClass = getNMSClass("BlockPosition");
 
     private static Constructor<?> bpConstructor = getBpConstructor();
     private static Constructor<?> packetConstructor = getPacketConstructor();
@@ -34,7 +35,7 @@ public class HandlePacketPlayOutBlockBreakAnimation {
     private int x, y, z;
     private int stage;
 
-    public HandlePacketPlayOutBlockBreakAnimation(int breakerId, int x, int y, int z, int stage) {
+    public HandleBlockBreakAnimation(int breakerId, int x, int y, int z, int stage) {
         this.breakerId = breakerId;
         this.x = x;
         this.y = y;

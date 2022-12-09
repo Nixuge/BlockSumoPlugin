@@ -17,11 +17,11 @@ import me.nixuge.GameManager;
 import me.nixuge.enums.Color;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.ExpiringBlock;
-import me.nixuge.reflections.HandlePacketPlayOutBlockBreakAnimation;
-import me.nixuge.reflections.HandleSendPacketNearby;
 import me.nixuge.reflections.HandleUtils;
-import me.nixuge.reflections.ParticleUtils;
-import me.nixuge.reflections.particleUtils.ParticleEnum;
+import me.nixuge.reflections.packet.HandleBlockBreakAnimation;
+import me.nixuge.reflections.packet.HandleParticleSend;
+import me.nixuge.reflections.packet.ParticleEnum;
+import me.nixuge.reflections.send.HandleSendPacketNearby;
 
 public class BlockManagerRunnable extends BukkitRunnable {
     private int tick_time = 0;
@@ -110,12 +110,13 @@ public class BlockManagerRunnable extends BukkitRunnable {
         // As of now, this doesn't work on 1.7 (the version using colors bukkit objects)
         // Need to find a fix on here
 
-        ParticleUtils.sendParticlePacket(ParticleEnum.BLOCK_CRACK,
+        new HandleParticleSend(ParticleEnum.BLOCK_CRACK,
                 (float) loc.getX() + .5f,
                 (float) loc.getY(),
                 (float) loc.getZ() + .5f,
                 0, 0, 0, 10,
-                new int[] { id | (data << 12) });
+                new int[] { id | (data << 12) })
+                .sendPacketAllPlayers();
 
     }
 
@@ -126,8 +127,8 @@ public class BlockManagerRunnable extends BukkitRunnable {
         int z = loc.getBlockZ();
         // int = id of player who is hitting
         // set it to a random one, everytime the same tho so that it doesn't look weird
-        
-        Object packet = new HandlePacketPlayOutBlockBreakAnimation(breakerId, x, y, z, stage).getPacket();
+
+        Object packet = new HandleBlockBreakAnimation(breakerId, x, y, z, stage).getPacket();
 
         List<BsPlayer> gamePlayers = BlockSumo.getInstance().getGameMgr()
                 .getPlayerMgr().getPlayers();
