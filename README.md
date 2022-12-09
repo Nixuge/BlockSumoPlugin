@@ -33,6 +33,6 @@ If/When this project gets serious, I'll **maybe** (maybe) switch to existing lib
 PM me if you want to teach me Graddle or Maven, for now i'm litterally just exporting jar/hot reloading to use the plugin, and you may want to do the same.
 
 # Additional note, version support:
-1.7 support is pretty much fully done. There are a few limitations & glitches (scoreboard) but can't do much about that and looks good.  
-Will eventually add support for at least 1.12 & 1.16.  
-& if I have the motivation to, go down to 1.6/1.5?
+1.7 support is pretty much fully done. There are a few limitations & glitches left but tried to iron them out as much as I could (except the block crack particles wool color, still need to figure that out).
+
+If I have the motivation to, I may try to go down to 1.5, which is honestly more likely than making the 1.13+ version, will see
