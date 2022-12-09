@@ -2,6 +2,7 @@ game:
   minplayercount: 2
   maxplayercount: 8
   countaskilldelay: 20
+  fireworkmaxtimetick: 300 #15s
 
 map: #use "<x> <y> <z>" only unless stated otherwise
   world: world

@@ -56,6 +56,7 @@ public class Logger {
      * @param level level to log the message to (eg: Info, Warning, ...)
      * @param message the message to log
      */
+    @SuppressWarnings("deprecation") // getOnlinePlayers deprecated on bukkit 1.7 for some reason
     public static void logBC(LogLevel level, String message) {
         logger.log(level.getLevel(), level.getColorMessageTerm(message));
         for (Player p : Bukkit.getOnlinePlayers()) {

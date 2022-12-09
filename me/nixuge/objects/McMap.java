@@ -25,6 +25,7 @@ public class McMap {
         this.innerAreas = innerAreas;
     }
 
+    @SuppressWarnings("deprecation") // Bukkit.getOnlinePlayers()
     private boolean isPlayerNearLocation(Location loc) {
         for (Player p : Bukkit.getOnlinePlayers()) {
             // Logger.log(LogLevel.DEBUG, p.getLocation().distance(loc) + "");

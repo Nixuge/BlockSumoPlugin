@@ -21,9 +21,7 @@ public class ParticleUtils extends ReflectionUtils {
         // speed, count?
         // TODO (maybe): use the count and not hardcode 0
         // TODO: make block break particles work like in 1.8
-        Color bukkitColor = (color == null) ?
-                Color.fromRGB(0, 0, 0) :
-                color.getDyeColor().getColor();
+        Color bukkitColor = (color == null) ? Color.fromRGB(0, 0, 0) : color.getDyeColor().getColor();
 
         Object packet = new HandlePacketPlayOutWorldParticles(
                 particle, (float) x, (float) y, (float) z,
@@ -32,6 +30,7 @@ public class ParticleUtils extends ReflectionUtils {
         return packet;
     }
 
+    @SuppressWarnings("deprecation") // Bukkit.getOnlinePlayers()
     public static void sendPacketAllPlayers(Object packet) {
         for (Player online : Bukkit.getOnlinePlayers()) {
             Object handle = HandleUtils.getHandleField(online, "playerConnection");

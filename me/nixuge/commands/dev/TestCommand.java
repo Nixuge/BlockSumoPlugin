@@ -1,7 +1,7 @@
 package me.nixuge.commands.dev;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
+// import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +25,7 @@ public class TestCommand implements CommandExecutor {
         Bukkit.broadcastMessage("name" + name);
         Bukkit.broadcastMessage("x" + x + "y:" + y + "z:" + z);
 
-        Color c = Color.RED;
+        // Color c = Color.RED;
 
         // PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(
         //         name,

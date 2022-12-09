@@ -1,10 +1,9 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "/home/nix/coding/plugins/1.5_serv/spigot-1.5.2-R1.1-SNAPSHOT.jar",
-        "/home/nix/coding/plugins/1.6_serv/spigot-1.6.2-R1.1-SNAPSHOT.jar"
+        "/home/nix/coding/plugins/1.7_serv/paperspigot-1.7.10-R0.1-SNAPSHOT.jar"
     ],
-    "java.project.exportJar.targetPath": "/home/nix/coding/plugins/1.5_serv/plugins/${workspaceFolderBasename}.jar",
+    "java.project.exportJar.targetPath": "/home/nix/coding/plugins/1.7_serv/plugins/${workspaceFolderBasename}.jar",
     "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx8G -Xms100m",
     // "java.inlayHints.parameterNames.enabled": "none", //<-temp key for when I have some hard to read smth lined up
 }

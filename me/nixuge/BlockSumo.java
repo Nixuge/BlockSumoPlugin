@@ -51,6 +51,7 @@ public class BlockSumo extends JavaPlugin {
 
     private LobbyRunnable lobbyRunnable;
 
+    @SuppressWarnings("deprecation") // Bukkit.getOnlinePlayers()
     public void init() {
         // set vars & config (order is important)
         main = this;
@@ -97,8 +98,14 @@ public class BlockSumo extends JavaPlugin {
     }
 }
 
-//TODO for 1.5 support:
-// scoreboard: The method getScore(OfflinePlayer) in the type Objective is not applicable for the arguments (String)
+// TODO for 1.5 (& 1.6) support:
+
+// scoreboard: The method getScore(OfflinePlayer) in the type Objective is not
+// applicable for the arguments (String)
+
 // setunbreakable: The method spigot() is undefined for the type ItemMeta
+
 // respawnlistener: The method respawn() is undefined for the type Player.Spigot
-// oninventoryclick: The method getClickedInventory() is undefined for the type InventoryClickEvent
+
+// oninventoryclick: The method getClickedInventory() is undefined for the type
+// InventoryClickEvent

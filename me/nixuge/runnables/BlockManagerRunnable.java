@@ -99,7 +99,6 @@ public class BlockManagerRunnable extends BukkitRunnable {
     @SuppressWarnings("deprecation")
     private void breakBlockParticles(Location loc) {
         Block block = loc.getBlock();
-        int id = block.getTypeId(); // =Material.WOOL.getId() in normal circumstances
         byte data = block.getData();
 
         // NOTE: to be more safe, could get the material here and if it's air

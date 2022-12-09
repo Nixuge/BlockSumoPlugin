@@ -1,6 +1,8 @@
 package me.nixuge.listeners.game;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -27,33 +29,43 @@ public class PlayerDamageListener implements Listener {
         gameRunnable = gameMgr.getGameRunnable();
     }
 
+    @SuppressWarnings("deprecation") // event.setDamage()
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player))
+        EntityType type = event.getEntityType();
+        if (!(type.equals(EntityType.PLAYER) || type.equals(EntityType.ZOMBIE)))
             return;
 
         switch (event.getCause()) {
             case VOID: // Kill instantly
-                event.setDamage(200); 
+                event.setDamage(200);
                 break;
-            case FALL: // Cancels the fall damage damage animation
-                event.setCancelled(true); 
+            case FIRE_TICK:
+            case FIRE:
+            case FALL: // Cancels the fall damage & fire damage animations
+                event.setCancelled(true);
                 break;
             default: // Cancel the damage without cancelling the animation
-                event.setDamage(0); 
+                event.setDamage(0);
                 break;
         }
     }
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player && event.getDamager() instanceof Player))
+        if (!(event.getDamager() instanceof Player))
             return;
-
-        Player hitPlayer = (Player) event.getEntity();
+        
         Player damager = (Player) event.getDamager();
+        EntityType type = event.getEntityType();
+        
+        BsPlayer bsp;
+        if (type.equals(EntityType.PLAYER)) {
+            bsp = playerMgr.getBsPlayer((Player) event.getEntity());
+        } else {
+            bsp = playerMgr.getBsPlayer((Zombie) event.getEntity());
+        }
 
-        BsPlayer bsp = playerMgr.getBsPlayer(hitPlayer);
         bsp.setLastHit(new Hit(gameRunnable.getTime(), damager));
     }
 }

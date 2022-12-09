@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import me.nixuge.utils.ItemUtils;
 
 public class MovingFireball {
+    @SuppressWarnings("deprecation") // fireball.setShooter(p)
     public static void run(Player p) {
         ItemUtils.removeSingleItemPlayerHand(p);
 
