@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -190,6 +192,10 @@ public class GameManager {
 
         setGameState(GameState.DONE);
         gameRunnable.cancel();
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.setGameMode(GameMode.CREATIVE);
+        }
 
         Bukkit.broadcastMessage(
                 winners.size() > 1 ? Lang.get("game.ending.gamedonewinners") : Lang.get("game.ending.gamedonewinner"));

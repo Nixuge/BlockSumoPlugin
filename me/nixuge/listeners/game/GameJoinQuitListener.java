@@ -1,9 +1,10 @@
 package me.nixuge.listeners.game;
 
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.nixuge.BlockSumo;
@@ -19,14 +20,14 @@ public class GameJoinQuitListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerLogin(PlayerLoginEvent event) {
-        if (!playerMgr.isPlayerInGameList(event.getPlayer())) {
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Lang.get("joinquit.game.alreadystarted"));
-        }
-    }
-
-    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        Player p = event.getPlayer();
+        if (!playerMgr.isPlayerInGameList(p)) {
+            event.setJoinMessage(null);
+            p.sendMessage(Lang.get("joinquit.game.alreadystarted"));
+            p.setGameMode(GameMode.SPECTATOR);
+            return;
+        }
         event.setJoinMessage(Lang.get("joinquit.game.rejoined", event.getPlayer().getName()));
         playerMgr.setPlayerLogin(event.getPlayer(), true);
     }

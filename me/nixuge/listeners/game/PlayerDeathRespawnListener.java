@@ -72,7 +72,8 @@ public class PlayerDeathRespawnListener implements Listener {
         baseDeathLogic(player);
 
         if (player.isDead()) {
-            player.getBukkitPlayer().getInventory().clear();
+            p.getInventory().clear();
+            p.setGameMode(GameMode.SPECTATOR);
             plugin.getGameMgr().checkGameEnd();
         }
 
