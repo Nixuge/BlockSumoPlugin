@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.BlockSumo;
@@ -16,6 +17,7 @@ import me.nixuge.objects.bonuses.global.MovingFireball;
 import me.nixuge.objects.bonuses.middle.BonusLife;
 import me.nixuge.objects.bonuses.middle.ExplosionGun;
 import me.nixuge.objects.bonuses.middle.TntRain;
+import me.nixuge.utils.PlayerUtils;
 
 public class PlayerInteractListener implements Listener {
 
@@ -30,13 +32,26 @@ public class PlayerInteractListener implements Listener {
     }
 
     @EventHandler
+    public void onPlayerItemPickup(PlayerPickupItemEvent event) {
+        if (PlayerUtils.isHidden(event.getPlayer()))
+            event.setCancelled(true);
+    }
+
+    @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         // Action action = event.getAction();
         Player p = event.getPlayer();
+
+        if (PlayerUtils.isHidden(p)) {
+            event.setCancelled(true);
+            return;
+        }
+
         BsPlayer bsPlayer = pManager.getBsPlayer(p);
         ItemStack item = event.getItem();
         if (item == null)
             return;
+
         Material material = item.getType();
 
         switch (material) {

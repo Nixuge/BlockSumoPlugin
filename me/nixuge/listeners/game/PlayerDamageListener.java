@@ -14,6 +14,7 @@ import me.nixuge.PlayerManager;
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.Hit;
 import me.nixuge.runnables.GameRunnable;
+import me.nixuge.utils.PlayerUtils;
 
 public class PlayerDamageListener implements Listener {
 
@@ -33,6 +34,12 @@ public class PlayerDamageListener implements Listener {
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
         EntityType type = event.getEntityType();
+
+        if (type.equals(EntityType.PLAYER) && PlayerUtils.isHidden((Player) event.getEntity())) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (!(type.equals(EntityType.PLAYER) || type.equals(EntityType.ZOMBIE)))
             return;
 
@@ -53,12 +60,14 @@ public class PlayerDamageListener implements Listener {
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player))
+        if (!(event.getDamager() instanceof Player)) {
+            event.setCancelled(true);
             return;
-        
+        }
+
         Player damager = (Player) event.getDamager();
         EntityType type = event.getEntityType();
-        
+
         BsPlayer bsp;
         if (type.equals(EntityType.PLAYER)) {
             bsp = playerMgr.getBsPlayer((Player) event.getEntity());

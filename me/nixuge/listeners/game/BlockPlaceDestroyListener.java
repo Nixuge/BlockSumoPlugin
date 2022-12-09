@@ -22,6 +22,7 @@ import me.nixuge.objects.ExpiringArea;
 import me.nixuge.objects.ExpiringBlock;
 import me.nixuge.objects.bonuses.global.NormalTnt;
 import me.nixuge.runnables.BlockManagerRunnable;
+import me.nixuge.utils.PlayerUtils;
 
 public class BlockPlaceDestroyListener implements Listener {
 
@@ -40,6 +41,11 @@ public class BlockPlaceDestroyListener implements Listener {
         Block block = event.getBlockPlaced();
         Player p = event.getPlayer();
 
+        if (PlayerUtils.isHidden(p)) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (block.getType().equals(Material.TNT)) {
             NormalTnt.run(block);
             return;
@@ -48,7 +54,7 @@ public class BlockPlaceDestroyListener implements Listener {
         BsPlayer bsPlayer = gameMgr.getPlayerMgr().getBsPlayer(p);
         Color color = bsPlayer.getColor();
 
-        //check for inner areas
+        // check for inner areas
         boolean isInArea = false;
         for (ExpiringArea area : innerAreas) {
             if (area.getArea().containsBlock(block.getLocation())) {
@@ -57,8 +63,8 @@ public class BlockPlaceDestroyListener implements Listener {
                 int breakStartTime = area.getBreakStartTime();
                 bdr.addBlock(new ExpiringBlock(bdr.getTickTime(), block.getLocation(),
                         color, breakTime, breakStartTime));
-                
-                break; //avoid adding to multiple areas
+
+                break; // avoid adding to multiple areas
             }
         }
         if (!isInArea) {
@@ -75,6 +81,11 @@ public class BlockPlaceDestroyListener implements Listener {
 
     @EventHandler
     public void onBlockDestroy(BlockBreakEvent event) {
+        if (PlayerUtils.isHidden(event.getPlayer())) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (gameMgr.getGameState() != GameState.PLAYING)
             return;
 

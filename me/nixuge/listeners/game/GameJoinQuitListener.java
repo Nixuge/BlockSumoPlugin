@@ -1,39 +1,62 @@
 package me.nixuge.listeners.game;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.nixuge.BlockSumo;
+import me.nixuge.GameManager;
 import me.nixuge.PlayerManager;
 import me.nixuge.config.Lang;
+import me.nixuge.objects.BsPlayer;
+import me.nixuge.utils.PlayerUtils;
 
 public class GameJoinQuitListener implements Listener {
 
     PlayerManager playerMgr;
+    GameManager gameMgr;
 
     public GameJoinQuitListener() {
-        playerMgr = BlockSumo.getInstance().getGameMgr().getPlayerMgr();
+        gameMgr = BlockSumo.getInstance().getGameMgr();
+        playerMgr = gameMgr.getPlayerMgr();
     }
 
-    @EventHandler
-    public void onPlayerLogin(PlayerLoginEvent event) {
-        if (!playerMgr.isPlayerInGameList(event.getPlayer())) {
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Lang.get("joinquit.game.alreadystarted"));
-        }
-    }
+    // public void onPlayerLogin(PlayerLoginEvent event)
+    // Now handled on onPlayerJoin for spectators.
+    
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        event.setJoinMessage(Lang.get("joinquit.game.rejoined", event.getPlayer().getName()));
-        playerMgr.setPlayerLogin(event.getPlayer(), true);
+        Player p = event.getPlayer();
+        
+        if (!playerMgr.isPlayerInGameList(p)) {
+            p.sendMessage(Lang.get("joinquit.game.alreadystarted"));
+        }
+
+        BsPlayer bsPlayer = playerMgr.getBsPlayer(p);
+        if (bsPlayer == null || (bsPlayer != null && bsPlayer.isDead())) {
+            PlayerUtils.hidePlayer(p);
+            event.setJoinMessage(null);
+            return;
+        }
+
+        event.setJoinMessage(Lang.get("joinquit.game.rejoined", p.getName()));
+        playerMgr.setPlayerLogin(p, true);
+
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        event.setQuitMessage(Lang.get("joinquit.game.quit", event.getPlayer().getName()));
-        playerMgr.setPlayerLogin(event.getPlayer(), false);
+        Player p = event.getPlayer();
+
+        if (PlayerUtils.isHidden(p)) {
+            event.setQuitMessage(null);
+            return;
+        }
+
+        event.setQuitMessage(Lang.get("joinquit.game.quit", p.getName()));
+        playerMgr.setPlayerLogin(p, false);
     }
 }

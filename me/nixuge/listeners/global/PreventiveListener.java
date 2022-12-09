@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.GameManager;
@@ -70,6 +71,11 @@ public class PreventiveListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerItemPickup(PlayerPickupItemEvent event) {
         event.setCancelled(true);
     }
 }
