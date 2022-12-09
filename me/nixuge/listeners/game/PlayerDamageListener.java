@@ -60,8 +60,10 @@ public class PlayerDamageListener implements Listener {
         BsPlayer bsp;
         if (type.equals(EntityType.PLAYER)) {
             bsp = playerMgr.getBsPlayer((Player) event.getEntity());
-        } else {
+        } else if (type.equals(EntityType.ZOMBIE)) {
             bsp = playerMgr.getBsPlayer((Zombie) event.getEntity());
+        } else {
+            return;
         }
         
         bsp.setLastHit(new Hit(gameRunnable.getTime(), damager));
