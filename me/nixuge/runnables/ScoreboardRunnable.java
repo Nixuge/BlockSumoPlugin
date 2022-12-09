@@ -130,8 +130,20 @@ public class ScoreboardRunnable extends BukkitRunnable {
     public void setScoreboardToPlayer(Player p, int kills) {
         Scoreboard scoreboard = p.getScoreboard();
 
+        // about this:
+        // need more testing, but if the scoreboard flickers, it's because
+        // i need to remove the old objective after registering the new one
+        // however, if I do this, with the way i did it i sometimes got errors
+        // bc i used the game timer instead of a timer here
+        // BUT tbh for now haven't had flickering issues so leaving it the simple way
+
+        // unregister the old objective
+        Objective tmp = scoreboard.getObjective("BlockSumo");
+        if (tmp != null)
+            tmp.unregister();
+
         // init a new objective
-        Objective objective = scoreboard.registerNewObjective("BlockSumo" + time, "main");
+        Objective objective = scoreboard.registerNewObjective("BlockSumo", "main");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName("§b§6BlockSumo");
 
@@ -148,11 +160,6 @@ public class ScoreboardRunnable extends BukkitRunnable {
 
         // same for kills
         objective.getScore(Lang.get("scoreboard.kills", kills)).setScore(killsIndex);
-
-        // unregister the old objective AFTER (from testing, removes flickers on 1.7)
-        Objective tmp = scoreboard.getObjective("BlockSumo" + (time - 1));
-        if (tmp != null)
-            tmp.unregister();
 
         if (isEnded)
             cancel();

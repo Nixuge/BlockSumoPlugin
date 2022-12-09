@@ -74,10 +74,10 @@ scoreboard:
   timer: "§fTimer: %s"
   kills: "§fKills: §c%d"
   ping: "Ping: §c%dms"
-  gotitem: "Got §n%s§r!"
+  gotitem: "Got §b%s"
   opspawnin: "§6OP§f in §a%ds"
-  opspawnnow: "§6§lOP spawned!"
-  gameended: "§nGame ended!"
+  opspawnnow: "§6§lOP spawned"
+  gameended: "§nGame ended !"
 
 joinquit:
   game:
