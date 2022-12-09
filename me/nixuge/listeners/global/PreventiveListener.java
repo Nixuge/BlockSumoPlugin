@@ -1,6 +1,6 @@
 package me.nixuge.listeners.global;
 
-import org.bukkit.entity.Player;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -54,13 +54,22 @@ public class PreventiveListener implements Listener {
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof Player))
+        EntityType type = event.getEntityType();
+        if (!(type.equals(EntityType.ZOMBIE) || type.equals(EntityType.PLAYER)))
             return;
 
-        // TP player back to surface
-        if (event.getCause() == DamageCause.VOID)
-            event.getEntity().teleport(gameMgr.getMcMap().getCenter());
-
+        // TP player back to surface or if zombie just remove it
+        if (event.getCause() == DamageCause.VOID) {
+            switch (type) {
+                case PLAYER:
+                    event.getEntity().teleport(gameMgr.getMcMap().getCenter());
+                    break;
+                default:
+                    event.getEntity().remove();
+                    break;
+            }
+        }
+        // Then still cancel it to avoid taking damage
         event.setCancelled(true);
     }
 
