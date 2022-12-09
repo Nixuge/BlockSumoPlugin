@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 
 import me.nixuge.enums.Color;
 import me.nixuge.objects.BsPlayer;
@@ -29,6 +30,10 @@ public class PlayerManager {
 
     public BsPlayer getBsPlayer(Player player) {
         return getBsPlayer(player.getName());
+    }
+
+    public BsPlayer getBsPlayer(Zombie entity) {
+        return getBsPlayer(entity.getCustomName());
     }
 
     public BsPlayer getBsPlayer(String playerName) {
@@ -70,7 +75,7 @@ public class PlayerManager {
         if (bsPlayer == null)
             return;
 
-        bsPlayer.setIsLoggedOn(isLoggedOn);
         bsPlayer.setBukkitPlayer(player);
+        bsPlayer.setIsLoggedOn(isLoggedOn);
     }
 }

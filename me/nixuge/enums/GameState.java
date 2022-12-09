@@ -11,7 +11,7 @@ import me.nixuge.listeners.game.GameInventoryListener;
 import me.nixuge.listeners.game.GameJoinQuitListener;
 import me.nixuge.listeners.game.PlayerDamageListener;
 import me.nixuge.listeners.game.PlayerInteractListener;
-import me.nixuge.listeners.game.PlayerRespawnListener;
+import me.nixuge.listeners.game.PlayerDeathRespawnListener;
 import me.nixuge.listeners.global.PreventiveListener;
 import me.nixuge.listeners.lobby.LobbyInventoryListener;
 import me.nixuge.listeners.lobby.LobbyJoinQuitListener;
@@ -26,7 +26,7 @@ public enum GameState {
         GameJoinQuitListener.class,
         BlockPlaceDestroyListener.class,
         BlockExplodeListener.class,
-        PlayerRespawnListener.class,
+        PlayerDeathRespawnListener.class,
         PlayerInteractListener.class,
         PlayerDamageListener.class,
         GameInventoryListener.class

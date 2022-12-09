@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -124,6 +126,13 @@ public class GameManager {
             return;
         }
         Logger.logIG(Lang.get("game.starting.starting"));
+
+        // clear all zombies from the map
+        for (Entity mob : map.getWorld().getEntities()) {
+            if (mob.getType().equals(EntityType.ZOMBIE)) {
+                mob.remove();
+            }
+        }
 
         // tp players & init their inventory
         pManager.getPlayers().forEach((p) -> p.getBukkitPlayer().teleport(map.getRandomSpawn()));

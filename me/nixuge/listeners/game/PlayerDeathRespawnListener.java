@@ -2,9 +2,12 @@ package me.nixuge.listeners.game;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,7 +25,7 @@ import me.nixuge.runnables.TargetterRunnable;
 import me.nixuge.runnables.particle.PlayerRespawnParticle;
 import me.nixuge.utils.TextUtils;
 
-public class PlayerRespawnListener implements Listener {
+public class PlayerDeathRespawnListener implements Listener {
 
     BlockSumo plugin;
     GameManager gameMgr;
@@ -31,7 +34,7 @@ public class PlayerRespawnListener implements Listener {
     TargetterRunnable targetterRunnable;
     McMap mcMap;
 
-    public PlayerRespawnListener() {
+    public PlayerDeathRespawnListener() {
         plugin = BlockSumo.getInstance();
         gameMgr = plugin.getGameMgr();
         playerMgr = gameMgr.getPlayerMgr();
@@ -40,40 +43,33 @@ public class PlayerRespawnListener implements Listener {
         mcMap = gameMgr.getMcMap();
     }
 
+    // Handle offline players deaths
+    @EventHandler
+    public void onZombieDeath(EntityDeathEvent event) {
+        if (!event.getEntityType().equals(EntityType.ZOMBIE))
+            return;
+
+        BsPlayer player = playerMgr.getBsPlayer((Zombie) event.getEntity());
+        if (player == null)
+            return;
+
+        baseDeathLogic(player);
+
+        if (player.isDead()) {
+            plugin.getGameMgr().checkGameEnd();
+        }
+
+        // respawn the now dead entity
+        player.spawnOfflineEntity(mcMap.getRandomSpawn());
+    }
+
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
+        event.setDeathMessage(null);
         Player p = event.getEntity();
         BsPlayer player = playerMgr.getBsPlayer(p);
 
-        player.removeLive();
-
-        String target = gameMgr.getTargetterRunnable().getTarget();
-        Hit lastHit = player.getLastHit();
-
-        if (lastHit != null && lastHit.getHitTime() + Config.game.getCountAsKillDelay() > gameRunnable.getTime()) {
-            BsPlayer killer = playerMgr.getBsPlayer(lastHit.getHitter());
-            killer.addKill();
-            event.setDeathMessage(
-                    Lang.get("deathmessages.fromkiller", player.getColoredName(), killer.getColoredName()));
-
-            if (target != null && target == p.getName()) {
-                TextUtils.broadcastGame(
-                        Lang.get("targetter.targetkilled", killer.getColoredName(), player.getColoredName()));
-                killer.addLive();
-                targetterRunnable.resetTarget();
-            }
-
-        } else {
-            event.setDeathMessage(Lang.get("deathmessages.alone", player.getColoredName()));
-
-            if (target != null && target == p.getName()) {
-                TextUtils.broadcastGame(Lang.get("targetter.targetdied", player.getColoredName()));
-                targetterRunnable.resetTarget();
-            }
-        }
-
-        // Always reset the player average Y anyways
-        targetterRunnable.resetPlayer(player.getName());
+        baseDeathLogic(player);
 
         if (player.isDead()) {
             player.getBukkitPlayer().getInventory().clear();
@@ -87,11 +83,41 @@ public class PlayerRespawnListener implements Listener {
                 p.spigot().respawn();
             }
         }.runTaskLater(plugin, 10);
+    }
 
-        // note: need to call the respawn event manually
-        // since spigot().respawn() doesn't
-        // edit: apparently it does?
-        // onRespawn(new PlayerRespawnEvent(p, null, false));
+    // Actual death logic
+    public void baseDeathLogic(BsPlayer player) {
+        player.removeLive();
+
+        Player p = player.getBukkitPlayer();
+        String target = gameMgr.getTargetterRunnable().getTarget();
+        Hit lastHit = player.getLastHit();
+
+        if (lastHit != null && lastHit.getHitTime() + Config.game.getCountAsKillDelay() > gameRunnable.getTime()) {
+            BsPlayer killer = playerMgr.getBsPlayer(lastHit.getHitter());
+            killer.addKill();
+
+            TextUtils.broadcastGame(
+                    Lang.get("deathmessages.fromkiller", player.getColoredName(), killer.getColoredName()));
+
+            if (target != null && target == p.getName()) {
+                TextUtils.broadcastGame(
+                        Lang.get("targetter.targetkilled", killer.getColoredName(), player.getColoredName()));
+                killer.addLive();
+                targetterRunnable.resetTarget();
+            }
+
+        } else {
+            TextUtils.broadcastGame(Lang.get("deathmessages.alone", player.getColoredName()));
+
+            if (target != null && target == p.getName()) {
+                TextUtils.broadcastGame(Lang.get("targetter.targetdied", player.getColoredName()));
+                targetterRunnable.resetTarget();
+            }
+        }
+
+        // Always reset the player average Y anyways
+        targetterRunnable.resetPlayer(player.getName());
     }
 
     @EventHandler

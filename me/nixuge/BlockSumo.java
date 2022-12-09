@@ -26,13 +26,6 @@ public class BlockSumo extends JavaPlugin {
 
     // TODO: add sounds
 
-    // TODO: proper game end (fireworks & other)
-
-    // NOT WORKING IN 1.7:
-    // Logging
-    // "BlockExplodeEvent"
-    // particles
-
     private static BlockSumo main;
 
     public static BlockSumo getInstance() {

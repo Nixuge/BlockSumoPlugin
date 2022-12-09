@@ -57,7 +57,7 @@ public class FireworkRunnable extends BukkitRunnable {
             Location loc = p.getLocation();
             final Firework f = p.getWorld().spawn(loc, Firework.class);
             FireworkMeta fm = f.getFireworkMeta();
-            fm.setPower(2); //flight duration? not sure
+            fm.setPower(4); //flight duration? not sure
             fm.addEffect(FireworkEffect.builder()
                     .flicker(true)
                     .trail(true)
