@@ -7,15 +7,15 @@ Unlike sumo, you can place blocks (that by default disappear after a while), and
 Altho you only have 2 items (shears & blocks), you can edit your kit so that you have them placed correctly in your inventory.  
 
 # Configuration
-This plugin was made to be as costumizable as possible, so you may get lost in the config.  
-As of now, since the plugin is still in beta and that i'm still adding functionalities, I haven't yet made a proper wiki for what every field in the config does (*altho you should be able to figure it out yourself for most of them*).
-
+[See the configuration documentation here](CONFIG.md)  
+[See the example configuration here](config.yml)
 
 # Build
-Compile using Java 8 only for Minecraft 1.8.8 only.
+Compile using Java 8 for Minecraft 1.8 - 1.12
 - Git clone this repo  
 - Open it in your editor of choice (personally using VSCode)  
-- Import the Paper 1.8.8's "cache/patched_1.8.8.jar" as a references library  
+- Import the Paper patcher jar "cache/patched_1.x.x.jar" as a referenced library  
+    - Note that you can build with the 1.8 jar for 1.12 and vice versa, as long as you stay within the version range
 - Export the Jar (no build tools, do it manually)  
 - Done !  
 
@@ -25,7 +25,7 @@ Game-Wise, this plugin was made to be one I could enjoy however i wanted (hence 
 ## Using names instead of UUIDs
 This plugin should be able to work with cracked accounts (untested but it should), which isn't possible with UUIDs
 ## The config
-The config has a really weird system, but all of that's explained in the "me/nixuge/config/Config.java" file
+The config has a really weird system, but all of that's explained in [the Config class](me/nixuge/config/Config.java)
 ## The libraries
 This project was mostly made for training for me, so pretty much no libs were used.  
 If/When this project gets serious, I'll **maybe** (maybe) switch to existing libs for things like particles.  

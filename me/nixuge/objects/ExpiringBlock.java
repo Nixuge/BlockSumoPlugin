@@ -26,8 +26,11 @@ public class ExpiringBlock {
     public ExpiringBlock(int currentTime, Location location, Color color, int breakTime, int breakStartTime) {
         // use center of block instead of edge
         this.location = location;
-
-        this.states = getStatesAfterTime(currentTime, breakTime, breakStartTime);
+        if (breakTime != 0) // TODO: ensure setting to 0 actually works
+            this.states = getStatesAfterTime(currentTime, breakTime, breakStartTime);
+        else
+            this.states = new int[0];
+        
         this.breakerId = rand.nextInt(Integer.MAX_VALUE);
 
         this.colorChanges = getRandomColorChanges(currentTime);
