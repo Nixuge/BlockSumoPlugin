@@ -51,7 +51,7 @@ bonusitems:
 bonuses:
   opintenseconds: "§7Un §6§lBonus OP§r§7 va apparître dans §a10s§7."
   opspawn: "§6§n%s§r§e est apparu au centre !"
-  normalspawn: "§7Tout le monde a été §b§n%s§r§7."
+  normalspawn: "§7Tout le monde a eu §b§n%s§r§7."
   tntrain: "§6Pluie de TNTs pour tout le monde !"
   bonuslife: "§aVous avez gagné une vie !"
   explosiongunwait: "§6Veuillez patienter un peu avant d'exploser quelque chose à nouveau"
@@ -97,8 +97,8 @@ deathmessages:
   fromkiller: "%s §7a été poussé dans le vide par %s"
 
 debug:
-  startcommand: "IMPORTANT: commande de développeur, uniquement pour tester A BESOIN D'ÊTRE RETIRÉ DANS LA VERSION FINALE."
-  endcommand: "Appel init ; COMMANDE DEBUG UNIQUEMENT ! PROVOQUE DES PROBLÈMES AVEC LES TEMPS DES PARTICULES ET PEUT-ÊTRE D'AUTRES, À UTILISER AVEC PRUDENCE !"
+  startcommand: "IMPORTANT: commande de développeur, uniquement pour tester. DOIT ÊTRE RETIRÉE OU LIMITÉE DANS LA VERSION FINALE."
+  endcommand: "Appel init() ; COMMANDE DEBUG UNIQUEMENT ! PROVOQUE DES PROBLÈMES AVEC LES TEMPS DES PARTICULES ET PEUT-ÊTRE D'AUTRES, À UTILISER AVEC PRUDENCE !"
 
 errors:
   mapconfig:
@@ -107,4 +107,4 @@ errors:
     wrongparselocation1: "§l§4Impossible de séparer XYZ et YP (%d parties au lieu de 5). @getLocationfromString pour chaîne \"%s\". Merci d'utiliser le format: <x> <y> <z>, <yaw> <pitch>."
     wrongparselocation2: "§l§4ERREUR DANS LA CONFIG ! @getLocationFromString pour valeur \"%s\" pour chaîne \"%s\"."
   kit:
-    critical: "§l§4Une erreur critique est apparue dans les fichiers de kit. Merci de prévenir quelqu'un."
+    critical: "§l§4Une erreur critique est apparue dans les fichiers de kit. Merci de prévenir un administrateur."
