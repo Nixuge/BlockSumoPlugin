@@ -51,28 +51,30 @@ public class FireworkRunnable extends BukkitRunnable {
             // 2% chance (or 1/50)
             // since this runs every tick (20 times/s), it should NOT match
             // (so spawn a firework) every ~2.5s per player
-            if (chance > 2)
-                continue;
-
-            Location loc = p.getLocation();
-            final Firework f = p.getWorld().spawn(loc, Firework.class);
-            FireworkMeta fm = f.getFireworkMeta();
-            fm.setPower(4); //flight duration? not sure
-            fm.addEffect(FireworkEffect.builder()
-                    .flicker(true)
-                    .trail(true)
-                    .with(FireworkEffect.Type.STAR)
-                    .with(FireworkEffect.Type.BALL)
-                    .with(FireworkEffect.Type.BALL_LARGE)
-                    .withColor(Color.AQUA)
-                    .withColor(Color.YELLOW)
-                    .withColor(Color.RED)
-                    .withColor(Color.WHITE)
-                    .build());
-
-            fm.setPower(0);
-            f.setFireworkMeta(fm);
+            if (chance <= 2)
+                spawnFirework(p);
         }
         currentTick++;
+    }
+
+    public void spawnFirework(Player p) {
+        Location loc = p.getLocation();
+        Firework f = p.getWorld().spawn(loc, Firework.class);
+        FireworkMeta fm = f.getFireworkMeta();
+        fm.setPower(4); // flight duration? not sure
+        fm.addEffect(FireworkEffect.builder()
+                .flicker(true)
+                .trail(true)
+                .with(FireworkEffect.Type.STAR)
+                .with(FireworkEffect.Type.BALL)
+                .with(FireworkEffect.Type.BALL_LARGE)
+                .withColor(Color.AQUA)
+                .withColor(Color.YELLOW)
+                .withColor(Color.RED)
+                .withColor(Color.WHITE)
+                .build());
+
+        fm.setPower(0);
+        f.setFireworkMeta(fm);
     }
 }

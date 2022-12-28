@@ -49,7 +49,6 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void manageGlobalBonus() {
-        // if (willBonusSpawn(lastGlobalBonusSpawn, .00125))
         if (willBonusSpawn(lastGlobalBonusSpawn)) {
             Logger.log(LogLevel.DEBUG, String.format("Global bonus spawn (time %ds)", time));
             lastGlobalBonusSpawn = 0;
@@ -73,13 +72,13 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private boolean willBonusSpawn(int lastSpawn) {
-        return willBonusSpawn(lastSpawn, .0025);
+        return willBonusSpawn(lastSpawn, .1);
     }
 
     private boolean willBonusSpawn(int lastSpawn, double multiplier) {
         int randomPercent = rand.nextInt(100);
-        // totally random formula
-        double neededPercent = ((multiplier * (lastSpawn * lastSpawn)) - .2);
+        // see the 1.8-1.12 branch for more info about this formula
+        double neededPercent = ((multiplier * lastSpawn));
         return neededPercent > randomPercent;
     }
 
@@ -88,7 +87,7 @@ public class GameRunnable extends BukkitRunnable {
         ParticleUtils.sendParticlePacket(ParticleEnum.FIREWORKS_SPARK,
                 center.getX(), center.getY(), center.getZ(), null);
 
-        MiddleItem item = MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
+        MiddleItem item = MiddleItem.getRandomItem();
         ItemStack stack = item.getItemStack();
         TextUtils.broadcastGame(Lang.get("bonuses.opspawn", item.getName()));
 
@@ -97,7 +96,7 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void spawnGlobalBonus() {
-        GlobalItem item = GlobalItem.values()[rand.nextInt(GlobalItem.values().length)];
+        GlobalItem item = GlobalItem.getRandomItem();
         ItemStack stack = item.getItemStack();
 
         for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {

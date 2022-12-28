@@ -1,7 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "/home/nix/coding/plugins/1.7_serv/paperspigot-1.7.10-R0.1-SNAPSHOT.jar"
+        "/home/nix/coding/plugins/servers/1.7_serv/paperspigot-1.7.10-R0.1-SNAPSHOT.jar"
     ],
     "java.project.exportJar.targetPath": "/home/nix/coding/plugins/1.7_serv/plugins/${workspaceFolderBasename}.jar",
     "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx8G -Xms100m",

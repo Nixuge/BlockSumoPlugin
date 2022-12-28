@@ -1,5 +1,7 @@
 package me.nixuge.enums.items;
 
+import java.util.Random;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -64,5 +66,9 @@ public enum MiddleItem {
     public String getName() {
         return name;
     }
-
+    
+    private static Random rand = new Random();
+    public static MiddleItem getRandomItem() {
+        return MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
+    }
 }
