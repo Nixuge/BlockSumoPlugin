@@ -49,7 +49,6 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void manageGlobalBonus() {
-        // if (willBonusSpawn(lastGlobalBonusSpawn, .00125))
         if (willBonusSpawn(lastGlobalBonusSpawn)) {
             Logger.log(LogLevel.DEBUG, String.format("Global bonus spawn (time %ds)", time));
             lastGlobalBonusSpawn = 0;
@@ -73,13 +72,18 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private boolean willBonusSpawn(int lastSpawn) {
-        return willBonusSpawn(lastSpawn, .0025);
+        return willBonusSpawn(lastSpawn, .1);
     }
 
     private boolean willBonusSpawn(int lastSpawn, double multiplier) {
         int randomPercent = rand.nextInt(100);
         // totally random formula
-        double neededPercent = ((multiplier * (lastSpawn * lastSpawn)) - .2);
+        // see on desmos: x * .1
+        // for the probabilities
+        // NOTE: this still run every second, so for ex if you want to get the probability
+        // of it spawning at 60s, you need to additionate the probabilities of it happening
+        // at 1s, 2s, 3s, ..., 59s and 60s
+        double neededPercent = ((multiplier * lastSpawn));
         return neededPercent > randomPercent;
     }
 
@@ -91,7 +95,7 @@ public class GameRunnable extends BukkitRunnable {
                 .7, .5, .7, 50, null)
                 .sendPacketAllPlayers();
 
-        MiddleItem item = MiddleItem.values()[rand.nextInt(MiddleItem.values().length)];
+        MiddleItem item = MiddleItem.getRandomItem();
         ItemStack stack = item.getItemStack();
         TextUtils.broadcastGame(Lang.get("bonuses.opspawn", item.getName()));
 
@@ -100,7 +104,7 @@ public class GameRunnable extends BukkitRunnable {
     }
 
     private void spawnGlobalBonus() {
-        GlobalItem item = GlobalItem.values()[rand.nextInt(GlobalItem.values().length)];
+        GlobalItem item = GlobalItem.getRandomItem();
         ItemStack stack = item.getItemStack();
 
         for (BsPlayer p : plugin.getGameMgr().getPlayerMgr().getPlayers()) {

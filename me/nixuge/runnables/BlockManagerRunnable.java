@@ -103,12 +103,8 @@ public class BlockManagerRunnable extends BukkitRunnable {
         // just not send any particles
         // but that means if i have an issue somewhere else in my code
         // with destroyed blocks not registering properly I won't see it
-        // so sticking with no checks here for now
+        // so sticking with no checks here.
         block.setType(Material.AIR);
-
-        // Important info:
-        // As of now, this doesn't work on 1.7 (the version using colors bukkit objects)
-        // Need to find a fix on here
 
         new HandleParticleSend(ParticleEnum.BLOCK_CRACK,
                 (float) loc.getX() + .5f,
