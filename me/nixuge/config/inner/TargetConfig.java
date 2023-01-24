@@ -2,14 +2,16 @@ package me.nixuge.config.inner;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-public class TargetConfig {
+import me.nixuge.config.ConfigPart;
+
+public class TargetConfig extends ConfigPart {
     public TargetConfig(ConfigurationSection conf) {
-        captureDelayTick = conf.getInt("capturedelaytick");
-        minValuesNeeded = conf.getInt("minimumvaluesneeded");
-        maxValuesStored = conf.getInt("maximumvaluesstored");
-        minYAverage = conf.getInt("minyaveragefortarget");
-        minimumTimeBetweenTargets = conf.getInt("minimumtimebetweentargets");
-        allowSameTargetMultipleTimes = conf.getBoolean("allowsametargetmultipletimes");
+        captureDelayTick = getInt(conf, "capturedelaytick", 100);
+        minValuesNeeded = getInt(conf, "minimumvaluesneeded", 7);
+        maxValuesStored = getInt(conf, "maximumvaluesstored", 9);
+        minYAverage = getInt(conf, "minyaveragefortarget", 15);
+        minimumTimeBetweenTargets = getInt(conf, "minimumtimebetweentargets", 60);
+        allowSameTargetMultipleTimes = getBoolean(conf, "allowsametargetmultipletimes", true);
     }
 
     private final int captureDelayTick;

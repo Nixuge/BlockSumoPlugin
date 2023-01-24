@@ -2,12 +2,14 @@ package me.nixuge.config.inner;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-public class GameConfig {
+import me.nixuge.config.ConfigPart;
+
+public class GameConfig extends ConfigPart {
     public GameConfig(ConfigurationSection conf) {
-        minPlayerCount = conf.getInt("minplayercount");
-        maxPlayerCount = conf.getInt("maxplayercount");
-        countAsKillDelay = conf.getInt("countaskilldelay");
-        fireworkMaxTickTime = conf.getInt("fireworkmaxtimetick");
+        minPlayerCount = getInt(conf, "minplayercount", 2);
+        maxPlayerCount = getInt(conf, "maxplayercount", 8);
+        countAsKillDelay = getInt(conf, "countaskilldelay", 2);
+        fireworkMaxTickTime = getInt(conf, "fireworkmaxtimetick", 300);
     }
 
     private final int minPlayerCount;

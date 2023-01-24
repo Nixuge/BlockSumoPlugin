@@ -9,25 +9,33 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
+import me.nixuge.config.ConfigPart;
 import me.nixuge.config.Lang;
 import me.nixuge.objects.ExpiringArea;
 import me.nixuge.objects.maths.Area;
 import me.nixuge.objects.maths.XYZ;
 
-public class MapConfig {
+public class MapConfig extends ConfigPart {
     public MapConfig(ConfigurationSection conf) {
-        world = Bukkit.getWorld(conf.getString("world"));
 
-        centerBlock = getXYZfromString(conf.getString("centerblock")).asLocation(getWorld()).add(.5, 1, .5);
+        //making default arraylistes
+        List<String> defaultDestroyableBlocks = new ArrayList<String>();
+        defaultDestroyableBlocks.add("WOOL");
+        List<String> defaultSpawns = new ArrayList<String>();
+        defaultSpawns.add("0 1 0, 90 6");
+
+        world = Bukkit.getWorld(getString(conf, "world", "world"));
+
+        centerBlock = getXYZfromString(getString(conf, "centerblock", "2 1 2")).asLocation(getWorld()).add(.5, 1, .5);
 
         destroyableBlocks = new ArrayList<>();
-        List<String> destroyableBlocksStr = conf.getStringList("destroyableblocks");
+        List<String> destroyableBlocksStr = getStringList(conf, "destroyableblocks", defaultDestroyableBlocks);
         for (String str : destroyableBlocksStr) {
             destroyableBlocks.add(Material.getMaterial(str));
         }
         
         spawns = new ArrayList<>();
-        for (String str : conf.getStringList("spawns")) {
+        for (String str : getStringList(conf, "spawns", defaultSpawns)) {
             spawns.add(getLocationFromString(str, world).add(.5, 1, .5));
         }
 
@@ -39,10 +47,10 @@ public class MapConfig {
             ConfigurationSection innerAreaConf = areaConf.getConfigurationSection(str);
 
             innerAreas.add(new ExpiringArea(
-                    new Area(getXYZfromString(innerAreaConf.getString("corner1")),
-                            getXYZfromString(innerAreaConf.getString("corner2"))),
-                    innerAreaConf.getInt("tickbreaktime"),
-                    innerAreaConf.getInt("tickbreakstarttime")));
+                    new Area(getXYZfromString(getString(innerAreaConf, "corner1", "0 0 0")),
+                            getXYZfromString(getString(innerAreaConf, "corner2", "0 0 0"))),
+                    getInt(innerAreaConf, "tickbreaktime", 0),
+                    getInt(innerAreaConf, "tickbreakstarttime", 0)));
         }
     }
 

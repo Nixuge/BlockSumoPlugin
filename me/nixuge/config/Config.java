@@ -26,11 +26,6 @@ public class Config {
     //// parse those values & set them
     // 3- The rest of the class is just getters for easy access
 
-    // would've liked to use inheritance, but unneeded & overcomplicated for this.
-
-    // TODO:
-    // See if i can load missing values from the default config if they fail from the user conf
-    // and if some do, print warnings in the console.
 
     private static BlockSumo plugin = BlockSumo.getInstance();
     private static FileConfiguration fileConf;

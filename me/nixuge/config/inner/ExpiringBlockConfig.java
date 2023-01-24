@@ -2,12 +2,14 @@ package me.nixuge.config.inner;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-public class ExpiringBlockConfig {
+import me.nixuge.config.ConfigPart;
+
+public class ExpiringBlockConfig extends ConfigPart {
     public ExpiringBlockConfig(ConfigurationSection conf) {
-        breakTime = conf.getInt("defaulttickbreaktime");
-        breakStartTime = conf.getInt("defaulttickbreakstarttime");
-        minColorChanges = conf.getInt("mincolorchangecount");
-        maxColorChanges = conf.getInt("maxcolorchangecount");
+        breakTime = getInt(conf, "defaulttickbreaktime", 1200);
+        breakStartTime = getInt(conf, "defaulttickbreakstarttime", 900);
+        minColorChanges = getInt(conf, "mincolorchangecount", 1);
+        maxColorChanges = getInt(conf, "maxcolorchangecount", 6);
     }
     
     private final int breakTime;

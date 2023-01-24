@@ -20,7 +20,7 @@ public class TestCommand2 implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        //TODO: use reflections for taht
+        //notTODO: use reflections for taht
         int x = Integer.parseInt(args[0]);
         int y = Integer.parseInt(args[1]);
         int z = Integer.parseInt(args[2]);

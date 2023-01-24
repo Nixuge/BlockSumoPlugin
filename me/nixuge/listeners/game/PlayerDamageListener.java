@@ -68,4 +68,7 @@ public class PlayerDamageListener implements Listener {
         
         bsp.setLastHit(new Hit(gameRunnable.getTime(), damager));
     }
+
+    //TODO: add Hit() fireball handling
+    // see if it triggers on EntityDamageByEntityEvent or only in EntityDamageEvent
 }

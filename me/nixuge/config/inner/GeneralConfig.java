@@ -2,9 +2,11 @@ package me.nixuge.config.inner;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-public class GeneralConfig {
+import me.nixuge.config.ConfigPart;
+
+public class GeneralConfig extends ConfigPart {
     public GeneralConfig(ConfigurationSection conf) {
-        language = conf.getString("language");
+        language = getString(conf, "language", "en");
     }
 
     private final String language;
