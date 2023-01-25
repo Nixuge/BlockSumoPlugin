@@ -7,46 +7,46 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.config.Lang;
-import me.nixuge.utils.ItemUtils;
+import me.nixuge.utils.ItemBuilder;
 
 public enum GlobalItem {
     FIREBALL(Lang.get("bonusitems.normal.fireball.name"),
-            ItemUtils.getItemStack(
-                    Material.FIREBALL,
-                    Lang.get("bonusitems.normal.fireball.name"),
-                    1,
-                    Lang.get("bonusitems.normal.fireball.lore"))),
+        new ItemBuilder(Material.FIREBALL)
+            .itemName(Lang.get("bonusitems.normal.fireball.name"))
+            .addLoreLine(Lang.get("bonusitems.normal.fireball.lore"))
+            .build()
+    ),
 
     SNOWBALLS(Lang.get("bonusitems.normal.snowballs.name"),
-            ItemUtils.getItemStack(
-                    Material.SNOW_BALL,
-                    Lang.get("bonusitems.normal.snowballs.name"),
-                    8,
-                    Lang.get("bonusitems.normal.snowballs.lore"))),
+        new ItemBuilder(Material.SNOW_BALL)
+            .itemName(Lang.get("bonusitems.normal.snowballs.name"))
+            .addLoreLine(Lang.get("bonusitems.normal.snowballs.lore"))
+            .count(8)
+            .build()
+    ),
 
     SMALL_BAT(Lang.get("bonusitems.normal.smallbat.name"),
-            ItemUtils.getItemStack(
-                    Material.WOOD_SWORD,
-                    Lang.get("bonusitems.normal.smallbat.name"),
-                    1,
-                    Lang.get("bonusitems.normal.smallbat.lore"),
-                    Enchantment.KNOCKBACK, 1,
-                    null, 0,
-                    (short) 59)),
+        new ItemBuilder(Material.WOOD_SWORD)
+            .itemName(Lang.get("bonusitems.normal.smallbat.name"))
+            .addLoreLine(Lang.get("bonusitems.normal.smallbat.lore"))
+            .addEnchant(Enchantment.KNOCKBACK, 1)
+            .durability(59)
+            .build()
+    ),
 
     TNT(Lang.get("bonusitems.normal.tnt.name"),
-            ItemUtils.getItemStack(
-                    Material.TNT,
-                    Lang.get("bonusitems.normal.tnt.name"),
-                    1,
-                    Lang.get("bonusitems.normal.tnt.lore"))),
+        new ItemBuilder(Material.TNT)
+            .itemName(Lang.get("bonusitems.normal.tnt.name"))
+            .addLoreLine(Lang.get("bonusitems.normal.tnt.lore"))
+            .build()
+    ),
 
     BOUNCE_FEATHER(Lang.get("bonusitems.normal.bouncyfeather.name"),
-            ItemUtils.getItemStack(
-                    Material.FEATHER,
-                    Lang.get("bonusitems.normal.bouncyfeather.name"),
-                    1,
-                    Lang.get("bonusitems.normal.bouncyfeather.lore")));
+        new ItemBuilder(Material.FEATHER)
+            .itemName(Lang.get("bonusitems.normal.bouncyfeather.name"))
+            .addLoreLine(Lang.get("bonusitems.normal.bouncyfeather.lore"))
+            .build()
+    );
 
     private final String name;
     private final ItemStack itemStack;

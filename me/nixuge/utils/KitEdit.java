@@ -53,9 +53,8 @@ public class KitEdit {
         Kit currentKit = Kit.loadKit(p);
         currentKit.useKit(p, false);
 
-        playerInventory.setItem(17, ItemUtils.getItemStack(Material.DIAMOND_SWORD, Lang.get("kit.savekit")));
-        ItemStack cancelItem = ItemUtils.getItemStack(Material.BARRIER, Lang.get("kit.cancelkit"));
-        playerInventory.setItem(16, cancelItem);
+        playerInventory.setItem(17, new ItemBuilder(Material.DIAMOND_SWORD).itemName(Lang.get("kit.savekit")).build());
+        playerInventory.setItem(16, new ItemBuilder(Material.BARRIER).itemName(Lang.get("kit.cancelkit")).build());
     }
 
     public void saveKit() {
