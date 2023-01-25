@@ -114,14 +114,15 @@ public class GameManager {
 
     public void startGame(boolean bypass) {
         if (bypass) {
-            Logger.log(LogLevel.WARNING, "Bypassing the startgame checks !");
+            Logger.log(LogLevel.WARNING, "Bypassing the not enough player check.");
+            Logger.log(LogLevel.WARNING, "Note that now the gamestate check isn't being bypassed anymore to prevent issues.");
         }
         // checks
         if (pManager.getPlayers().size() < Config.game.getMinPlayers() && !bypass) {
             Logger.logBC(LogLevel.WARNING, Lang.get("game.starting.notenoughplayers"));
             return;
         }
-        if (state != GameState.WAITING && !bypass) {
+        if (state != GameState.WAITING) {
             Logger.logBC(LogLevel.WARNING, Lang.get("game.starting.wrongstate", state));
             return;
         }

@@ -8,10 +8,11 @@ import me.nixuge.utils.logger.LogLevel;
 import me.nixuge.utils.logger.Logger;
 
 public abstract class ConfigPart {
-    // Bit of a verbose class
-    // but useful for easy access
-    // NOTE: using a private/protected conf instead of having as a param
-    // isn't that good of an idea
+    // Bit of a verbose & inefficient class
+    // but useful for easy access and only meant to be called 1x at startup anyways
+    
+    // NOTE: using a private/protected ConfigurationSection instead of having 
+    // as a parameter isn't that good of an idea
     // -> need error checking at the start of every method to make sure its there
     // -> not good for like the "MapConfig" class where the used conf changes
 
@@ -47,7 +48,6 @@ public abstract class ConfigPart {
         }
         return value;
     }
-
 
     protected List<String> getStringList(ConfigurationSection conf, String key, List<String> defaultVal) {
         List<String> value;
