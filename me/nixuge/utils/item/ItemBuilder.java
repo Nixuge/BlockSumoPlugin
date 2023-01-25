@@ -30,6 +30,7 @@ public class ItemBuilder {
     // tbh could've maybe moved the potion part to another class
     // and made them both inherit the same base,
     // but it's not that huge of a mess so staying here
+    // 2DO: look at potion color support (seems to need NMS on 1.8)
     private boolean isPotion = false;
     private PotionEffectType potionMainEffectType;
     private List<PotionEffect> potionEffects;
@@ -46,7 +47,8 @@ public class ItemBuilder {
     }
 
     public ItemBuilder itemName(String itemName) {
-        this.itemName = itemName;
+        // §r to remove the default italic effect
+        this.itemName = "§r" + itemName;
         return this;
     }
 
@@ -125,7 +127,7 @@ public class ItemBuilder {
 
     private void setItemPotionMeta(ItemStack item) {
         PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
-        
+
         potionMeta.setMainEffect(this.potionMainEffectType);
 
         if (this.potionEffects.size() > 0) {

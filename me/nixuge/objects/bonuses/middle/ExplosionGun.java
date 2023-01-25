@@ -26,7 +26,7 @@ public class ExplosionGun {
         double yaw = loc.getYaw();
         double pitch = loc.getPitch();
         double x = loc.getX();
-        double y = loc.getY() + 1;
+        double y = loc.getY() + 1.5; //getY = base of feet, +1.5 = head
         double z = loc.getZ();
         for (int i = 0; i < 40; i++) {
             double yMinus = Math.sin(Math.toRadians(pitch));
