@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.config.Lang;
-import me.nixuge.utils.item.ItemUtils;
+import me.nixuge.utils.item.ItemBuilder;
 
 public class Kit {
     private static BlockSumo plugin = BlockSumo.getInstance();
@@ -115,7 +115,7 @@ public class Kit {
                         playerInventory.setItem(i, new ItemStack(item.getType(), 64));
                         break;
                     case SHEARS:
-                        playerInventory.setItem(i, ItemUtils.setUnbreakable(item));
+                        playerInventory.setItem(i, new ItemBuilder(Material.SHEARS).unbreakable(true).build());
                         break;
                     default:
                         break;

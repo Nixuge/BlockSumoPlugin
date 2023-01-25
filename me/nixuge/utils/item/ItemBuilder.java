@@ -27,6 +27,9 @@ public class ItemBuilder {
     private List<String> lore = new ArrayList<>();
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
 
+    // tbh could've maybe moved the potion part to another class
+    // and made them both inherit the same base,
+    // but it's not that huge of a mess so staying here
     private boolean isPotion = false;
     private PotionEffectType potionMainEffectType;
     private List<PotionEffect> potionEffects;

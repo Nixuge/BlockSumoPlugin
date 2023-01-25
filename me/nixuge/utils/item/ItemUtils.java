@@ -1,40 +1,8 @@
 package me.nixuge.utils.item;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class ItemUtils {
-    // method overloading at its finest
-
-    public static ItemStack getItemStackPotion(String itemName, int count, List<String> lore,
-            PotionEffectType effectType, int durationTicks, int effectLevel) {
-        ItemStack item = new ItemStack(Material.POTION, count);
-        PotionMeta meta = (PotionMeta) item.getItemMeta();
-
-        meta.setDisplayName("§r" + itemName);
-        meta.setLore(lore);
-
-        meta.setMainEffect(effectType);
-        meta.addCustomEffect(new PotionEffect(effectType, durationTicks, effectLevel), false);
-
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    public static ItemStack getItemStackPotion(String itemName, int count, String lore, PotionEffectType effectType,
-            int durationTicks, int effectLevel) {
-        List<String> loreArr = new ArrayList<>();
-        loreArr.add(lore);
-        return getItemStackPotion(itemName, count, loreArr, effectType, durationTicks, effectLevel);
-    }
 
     public static void removeSingleItemPlayerHand(Player p) {
         int amount = p.getItemInHand().getAmount();
@@ -55,12 +23,5 @@ public class ItemUtils {
              */
             p.setItemInHand(null);
         }
-    }
-
-    public static ItemStack setUnbreakable(ItemStack itemStack) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.spigot().setUnbreakable(true);
-        itemStack.setItemMeta(itemMeta);
-        return itemStack;
     }
 }
