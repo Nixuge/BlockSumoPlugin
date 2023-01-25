@@ -3,7 +3,7 @@ package me.nixuge.objects.bonuses.global;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import me.nixuge.utils.ItemUtils;
+import me.nixuge.utils.item.ItemUtils;
 
 public class BounceFeather {
     public static void run(Player p) {

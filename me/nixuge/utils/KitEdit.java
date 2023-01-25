@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.config.Lang;
 import me.nixuge.objects.Kit;
+import me.nixuge.utils.item.ItemBuilder;
 
 public class KitEdit {
     // bit different approach to other classes

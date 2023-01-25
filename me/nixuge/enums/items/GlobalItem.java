@@ -7,7 +7,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.config.Lang;
-import me.nixuge.utils.ItemBuilder;
+import me.nixuge.utils.item.ItemBuilder;
 
 public enum GlobalItem {
     FIREBALL(Lang.get("bonusitems.normal.fireball.name"),

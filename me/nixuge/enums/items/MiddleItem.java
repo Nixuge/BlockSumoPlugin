@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import me.nixuge.config.Lang;
-import me.nixuge.utils.ItemUtils;
+import me.nixuge.utils.item.ItemUtils;
 
 public enum MiddleItem {
     // honestly, to rework if possible

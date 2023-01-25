@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import me.nixuge.objects.BsPlayer;
 import me.nixuge.objects.Kit;
+import me.nixuge.utils.item.ItemBuilder;
 
 public class InventoryUtils {
     public static void setupInventories(List<BsPlayer> players) {
@@ -32,7 +33,7 @@ public class InventoryUtils {
 
         for (int i = 0; i < 4; i++) {
             Material currentPart = materials[i];
-            ItemStack item = ItemUtils.setUnbreakable(new ItemStack(currentPart));
+            ItemStack item = new ItemBuilder(currentPart).unbreakable(true).build();
 
             LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
             meta.setColor(bsPlayer.getColor().getDyeColor().getColor());

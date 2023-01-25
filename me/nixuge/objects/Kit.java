@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.nixuge.BlockSumo;
 import me.nixuge.config.Lang;
-import me.nixuge.utils.ItemUtils;
+import me.nixuge.utils.item.ItemUtils;
 
 public class Kit {
     private static BlockSumo plugin = BlockSumo.getInstance();

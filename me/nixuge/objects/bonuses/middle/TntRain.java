@@ -10,8 +10,8 @@ import org.bukkit.entity.TNTPrimed;
 
 import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
-import me.nixuge.utils.ItemUtils;
 import me.nixuge.utils.TextUtils;
+import me.nixuge.utils.item.ItemUtils;
 
 public class TntRain {
     public static void run(BsPlayer bsPlayer, List<BsPlayer> bsPlayers) {

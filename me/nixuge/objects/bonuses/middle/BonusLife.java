@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import me.nixuge.config.Lang;
 import me.nixuge.objects.BsPlayer;
-import me.nixuge.utils.ItemUtils;
+import me.nixuge.utils.item.ItemUtils;
 
 public class BonusLife {
     public static void run(BsPlayer bsPlayer) {
