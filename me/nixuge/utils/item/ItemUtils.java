@@ -1,9 +1,9 @@
 package me.nixuge.utils.item;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class ItemUtils {
-
     public static void removeSingleItemPlayerHand(Player p) {
         int amount = p.getItemInHand().getAmount();
         if (amount > 1) {
@@ -21,6 +21,9 @@ public class ItemUtils {
              * and
              * https://hub.spigotmc.org/jira/browse/SPIGOT-2977
              */
+            if (p.getItemInHand().getType() == Material.AIR)
+                return; //this line should fix the error above, to see
+            
             p.setItemInHand(null);
         }
     }

@@ -4,8 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 public class XYZ {
-    //2do: convert more things to this format
-    //edit: maybe, this is for blocks only 
     private final int x, y, z;
 
     public XYZ(int x, int y, int z) {

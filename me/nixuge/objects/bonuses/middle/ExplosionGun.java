@@ -30,13 +30,11 @@ public class ExplosionGun {
         double z = loc.getZ();
         for (int i = 0; i < 40; i++) {
             double yMinus = Math.sin(Math.toRadians(pitch));
-            double xMinus = Math.sin(Math.toRadians(yaw));
-            double zPlus = Math.cos(Math.toRadians(yaw));
 
             double yMultiply = getYMultiplyOffset(yMinus);
 
-            x -= xMinus * yMultiply;
-            z += zPlus * yMultiply;
+            x -= Math.sin(Math.toRadians(yaw)) * yMultiply;
+            z += Math.cos(Math.toRadians(yaw)) * yMultiply;
             y -= yMinus;
 
             new HandleParticleSend(ParticleEnum.FIREWORKS_SPARK, x, y, z, 0, 0, 0, 10, null)
@@ -63,7 +61,7 @@ public class ExplosionGun {
         }
         p.sendMessage(Lang.get("bonuses.explosiongunbadaim"));
     }
-
+    
     /**
      * This function is used to calculate the multiply offset for X/Z
      * based on how up/down the player is looking.
@@ -76,7 +74,7 @@ public class ExplosionGun {
         // get the absolute value of yMinus
         double yMultiply = yMinus > 0 ? yMinus : -yMinus;
 
-        // function sqrt(r² + x²)
+        // function sqrt(r² - x²)
         // makes a nice quarter cycle
         return Math.sqrt(1 - (yMultiply * yMultiply));
     }

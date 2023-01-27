@@ -26,7 +26,7 @@ public class ExpiringBlock {
     public ExpiringBlock(int currentTime, Location location, Color color, int breakTime, int breakStartTime) {
         // use center of block instead of edge
         this.location = location;
-        if (breakTime != 0) // TODO: ensure setting to 0 actually works
+        if (breakTime != 0) // 2DO: ensure setting to 0 actually works
             this.states = getStatesAfterTime(currentTime, breakTime, breakStartTime);
         else
             this.states = new int[0];
