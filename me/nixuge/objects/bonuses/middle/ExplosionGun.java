@@ -22,19 +22,23 @@ public class ExplosionGun {
             return;
         }
 
+        // values straight from the player
         Location loc = p.getLocation();
         double yaw = loc.getYaw();
         double pitch = loc.getPitch();
         double x = loc.getX();
         double y = loc.getY() + 1.5; //getY = base of feet, +1.5 = head
         double z = loc.getZ();
+
+        // values computed
+        double yMinus = Math.sin(Math.toRadians(pitch));
+        double yMultiply = getYMultiplyOffset(yMinus);
+        double xMinus = Math.sin(Math.toRadians(yaw)) * yMultiply;
+        double zPlus = Math.cos(Math.toRadians(yaw)) * yMultiply;
+
         for (int i = 0; i < 40; i++) {
-            double yMinus = Math.sin(Math.toRadians(pitch));
-
-            double yMultiply = getYMultiplyOffset(yMinus);
-
-            x -= Math.sin(Math.toRadians(yaw)) * yMultiply;
-            z += Math.cos(Math.toRadians(yaw)) * yMultiply;
+            x -= xMinus;
+            z += zPlus;
             y -= yMinus;
 
             new HandleParticleSend(ParticleEnum.FIREWORKS_SPARK, x, y, z, 0, 0, 0, 10, null)
